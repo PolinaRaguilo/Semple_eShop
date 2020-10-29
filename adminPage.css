@@ -1,0 +1,48 @@
+.btn_delete{
+  margin: 0 auto;
+}
+.navbar-brand{
+  text-transform: none;
+  font-size: 20px;
+  margin-left: 20px;
+}
+.icons-wrapper{
+  width: 10%;
+}
+
+.fa-user-circle{
+  font-size: 30px;
+  margin-right: 25px;
+}
+
+.fa-shopping-cart{
+  font-size: 28px;
+  margin-right: 15px;
+}
+
+.fa-sign-out-alt{
+  font-size: 30px;
+  margin-left: 12px;
+  display: none;
+}
+
+.fa-user-circle::before, .fa-shopping-cart::before, .fa-sign-out-alt::before{
+  color: white;
+}
+
+.search_form{
+  margin-top: 20px;
+}
+
+.search_form_button{
+  margin-left: 10px;
+}
+
+.breadcrumb{
+  background-color: transparent !important;
+}
+
+.links_wrapper{
+  text-align: center;
+}
+
