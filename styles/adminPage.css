@@ -7,7 +7,7 @@
   margin-left: 20px;
 }
 .icons-wrapper{
-  width: 10%;
+  width: 11%;
 }
 
 .fa-user-circle{
@@ -23,7 +23,6 @@
 .fa-sign-out-alt{
   font-size: 30px;
   margin-left: 12px;
-  display: none;
 }
 
 .fa-user-circle::before, .fa-shopping-cart::before, .fa-sign-out-alt::before{

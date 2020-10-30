@@ -5,7 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+    integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
   <link rel="stylesheet" href="./styles/registration.css">
   <title>Registration</title>
 </head>
@@ -13,18 +16,56 @@
 <body>
   <div class="container">
     <div class="card card-container">
-        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-        <p id="profile-name" class="profile-name-card"></p>
+      <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+      <p id="profile-name" class="profile-name-card">Регистрация</p>
+      <div class="container">
         <form class="form-signin" action="submit">
-            <input type="text" id="inputFirstName" class="form-control" placeholder="Имя" required>
-            <input type="text" id="inputLastName" class="form-control" placeholder="Фамилия" required>
-            <input type="text" id="inputPassword" class="form-control" placeholder="Email" required>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Подтвердите пароль" required>
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Зарегистрироваться</button>
+          <div class="row">
+            <div class="col ">
+              <label for="inputFirstName">Введите имя:</label>
+              <input type="text" id="inputFirstName" class="form-control" placeholder="Имя" required>
+
+              <label for="inputLastName">Введите фамилию:</label>
+              <input type="text" id="inputLastName" class="form-control" placeholder="Фамилия" required>
+
+              <label for="inputEmail">Введите email<br>(далее Ваш логин):</label>
+              <input type="email" id="inputEmail" class="form-control" placeholder="Email" required>
+
+            </div>
+            <div class="col passwordCol">
+              <label for="inputPassword">Введите пароль:</label>
+              <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
+
+              <label for="inputPasswordCheck">Подтвердите пароль:</label>
+              <input type="password" id="inputPasswordCheck" class="form-control" placeholder="Подтвердите пароль"
+                required>
+            </div>
+          </div>
+
+          <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Зарегистрироваться</button>
+          <a href="#" class="link_toLogin">Есть аккаунт? Войдите</a>
         </form>
+      </div>
+      <!-- <form class="form-signin" action="submit">
+
+            <label for="inputFirstName">Введите имя:</label>
+            <input type="text" id="inputFirstName" class="form-control" placeholder="Имя" required>
+
+            <label for="inputLastName">Введите фамилию:</label>
+            <input type="text" id="inputLastName" class="form-control" placeholder="Фамилия" required>
+
+            <label for="inputEmail">Введите email(далее Ваш логин):</label>
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email" required>
+
+            <label for="inputPassword">Введите пароль:</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
+
+            <label for="inputPasswordCheck">Подтвердите пароль:</label>
+            <input type="password" id="inputPasswordCheck" class="form-control" placeholder="Подтвердите пароль" required>
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Зарегистрироваться</button>
+        </form> -->
     </div>
-</div>
+  </div>
 </body>
 
 </html>
