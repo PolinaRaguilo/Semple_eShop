@@ -1,3 +1,7 @@
+
+.brands_col{
+  margin-left: 5px;
+}
 .icons-wrapper {
   width: 11%;
 }
@@ -17,10 +21,21 @@
   margin-left: 12px;
 }
 
+
+
 .fa-user-circle::before,
 .fa-shopping-cart::before,
 .fa-sign-out-alt::before {
   color: white;
+}
+
+.fa-cart-plus::before{
+  color: grey;
+  font-size: 25px;
+}
+
+.fas:hover{
+  color: red
 }
 
 body {
@@ -56,7 +71,7 @@ img {
   background-color: antiquewhite !important
 }
 
-/* .filter_menu > .active */
+
 
 
 .product:hover {
@@ -80,8 +95,6 @@ img {
 
 .product-price {
   bottom: 15px;
-  left: 0;
-  position: absolute;
   width: 100%;
   color: #d51e08;
   font-size: 18px;
