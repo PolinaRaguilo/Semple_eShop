@@ -1,37 +1,3 @@
-
-.brands_col{
-  margin-left: 5px;
-}
-.icons-wrapper {
-  width: 11%;
-}
-
-.fa-user-circle {
-  font-size: 30px;
-  margin-right: 25px;
-}
-
-.fa-shopping-cart {
-  font-size: 28px;
-  margin-right: 15px;
-}
-
-.fa-sign-out-alt {
-  font-size: 30px;
-  margin-left: 12px;
-}
-
-.fa-user-circle::before,
-.fa-shopping-cart::before,
-.fa-sign-out-alt::before {
-  color: white;
-}
-
-
-body {
-  background: #ececec;
-}
-
 img {
   height: auto;
   max-width: 100%;
@@ -40,7 +6,6 @@ img {
 .content {
   margin-top: 50px;
 }
-
 
 .product {
   background: #fff none repeat scroll 0 0;
@@ -55,10 +20,6 @@ img {
 }
 .filter_title{
   background-color: #ffedaf;
-}
-
-.brend_item:active, .brend_item:hover{
-  background-color: antiquewhite !important
 }
 
 .product:hover {

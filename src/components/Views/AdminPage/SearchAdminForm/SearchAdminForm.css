@@ -1,0 +1,15 @@
+.search_form{
+  margin-top: 20px;
+}
+
+.search_form_button{
+  margin-left: 10px;
+}
+
+.breadcrumb{
+  background-color: transparent !important;
+}
+
+.links_wrapper{
+  text-align: center;
+}

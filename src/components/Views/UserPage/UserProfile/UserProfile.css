@@ -1,0 +1,40 @@
+.container {
+  margin-top: 50px;
+  background-color: white;
+  width: 50%;
+  height: 50%;
+}
+
+.profile_title{
+  text-align: center;
+}
+
+.profile_table{
+  margin-top: 30px;
+}
+
+.profile-img-card{
+  width: 23%;
+  height: 23%;
+  margin: 0 auto 10px;
+  padding-top: 15px;
+  display: block;
+}
+
+
+.btn_edit{
+  float: right;
+  margin-bottom: 10px;
+}
+
+.btns{
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 40%;
+}
+
+.btn_editPsw{
+  margin-bottom: 10px;
+}
+
