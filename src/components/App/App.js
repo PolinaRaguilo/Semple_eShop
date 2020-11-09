@@ -1,23 +1,35 @@
 import React from 'react';
-import Header from '../Header/Header';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import AdminPage from '../Views/AdminPage/AdminPage';
 import ItemsPage from '../Views/ItemsPage/ItemsPage';
 import LoginPage from '../Views/LoginPage/LoginPage';
-import RegistrationForm from '../Views/RegistrationPage/RegistrationForm/RegistrationForm';
+import RegistrationPage from '../Views/RegistrationPage/RegistrationPage';
 import UserPage from '../Views/UserPage/UserPage';
 
 
 class App extends React.Component{
 
+  
+
   render(){
     return(
-      // <AdminPage/>
-      // <ItemsPage/>
-    //  <LoginPage/>
-    // <RegistrationForm/>
-    <UserPage/>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={ItemsPage}/>
+        <Route path="/admin" component={AdminPage}/>
+        <Route exact path="/user" component={UserPage}/>
+        <Route exact path="/login" component={LoginPage}/>
+        <Route exact path="/registration" component={RegistrationPage}/>
+      </Switch>
+    </BrowserRouter>
     )
   }
 }
 
 export default App;
+
+// <AdminPage/>
+      // <ItemsPage/>
+    //  <LoginPage/>
+    // <RegistrationForm/>
+    // <UserPage/>

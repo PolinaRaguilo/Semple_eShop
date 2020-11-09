@@ -8,7 +8,7 @@ class OneItem extends React.Component{
         <div class=" product">
           <a href="#">
             <img
-              src="https://ziko.by/upload/resize_cache/iblock/120/500_500_140cd750bba9870f18aada2478b24840a/1205acf653a970c5f8296e8337c2fd3e.png"
+              src="https://ziko.by/upload/iblock/66a/66ab640a1af2333386f89e2c50089e5e.png"
               alt=""
               class="product-img"
             />
