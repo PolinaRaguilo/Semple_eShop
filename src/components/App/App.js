@@ -9,7 +9,6 @@ import UserPage from '../Views/UserPage/UserPage';
 
 class App extends React.Component{
 
-  
 
   render(){
     return(
