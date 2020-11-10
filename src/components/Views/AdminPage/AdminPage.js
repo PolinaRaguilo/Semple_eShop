@@ -13,12 +13,26 @@ class AdminPage extends React.Component{
     ]
   }
 
+  deleteUser = (id) => {
+    this.setState(({users}) => {
+      let idToDel = users.findIndex(elem => elem.id === id);
+
+      let beforeDelItem = users.slice(0, idToDel);
+      let afterDelItem = users.slice(idToDel + 1);
+
+      let newData = [...beforeDelItem, ...afterDelItem];
+      return {
+        users: newData
+      }
+    })
+  }
+
   render(){
     return(
       <React.Fragment>
         <Header/>
         <SearchAdminForm/>
-        <UserTable usersData={this.state.users}/>
+        <UserTable usersData={this.state.users} onDelete={this.deleteUser}/>
       </React.Fragment>
     )
   }

@@ -7,24 +7,24 @@ class SearchAdminForm extends React.Component {
     return (
       <React.Fragment>
         <form
-          class="form-inline justify-content-center search_form"
+          className="form-inline justify-content-center search_form"
           type="submit"
         >
           <input
-            class="form-control col-md-4"
+            className="form-control col-md-4"
             type="text"
             placeholder="Найти..."
           />
-          <button class="btn btn-primary search_form_button" type="submit">
+          <button className="btn btn-primary search_form_button" type="submit">
             Искать
           </button>
         </form>
-        <div class="links_wrapper">
-          <ul class="justify-content-md-center breadcrumb">
-            <li class="breadcrumb-item">
+        <div className="links_wrapper">
+          <ul className="justify-content-md-center breadcrumb">
+            <li className="breadcrumb-item">
               <a href="#">Пользователи</a>
             </li>
-            <li class="breadcrumb-item ">
+            <li className="breadcrumb-item ">
               <a href="#">Товары</a>
             </li>
           </ul>

@@ -5,37 +5,37 @@ class LoginForm extends React.Component {
   render() {
     return (
     <div className="loginBody">
-      <div class="container">
-        <div class="card card-container">
+      <div className="container">
+        <div className="card card-container">
           <img
             id="profile-img"
-            class="profile-img-card"
+            className="profile-img-card"
             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
           />
-          <p id="profile-name" class="profile-name-card"></p>
-          <form class="form-signin" action="submit">
+          <p id="profile-name" className="profile-name-card"></p>
+          <form className="form-signin" action="submit">
             <input
               type="text"
               id="inputEmail"
-              class="form-control"
+              className="form-control"
               placeholder="Логин"
               required
             />
             <input
               type="password"
               id="inputPassword"
-              class="form-control"
+              className="form-control"
               placeholder="Пароль"
               required
             />
             <button
-              class="btn btn-lg btn-primary btn-block btn-signin"
+              className="btn btn-lg btn-primary btn-block btn-signin"
               type="submit"
             >
               Войти
             </button>
           </form>
-          <a href="#" class="signUp">
+          <a href="#" className="signUp">
             Зарегистрироваться
           </a>
         </div>

@@ -1,22 +1,22 @@
-import React from 'react';
+import React from "react";
 
-import './UserItem.css';
+import "./UserItem.css";
 
-class UserItem extends React.Component{
-
-  render(){
-
-    const {key, firstName, lastName, email} = this.props;
+class UserItem extends React.Component {
+  render() {
+    const {  firstName, lastName, email, onDelete } = this.props;
 
     return (
-      <tr key={key}>
-        <td >
-          {firstName}
-        </td>
+      <tr >
+        <td>{firstName}</td>
         <td>{lastName}</td>
         <td>{email}</td>
         <td>
-          <button type="button" class="btn btn-primary btn_delete">
+          <button
+            type="button"
+            className="btn btn-primary btn_delete"
+            onClick={onDelete}
+          >
             Удалить
           </button>
         </td>

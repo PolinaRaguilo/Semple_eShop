@@ -19,6 +19,7 @@ class App extends React.Component{
         <Route exact path="/user" component={UserPage}/>
         <Route exact path="/login" component={LoginPage}/>
         <Route exact path="/registration" component={RegistrationPage}/>
+        <Route render={() => <h2>Page not found 404</h2>}/>
       </Switch>
     </BrowserRouter>
     )

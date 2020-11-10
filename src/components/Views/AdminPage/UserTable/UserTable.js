@@ -1,16 +1,18 @@
 import React from "react";
 import UserItem from "./UserItem/UserItem";
 
-const UserTable =({usersData}) =>  {
+import './UserTable.css'
+
+const UserTable =({usersData,onDelete}) =>  {
 
   let users = usersData.map((item) => {
     const {id, firstName, lastName, email} = item;
-    return <UserItem key={id} firstName={firstName} lastName={lastName} email={email}/>
+    return <UserItem key={id} id={id} firstName={firstName} lastName={lastName} email={email} onDelete={()=>onDelete(id)}/>
   })
 
     return (
-      <table class="container table table-hover">
-        <thead class="table-warning">
+      <table className="container table table-hover">
+        <thead className="table-warning">
           <tr>
             <th scope="col">Имя</th>
             <th scope="col">Фамилия</th>

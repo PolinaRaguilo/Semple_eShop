@@ -6,21 +6,21 @@ class OneItem extends React.Component{
     const {id, imageClock, collection, vendorCode, price} = this.props;
 
     return (
-      <div class="col-4" key={id}>
-        <div class=" product">
+      <div className="col-4" key={id}>
+        <div className=" product">
           <a href="#">
             <img
               src={imageClock}
               alt=""
-              class="product-img"
+              className="product-img"
             />
           </a>
-          <p class="product-title">
+          <p className="product-title">
             <a href="#">Коллекция: {collection}</a>
           </p>
-          <p class="product-desc">Артикул: {vendorCode}</p>
-          <p class="product-price">Цена: ${price}</p>
-          <button type="button" class="btn btn-primary btn_toCart">
+          <p className="product-desc">Артикул: {vendorCode}</p>
+          <p className="product-price">Цена: ${price}</p>
+          <button type="button" className="btn btn-primary btn_toCart">
             В корзину
           </button>
         </div>

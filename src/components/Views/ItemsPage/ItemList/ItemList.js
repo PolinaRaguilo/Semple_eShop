@@ -18,28 +18,28 @@ const ItemList = ({data, brands}) => {
     const {id, brand} = item;
 
     return (
-      <li class="list-group-item brend_item " key={id}>
+      <li className="list-group-item brend_item " key={id}>
       <a href="#">{brand}</a>
     </li>
     )
   })
 
     return (
-      <div class="content">
-        <div class="row">
-          <div class="col">
-            <div class="list-group  ">
+      <div className="content">
+        <div className="row">
+          <div className="col">
+            <div className="list-group  ">
 
-              <ul class=" filter_menu">
-                <li class="list-group-item  filter_title">Бренды</li>
+              <ul className=" filter_menu">
+                <li className="list-group-item  filter_title">Бренды</li>
                 {brandsList}
               </ul>
               
 
             </div>
           </div>
-          <div class="col-md-8 products">
-            <div class="row">
+          <div className="col-md-8 products">
+            <div className="row">
               {clockItems}
             </div>
           </div>
