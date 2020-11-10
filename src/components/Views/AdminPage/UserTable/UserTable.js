@@ -1,8 +1,13 @@
 import React from "react";
 import UserItem from "./UserItem/UserItem";
 
-class UserTable extends React.Component {
-  render() {
+const UserTable =({usersData}) =>  {
+
+  let users = usersData.map((item) => {
+    const {id, firstName, lastName, email} = item;
+    return <UserItem key={id} firstName={firstName} lastName={lastName} email={email}/>
+  })
+
     return (
       <table class="container table table-hover">
         <thead class="table-warning">
@@ -14,13 +19,12 @@ class UserTable extends React.Component {
           </tr>
         </thead>
         <tbody>
-          <UserItem/>
-          <UserItem/>
+          {users}
         </tbody>
       </table>
     );
   }
-}
+
 
 
 export default UserTable;

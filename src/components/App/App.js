@@ -27,8 +27,3 @@ class App extends React.Component{
 
 export default App;
 
-// <AdminPage/>
-      // <ItemsPage/>
-    //  <LoginPage/>
-    // <RegistrationForm/>
-    // <UserPage/>

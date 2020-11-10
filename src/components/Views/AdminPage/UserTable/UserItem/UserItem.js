@@ -6,13 +6,15 @@ class UserItem extends React.Component{
 
   render(){
 
+    const {key, firstName, lastName, email} = this.props;
+
     return (
-      <tr>
-        <td scope="row" class="font-weight-normal">
-          Иван
+      <tr key={key}>
+        <td >
+          {firstName}
         </td>
-        <td>Иванов</td>
-        <td>ivan@mail.ru</td>
+        <td>{lastName}</td>
+        <td>{email}</td>
         <td>
           <button type="button" class="btn btn-primary btn_delete">
             Удалить
