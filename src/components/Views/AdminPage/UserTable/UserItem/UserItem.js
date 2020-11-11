@@ -8,7 +8,7 @@ class UserItem extends React.Component {
 
     return (
       <tr >
-        <td>{firstName}</td>
+        <td> {firstName} </td>
         <td>{lastName}</td>
         <td>{email}</td>
         <td>

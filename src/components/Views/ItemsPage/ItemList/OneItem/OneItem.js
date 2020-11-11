@@ -3,7 +3,7 @@ import React from 'react';
 class OneItem extends React.Component{
 
   render(){
-    const {id, imageClock, collection, vendorCode, price} = this.props;
+    const {id, imageClock,brandClock, collection, vendorCode, price} = this.props;
 
     return (
       <div className="col-4" key={id}>
@@ -16,9 +16,10 @@ class OneItem extends React.Component{
             />
           </a>
           <p className="product-title">
-            <a href="#">Коллекция: {collection}</a>
+            <a href="#">Часы: {brandClock}</a>
           </p>
-          <p className="product-desc">Артикул: {vendorCode}</p>
+          <p className="product-collection">Коллекция: {collection}</p>
+          <p className="product-vendor">Артикул: {vendorCode}</p>
           <p className="product-price">Цена: ${price}</p>
           <button type="button" className="btn btn-primary btn_toCart">
             В корзину

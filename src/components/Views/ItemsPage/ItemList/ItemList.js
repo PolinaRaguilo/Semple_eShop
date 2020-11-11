@@ -7,10 +7,10 @@ import OneItem from "./OneItem/OneItem";
 const ItemList = ({data, brands}) => {
   
   let clockItems = data.map((item) => {
-    const {id, imageClock, collection, vendorCode, price} = item;
+    const {id, imageClock,brandClock, collection, vendorCode, price} = item;
 
     return (
-      <OneItem key={id} imageClock={imageClock} collection={collection} vendorCode={vendorCode} price={price}/>
+      <OneItem key={id} imageClock={imageClock} brandClock={brandClock} collection={collection} vendorCode={vendorCode} price={price}/>
     )
   })
 

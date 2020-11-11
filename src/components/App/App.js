@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import AdminPage from '../Views/AdminPage/AdminPage';
+import ItemsTableForAdmin from '../Views/AdminPage/ItemsTableForAdmin/ItemsTableForAdmin';
+import UserTable from '../Views/AdminPage/UserTable/UserTable';
 import ItemsPage from '../Views/ItemsPage/ItemsPage';
 import LoginPage from '../Views/LoginPage/LoginPage';
 import RegistrationPage from '../Views/RegistrationPage/RegistrationPage';
@@ -16,6 +18,8 @@ class App extends React.Component{
       <Switch>
         <Route exact path="/" component={ItemsPage}/>
         <Route path="/admin" component={AdminPage}/>
+        {/* <Route path = "/admin/userTable" component={UserTable}/> */}
+        {/* <Route path = "/admin/itemsTable" component={ItemsTableForAdmin}/> */}
         <Route exact path="/user" component={UserPage}/>
         <Route exact path="/login" component={LoginPage}/>
         <Route exact path="/registration" component={RegistrationPage}/>
@@ -25,6 +29,7 @@ class App extends React.Component{
     )
   }
 }
+
 
 export default App;
 
