@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 
 import "./SearchAdminForm.css";
@@ -23,10 +24,10 @@ class SearchAdminForm extends React.Component {
         <div className="links_wrapper">
           <ul className="justify-content-md-center breadcrumb">
             <li className="breadcrumb-item">
-              <a href="#">Пользователи</a>
+            <Link to="/admin/userTable">Пользователи</Link>
             </li>
             <li className="breadcrumb-item ">
-              <a href="#">Товары</a>
+            <Link to="/admin/itemsTable">Товары</Link>
             </li>
           </ul>
         </div>

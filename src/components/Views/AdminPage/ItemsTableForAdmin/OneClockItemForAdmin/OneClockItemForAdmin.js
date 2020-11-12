@@ -4,7 +4,7 @@ import './OneClockItemForAdmin.css';
 
 class OneClockItemForAdmin extends React.Component {
   render() {
-    const {id, imageClock,brand, collection, vendorCode,price} = this.props;
+    const {id, imageClock,brand, collection, vendorCode,price, onDelete} = this.props;
 
     return (
       <tr >
@@ -18,6 +18,7 @@ class OneClockItemForAdmin extends React.Component {
           <button
             type="button"
             className="btn btn-primary btn_delete"
+            onClick={onDelete}
           >
             Удалить
           </button>

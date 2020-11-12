@@ -3,11 +3,11 @@ import OneClockItemForAdmin from "./OneClockItemForAdmin/OneClockItemForAdmin";
 
 
 
-const ItemsTableForAdmin =({clocksData}) =>  {
+const ItemsTableForAdmin =({clocksData, onDelete}) =>  {
 
   let clocksItems = clocksData.map((item) => {
     const {id, imageClock,brand, collection, vendorCode,price} = item;
-    return <OneClockItemForAdmin key={id} id={id} imageClock={imageClock} brand={brand} collection={collection}  vendorCode={vendorCode} price={price}/>
+    return <OneClockItemForAdmin key={id} id={id} imageClock={imageClock} brand={brand} collection={collection}  vendorCode={vendorCode} price={price} onDelete={()=>onDelete(id)}/>
   })
 
     return (
@@ -24,7 +24,6 @@ const ItemsTableForAdmin =({clocksData}) =>  {
           </tr>
         </thead>
         <tbody>
-          {/* <OneClockItemForAdmin/> */}
           {clocksItems}
         </tbody>
       </table>

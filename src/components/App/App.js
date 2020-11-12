@@ -18,8 +18,6 @@ class App extends React.Component{
       <Switch>
         <Route exact path="/" component={ItemsPage}/>
         <Route path="/admin" component={AdminPage}/>
-        {/* <Route path = "/admin/userTable" component={UserTable}/> */}
-        {/* <Route path = "/admin/itemsTable" component={ItemsTableForAdmin}/> */}
         <Route exact path="/user" component={UserPage}/>
         <Route exact path="/login" component={LoginPage}/>
         <Route exact path="/registration" component={RegistrationPage}/>
