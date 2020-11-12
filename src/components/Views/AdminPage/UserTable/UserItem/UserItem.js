@@ -4,7 +4,7 @@ import "./UserItem.css";
 
 class UserItem extends React.Component {
   render() {
-    const {  firstName, lastName, email, onDelete } = this.props;
+    const {  firstName, lastName, email, onDeleteUser } = this.props;
 
     return (
       <tr >
@@ -15,7 +15,7 @@ class UserItem extends React.Component {
           <button
             type="button"
             className="btn btn-primary btn_delete"
-            onClick={onDelete}
+            onClick={onDeleteUser}
           >
             Удалить
           </button>

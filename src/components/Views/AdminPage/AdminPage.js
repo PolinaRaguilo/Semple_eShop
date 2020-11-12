@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import {  Route, Switch } from 'react-router-dom';
 import Header from '../../Header/Header';
 import ItemsTableForAdmin from './ItemsTableForAdmin/ItemsTableForAdmin';
 import SearchAdminForm from './SearchAdminForm/SearchAdminForm';
@@ -39,18 +39,20 @@ class AdminPage extends React.Component {
     ],
   };
 
-  deleteItem = (id) => {
-    this.setState(({ users }) => {
-      let idToDel = users.findIndex((elem) => elem.id === id);
 
-      let beforeDelItem = users.slice(0, idToDel);
-      let afterDelItem = users.slice(idToDel + 1);
-
-      let newData = [...beforeDelItem, ...afterDelItem];
-      return {
-        users: newData,
-      };
+  deleteSomething = (stateS, id) => {
+    let newData = this.state[stateS].filter((item) => item.id !== id);
+    this.setState({
+      [stateS]: newData,
     });
+  };
+
+  deleteUser = (id) => {
+    this.deleteSomething("users", id);
+  };
+
+  deleteClock = (id) => {
+    this.deleteSomething("clocks", id);
   };
 
   render() {
@@ -64,14 +66,19 @@ class AdminPage extends React.Component {
             render={() => (
               <UserTable
                 usersData={this.state.users}
-                onDelete={this.deleteItem}
+                onDeleteUser={this.deleteUser}
               />
             )}
           />
 
           <Route
             path="/admin/itemsTable"
-            render={() => <ItemsTableForAdmin clocksData={this.state.clocks} onDelete={this.deleteItem}/>}
+            render={() => (
+              <ItemsTableForAdmin
+                clocksData={this.state.clocks}
+                onDeleteClock={this.deleteClock}
+              />
+            )}
           />
         </Switch>
       </React.Fragment>

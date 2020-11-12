@@ -3,12 +3,21 @@ import UserItem from "./UserItem/UserItem";
 
 import './UserTable.css'
 
-const UserTable =({usersData,onDelete}) =>  {
+const UserTable =({usersData,onDeleteUser}) =>  {
 
   let users = usersData.map((item) => {
-    const {id, firstName, lastName, email} = item;
-    return <UserItem key={id} id={id} firstName={firstName} lastName={lastName} email={email} onDelete={()=>onDelete(id)}/>
-  })
+    const { id, firstName, lastName, email } = item;
+    return (
+      <UserItem
+        key={id}
+        id={id}
+        firstName={firstName}
+        lastName={lastName}
+        email={email}
+        onDeleteUser={() => onDeleteUser(id)}
+      />
+    );
+  });
 
     return (
       <table className="container table table-hover">

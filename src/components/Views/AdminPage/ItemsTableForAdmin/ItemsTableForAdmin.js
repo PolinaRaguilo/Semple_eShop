@@ -3,12 +3,23 @@ import OneClockItemForAdmin from "./OneClockItemForAdmin/OneClockItemForAdmin";
 
 
 
-const ItemsTableForAdmin =({clocksData, onDelete}) =>  {
+const ItemsTableForAdmin =({clocksData, onDeleteClock}) =>  {
 
   let clocksItems = clocksData.map((item) => {
-    const {id, imageClock,brand, collection, vendorCode,price} = item;
-    return <OneClockItemForAdmin key={id} id={id} imageClock={imageClock} brand={brand} collection={collection}  vendorCode={vendorCode} price={price} onDelete={()=>onDelete(id)}/>
-  })
+    const { id, imageClock, brand, collection, vendorCode, price } = item;
+    return (
+      <OneClockItemForAdmin
+        key={id}
+        id={id}
+        imageClock={imageClock}
+        brand={brand}
+        collection={collection}
+        vendorCode={vendorCode}
+        price={price}
+        onDeleteClock={() => onDeleteClock(id)}
+      />
+    );
+  });
 
     return (
       <table className="container table table-hover">
