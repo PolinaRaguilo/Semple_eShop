@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import AdminPage from '../Views/AdminPage/AdminPage';
-import ItemsForAdmin from '../Views/AdminPage/ItemsForAdmin/ItemsForAdmin';
-import UserTable from '../Views/AdminPage/UserTable/UserTable';
 import ItemsPage from '../Views/ItemsPage/ItemsPage';
 import LoginPage from '../Views/LoginPage/LoginPage';
 import RegistrationPage from '../Views/RegistrationPage/RegistrationPage';
@@ -10,6 +8,7 @@ import UserPage from '../Views/UserPage/UserPage';
 
 
 class App extends React.Component{
+  maxId = 3;
 
   state = {
     users: [
@@ -41,7 +40,8 @@ class App extends React.Component{
       {id:1, brand:'Tissot'},
       {id:2, brand:'MK'},
       {id:3, brand:'CASIO'},
-    ]
+    ],
+    newClock:{}
   };
 
   deleteSomething = (stateS, id) => {
@@ -50,13 +50,33 @@ class App extends React.Component{
       [stateS]: newData,
     });
   };
+ 
+  addNewClock = (imageClock, brandClock, collection,vendorCode,price) => {
+    this.setState(({clocks}) => {
+      let newArr = [
+        ...clocks,
+        {id: ++this.maxId,
+          imageClock: imageClock,
+          brandClock: brandClock,
+          collection: collection,
+          vendorCode: vendorCode,
+          price: price
+        }
+      ]
+      return{
+        clocks: newArr
+      }
+    })
+  }
 
   render(){
     return(
     <BrowserRouter>
       <Switch>
         <Route exact path="/" render={()=> <ItemsPage data={this.state} />}/>
-        <Route path="/admin" render={()=> <AdminPage adminData={this.state} deleteSomething={this.deleteSomething}/>}/>
+        <Route path="/admin" render={()=> <AdminPage adminData={this.state} 
+                                                     deleteSomething={this.deleteSomething}  
+                                                     addNewClock={this.addNewClock}/>}/>
         <Route exact path="/user" component={UserPage}/>
         <Route exact path="/login" component={LoginPage}/>
         <Route exact path="/registration" component={RegistrationPage}/>

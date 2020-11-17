@@ -8,13 +8,6 @@ import UserTable from './UserTable/UserTable';
 class AdminPage extends React.Component {
   
 
-  // deleteSomething = (stateS, id) => {
-  //   const {adminData} = this.props;
-  //   let newData = adminData[stateS].filter((item) => item.id !== id);
-  //   this.setState({
-  //     [stateS]: newData,
-  //   });
-  // };
 
   deleteUser = (id) => {
     this.props.deleteSomething("users", id);
@@ -45,8 +38,10 @@ class AdminPage extends React.Component {
             path="/admin/itemsTable"
             render={() => (
               <ItemsForAdmin
-                clocksData={adminData.clocks}
+                adminData={adminData}
                 onDeleteClock={this.deleteClock}
+                onInputChange={this.props.onInputChange}
+                addNewClock={this.props.addNewClock}
               />
             )}
           />
