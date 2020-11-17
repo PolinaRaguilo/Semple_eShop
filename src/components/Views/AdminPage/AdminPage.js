@@ -1,7 +1,7 @@
 import React from 'react';
 import {  Route, Switch } from 'react-router-dom';
 import Header from '../../Header/Header';
-import ItemsTableForAdmin from './ItemsTableForAdmin/ItemsTableForAdmin';
+import ItemsForAdmin from './ItemsForAdmin/ItemsForAdmin';
 import SearchAdminForm from './SearchAdminForm/SearchAdminForm';
 import UserTable from './UserTable/UserTable';
 
@@ -74,7 +74,7 @@ class AdminPage extends React.Component {
           <Route
             path="/admin/itemsTable"
             render={() => (
-              <ItemsTableForAdmin
+              <ItemsForAdmin
                 clocksData={this.state.clocks}
                 onDeleteClock={this.deleteClock}
               />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import AdminPage from '../Views/AdminPage/AdminPage';
-import ItemsTableForAdmin from '../Views/AdminPage/ItemsTableForAdmin/ItemsTableForAdmin';
+import ItemsForAdmin from '../Views/AdminPage/ItemsForAdmin/ItemsForAdmin';
 import UserTable from '../Views/AdminPage/UserTable/UserTable';
 import ItemsPage from '../Views/ItemsPage/ItemsPage';
 import LoginPage from '../Views/LoginPage/LoginPage';
