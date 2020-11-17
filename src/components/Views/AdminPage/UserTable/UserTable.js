@@ -14,7 +14,8 @@ const UserTable =({usersData,onDeleteUser}) =>  {
         firstName={firstName}
         lastName={lastName}
         email={email}
-        onDeleteUser={() => onDeleteUser(id)}
+        onDeleteUser={() => {
+          onDeleteUser(id)}}
       />
     );
   });
