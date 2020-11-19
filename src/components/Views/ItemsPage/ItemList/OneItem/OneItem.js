@@ -1,19 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-class OneItem extends React.Component{
-
-  render(){
-    const {id, imageClock,brandClock, collection, vendorCode, price} = this.props;
+class OneItem extends React.Component {
+  render() {
+    const { id, imageClock, brandClock, collection, vendorCode, price } = this.props;
 
     return (
       <div className="col-4" key={id}>
         <div className=" product">
           <a href="#">
-            <img
-              src={imageClock}
-              alt=""
-              className="product-img"
-            />
+            <img src={imageClock} alt="" className="product-img" />
           </a>
           <p className="product-title">
             <a href="#">Часы: {brandClock}</a>
@@ -30,5 +26,22 @@ class OneItem extends React.Component{
   }
 }
 
+OneItem.propTypes = {
+  id: PropTypes.number,
+  imageClock: PropTypes.string,
+  brandClock: PropTypes.string,
+  collection: PropTypes.string,
+  vendorCode: PropTypes.string,
+  price: PropTypes.number,
+};
+
+OneItem.defaultProps = {
+  id: 0,
+  imageClock: 'https://hellenic.property/wp-content/uploads/2018/01/No-Image.jpg',
+  brandClock: 'no information',
+  collection: 'no information',
+  vendorCode: 'no information',
+  price: 0,
+};
 
 export default OneItem;

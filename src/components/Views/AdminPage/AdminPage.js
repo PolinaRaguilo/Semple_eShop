@@ -1,37 +1,30 @@
 import React from 'react';
-import {  Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Route, Switch } from 'react-router-dom';
 import Header from '../../Header/Header';
 import ItemsForAdmin from './ItemsForAdmin/ItemsForAdmin';
 import SearchAdminForm from './SearchAdminForm/SearchAdminForm';
 import UserTable from './UserTable/UserTable';
 
 class AdminPage extends React.Component {
-  
-
-
-  deleteUser = (id) => {
-    this.props.deleteSomething("users", id);
+  deleteUser = id => {
+    this.props.deleteSomething('users', id);
   };
 
-  deleteClock = (id) => {
-    this.props.deleteSomething("clocks", id);
+  deleteClock = id => {
+    this.props.deleteSomething('clocks', id);
   };
 
   render() {
-    const {adminData} = this.props;
+    const { adminData } = this.props;
     return (
-      <React.Fragment>
+      <>
         <Header />
         <SearchAdminForm />
         <Switch>
           <Route
             path="/admin/userTable"
-            render={() => (
-              <UserTable
-                usersData={adminData.users}
-                onDeleteUser={this.deleteUser}
-              />
-            )}
+            render={() => <UserTable usersData={adminData.users} onDeleteUser={this.deleteUser} />}
           />
 
           <Route
@@ -46,9 +39,23 @@ class AdminPage extends React.Component {
             )}
           />
         </Switch>
-      </React.Fragment>
+      </>
     );
   }
 }
+
+AdminPage.propTypes = {
+  deleteSomething: PropTypes.func,
+  adminData: PropTypes.array,
+  onInputChange: PropTypes.func,
+  addNewClock: PropTypes.func,
+};
+
+AdminPage.defaultProps = {
+  deleteSomething: () => {},
+  adminData: [],
+  onInputChange: () => {},
+  addNewClock: () => {},
+};
 
 export default AdminPage;

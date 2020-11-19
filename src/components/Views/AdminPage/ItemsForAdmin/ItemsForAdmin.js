@@ -1,41 +1,38 @@
-import React from "react";
-import OneClockItemForAdmin from "./OneClockItemForAdmin/OneClockItemForAdmin";
+import React from 'react';
+import PropTypes from 'prop-types';
+import OneClockItemForAdmin from './OneClockItemForAdmin/OneClockItemForAdmin';
 
 import './ItemsForAdmin.css';
 
-class ItemsForAdmin extends React.Component{
+class ItemsForAdmin extends React.Component {
+  state = {};
 
-  state={}
+  onSubmit = e => {
+    const { imageClock, brandClock, collection, vendorCode, price } = this.state;
+    e.preventDefault();
+    this.props.addNewClock(imageClock, brandClock, collection, vendorCode, price);
+  };
 
-   onSubmit = (e) => {
-      const {imageClock, brandClock, collection,vendorCode,price} = this.state;
-      e.preventDefault();
-      this.props.addNewClock(imageClock, brandClock, collection,vendorCode,price);
-    }
+  onInputChange = e => {
+    const { name } = e.target;
+    const { value } = e.target;
 
-    onInputChange = (e) => {
-      let name = e.target.name;
-      let value = e.target.value;
-      
-      this.setState({
-        [name]: value
-      })
-      console.log(this.state)
-    }
+    this.setState({
+      [name]: value,
+    });
+  };
 
+  render() {
+    const { adminData, onDeleteClock } = this.props;
 
-  render(){
-
-    const {adminData, onDeleteClock} =  this.props;
-
-    let clocksItems = adminData.clocks.map((item) => {
-      const { id, imageClock, brand, collection, vendorCode, price } = item;
+    const clocksItems = adminData.clocks.map(item => {
+      const { id, imageClock, brandClock, collection, vendorCode, price } = item;
       return (
         <OneClockItemForAdmin
           key={id}
           id={id}
           imageClock={imageClock}
-          brand={brand}
+          brandClock={brandClock}
           collection={collection}
           vendorCode={vendorCode}
           price={price}
@@ -43,8 +40,8 @@ class ItemsForAdmin extends React.Component{
         />
       );
     });
-    return(
-      <React.Fragment>
+    return (
+      <>
         <form onSubmit={this.onSubmit}>
           <div className="form-group add_clock ">
             <div className="col">
@@ -68,7 +65,9 @@ class ItemsForAdmin extends React.Component{
               />
 
               <div className="form-group">
-                <label className="control-label">Цена</label>
+                <label className="control-label" htmlFor="priceInput">
+                  Цена
+                </label>
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <span className="input-group-text">$</span>
@@ -76,12 +75,12 @@ class ItemsForAdmin extends React.Component{
                   <input
                     type="text"
                     className="form-control"
+                    id="priceInput"
                     name="price"
                     onChange={this.onInputChange}
                   />
                 </div>
               </div>
-
             </div>
 
             <div className="col">
@@ -118,16 +117,26 @@ class ItemsForAdmin extends React.Component{
               <th scope="col">Коллекция</th>
               <th scope="col">Артикул</th>
               <th scope="col">Цена</th>
-              <th scope="col"></th>
+              <th scope="col">Удалить?</th>
             </tr>
           </thead>
           <tbody>{clocksItems}</tbody>
         </table>
-      </React.Fragment>
-    )
+      </>
+    );
   }
 }
 
+ItemsForAdmin.propTypes = {
+  adminData: PropTypes.array,
+  addNewClock: PropTypes.func,
+  onDeleteClock: PropTypes.func,
+};
 
+ItemsForAdmin.defaultProps = {
+  addNewClock: () => {},
+  onDeleteClock: () => {},
+  adminData: [],
+};
 
 export default ItemsForAdmin;

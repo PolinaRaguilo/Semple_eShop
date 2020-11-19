@@ -1,11 +1,11 @@
-import React from "react";
-import UserItem from "./UserItem/UserItem";
+import React from 'react';
+import PropTypes from 'prop-types';
+import UserItem from './UserItem/UserItem';
 
-import './UserTable.css'
+import './UserTable.css';
 
-const UserTable =({usersData,onDeleteUser}) =>  {
-
-  let users = usersData.map((item) => {
+const UserTable = ({ usersData, onDeleteUser }) => {
+  const users = usersData.map(item => {
     const { id, firstName, lastName, email } = item;
     return (
       <UserItem
@@ -15,28 +15,33 @@ const UserTable =({usersData,onDeleteUser}) =>  {
         lastName={lastName}
         email={email}
         onDeleteUser={() => {
-          onDeleteUser(id)}}
+          onDeleteUser(id);
+        }}
       />
     );
   });
 
-    return (
-      <table className="container table table-hover">
-        <thead className="table-warning">
-          <tr>
-            <th scope="col">Имя</th>
-            <th scope="col">Фамилия</th>
-            <th scope="col">Email</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {users}
-        </tbody>
-      </table>
-    );
-  }
+  return (
+    <table className="container table table-hover">
+      <thead className="table-warning">
+        <tr>
+          <th scope="col">Имя</th>
+          <th scope="col">Фамилия</th>
+          <th scope="col">Email</th>
+          <th scope="col">Удалить?</th>
+        </tr>
+      </thead>
+      <tbody>{users}</tbody>
+    </table>
+  );
+};
 
-
-
+UserTable.propTypes = {
+  usersData: PropTypes.array,
+  onDeleteUser: PropTypes.func,
+};
+UserTable.defaultProps = {
+  usersData: [],
+  onDeleteUser: () => {},
+};
 export default UserTable;

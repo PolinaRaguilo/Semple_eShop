@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import "./RegistrationForm.css";
+import './RegistrationForm.css';
 
 class RegistrationForm extends React.Component {
   render() {
@@ -11,6 +11,7 @@ class RegistrationForm extends React.Component {
             id="profile-img"
             className="profile-img-card"
             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+            alt="newUserImg"
           />
           <p id="profile-name" className="profile-name-card">
             Регистрация
@@ -19,7 +20,7 @@ class RegistrationForm extends React.Component {
             <form className="form-signin" action="submit">
               <div className="row">
                 <div className="col ">
-                  <label for="inputFirstName">Введите имя:</label>
+                  <label htmlFor="inputFirstName">Введите имя:</label>
                   <input
                     type="text"
                     id="inputFirstName"
@@ -28,7 +29,7 @@ class RegistrationForm extends React.Component {
                     required
                   />
 
-                  <label for="inputLastName">Введите фамилию:</label>
+                  <label htmlFor="inputLastName">Введите фамилию:</label>
                   <input
                     type="text"
                     id="inputLastName"
@@ -37,7 +38,7 @@ class RegistrationForm extends React.Component {
                     required
                   />
 
-                  <label for="inputEmail">
+                  <label htmlFor="inputEmail">
                     Введите email
                     <br />
                     (далее Ваш логин):
@@ -50,8 +51,8 @@ class RegistrationForm extends React.Component {
                     required
                   />
                 </div>
-                <div class="col passwordCol">
-                  <label for="inputPassword">Введите пароль:</label>
+                <div className="col passwordCol">
+                  <label htmlFor="inputPassword">Введите пароль:</label>
                   <input
                     type="password"
                     id="inputPassword"
@@ -60,7 +61,7 @@ class RegistrationForm extends React.Component {
                     required
                   />
 
-                  <label for="inputPasswordCheck">Подтвердите пароль:</label>
+                  <label htmlFor="inputPasswordCheck">Подтвердите пароль:</label>
                   <input
                     type="password"
                     id="inputPasswordCheck"
@@ -71,10 +72,7 @@ class RegistrationForm extends React.Component {
                 </div>
               </div>
 
-              <button
-                className="btn btn-lg btn-primary btn-block btn-signin"
-                type="submit"
-              >
+              <button className="btn btn-lg btn-primary btn-block btn-signin" type="submit">
                 Зарегистрироваться
               </button>
               <a href="#" className="link_toLogin">
