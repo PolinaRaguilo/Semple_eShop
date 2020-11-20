@@ -1,4 +1,5 @@
 import React from 'react';
+import { Rating } from '@material-ui/lab';
 import PropTypes from 'prop-types';
 
 class OneItem extends React.Component {
@@ -17,6 +18,7 @@ class OneItem extends React.Component {
           <p className="product-collection">Коллекция: {collection}</p>
           <p className="product-vendor">Артикул: {vendorCode}</p>
           <p className="product-price">Цена: ${price}</p>
+          <Rating defaultValue={0} precision={1} />
           <button type="button" className="btn btn-primary btn_toCart">
             В корзину
           </button>
