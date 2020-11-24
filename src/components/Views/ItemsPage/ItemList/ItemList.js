@@ -6,7 +6,7 @@ import OneItem from './OneItem/OneItem';
 
 const ItemList = ({ data, brands }) => {
   const clockItems = data.map(item => {
-    const { id, imageClock, brandClock, collection, vendorCode, price } = item;
+    const { id, imageClock, brandClock, collection, vendorCode, price, rating } = item;
 
     return (
       <OneItem
@@ -16,6 +16,7 @@ const ItemList = ({ data, brands }) => {
         collection={collection}
         vendorCode={vendorCode}
         price={price}
+        rating={rating}
       />
     );
   });
@@ -55,7 +56,7 @@ ItemList.propTypes = {
 };
 
 ItemList.defaultProps = {
-  data: [],
+  data: {},
   brands: [],
 };
 

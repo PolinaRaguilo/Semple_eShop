@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch } from 'react-router-dom';
-import Header from '../../Header/Header';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import ItemsForAdmin from './ItemsForAdmin/ItemsForAdmin';
 import SearchAdminForm from './SearchAdminForm/SearchAdminForm';
 import UserTable from './UserTable/UserTable';
@@ -17,30 +16,34 @@ class AdminPage extends React.Component {
 
   render() {
     const { adminData } = this.props;
-    return (
-      <>
-        <Header />
-        <SearchAdminForm />
-        <Switch>
-          <Route
-            path="/admin/userTable"
-            render={() => <UserTable usersData={adminData.users} onDeleteUser={this.deleteUser} />}
-          />
+    if (adminData.showAdmin === true) {
+      return (
+        <>
+          <SearchAdminForm />
+          <Switch>
+            <Route
+              path="/admin/userTable"
+              render={() => (
+                <UserTable usersData={adminData.users} onDeleteUser={this.deleteUser} />
+              )}
+            />
 
-          <Route
-            path="/admin/itemsTable"
-            render={() => (
-              <ItemsForAdmin
-                adminData={adminData}
-                onDeleteClock={this.deleteClock}
-                onInputChange={this.props.onInputChange}
-                addNewClock={this.props.addNewClock}
-              />
-            )}
-          />
-        </Switch>
-      </>
-    );
+            <Route
+              path="/admin/itemsTable"
+              render={() => (
+                <ItemsForAdmin
+                  adminData={adminData}
+                  onDeleteClock={this.deleteClock}
+                  onInputChange={this.props.onInputChange}
+                  addNewClock={this.props.addNewClock}
+                />
+              )}
+            />
+          </Switch>
+        </>
+      );
+    }
+    return <Redirect to="/" />;
   }
 }
 

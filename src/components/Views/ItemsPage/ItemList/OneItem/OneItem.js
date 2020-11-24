@@ -1,10 +1,11 @@
 import React from 'react';
 import { Rating } from '@material-ui/lab';
 import PropTypes from 'prop-types';
+import './OneItem.css';
 
 class OneItem extends React.Component {
   render() {
-    const { id, imageClock, brandClock, collection, vendorCode, price } = this.props;
+    const { id, imageClock, brandClock, collection, vendorCode, price, rating } = this.props;
 
     return (
       <div className="col-4" key={id}>
@@ -18,7 +19,18 @@ class OneItem extends React.Component {
           <p className="product-collection">Коллекция: {collection}</p>
           <p className="product-vendor">Артикул: {vendorCode}</p>
           <p className="product-price">Цена: ${price}</p>
-          <Rating defaultValue={0} precision={1} />
+          <div>
+            <Rating
+              name="simple-controlled"
+              value={rating}
+              defaultValue={0}
+              precision={1}
+              // onChange={newRateValue => {
+              //   this.setState({ rateValue: newRateValue });
+              //   console.log(this.state.rateValue);
+              // }}
+            />
+          </div>
           <button type="button" className="btn btn-primary btn_toCart">
             В корзину
           </button>
@@ -35,6 +47,7 @@ OneItem.propTypes = {
   collection: PropTypes.string,
   vendorCode: PropTypes.string,
   price: PropTypes.number,
+  rating: PropTypes.number,
 };
 
 OneItem.defaultProps = {
@@ -44,6 +57,7 @@ OneItem.defaultProps = {
   collection: 'no information',
   vendorCode: 'no information',
   price: 0,
+  rating: 0,
 };
 
 export default OneItem;

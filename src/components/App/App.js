@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Header from '../Header/Header';
 import AdminPage from '../Views/AdminPage/AdminPage';
 import ItemsPage from '../Views/ItemsPage/ItemsPage';
 import LoginPage from '../Views/LoginPage/LoginPage';
@@ -24,6 +25,7 @@ class App extends Component {
         collection: 'T-Sport',
         vendorCode: 'T055.417.11.057.00',
         price: 1000,
+        rating: 0,
       },
       {
         id: 2,
@@ -33,6 +35,7 @@ class App extends Component {
         collection: 'T-Classic',
         vendorCode: 'T101.417.23.061.00',
         price: 1500,
+        rating: 2,
       },
     ],
     brands: [
@@ -40,6 +43,20 @@ class App extends Component {
       { id: 2, brand: 'MK' },
       { id: 3, brand: 'CASIO' },
     ],
+    showAdmin: false,
+  };
+
+  toogle = () => {
+    this.setState(state => ({
+      showAdmin: !state.showAdmin,
+    }));
+    console.log(this.state.showAdmin);
+  };
+
+  addRating = value => {
+    this.setState({
+      rating: value,
+    });
   };
 
   deleteSomething = (stateS, id) => {
@@ -74,25 +91,28 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" render={() => <ItemsPage data={this.state} />} />
-          <Route
-            path="/admin"
-            render={() => (
-              <AdminPage
-                adminData={this.state}
-                deleteSomething={this.deleteSomething}
-                addNewClock={this.addNewClock}
-              />
-            )}
-          />
-          <Route exact path="/user" component={UserPage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/registration" component={RegistrationPage} />
-          <Route render={() => <h2>Page not found 404</h2>} />
-        </Switch>
-      </BrowserRouter>
+      <>
+        <Header toogle={this.toogle} />
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" render={() => <ItemsPage data={this.state} />} />
+            <Route
+              path="/admin"
+              render={() => (
+                <AdminPage
+                  adminData={this.state}
+                  deleteSomething={this.deleteSomething}
+                  addNewClock={this.addNewClock}
+                />
+              )}
+            />
+            <Route exact path="/user" component={UserPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/registration" component={RegistrationPage} />
+            <Route render={() => <h2>Page not found 404</h2>} />
+          </Switch>
+        </BrowserRouter>
+      </>
     );
   }
 }
