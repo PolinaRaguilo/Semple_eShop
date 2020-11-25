@@ -1,16 +1,16 @@
-.table_container{
+.table-container {
   background-color: white;
   margin: 0 auto;
   width: 50%;
 }
 
-.add_clock{
+.add-clock {
   display: flex;
   margin: 0 auto;
   width: 50%;
 }
 
-.btn_add{
+.btn-add {
   margin-top: 35px;
   float: right;
 }

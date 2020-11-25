@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Header from '../Header/Header';
 import AdminPage from '../Views/AdminPage/AdminPage';
 import ItemsPage from '../Views/ItemsPage/ItemsPage';
@@ -7,7 +8,14 @@ import LoginPage from '../Views/LoginPage/LoginPage';
 import RegistrationPage from '../Views/RegistrationPage/RegistrationPage';
 import UserPage from '../Views/UserPage/UserPage';
 
-class App extends Component {
+const PrivateRoute = ({ component: Component, showAdmin, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => (showAdmin === false ? <Component {...props} /> : <Redirect to="/admin" />)}
+  />
+);
+
+class App extends React.Component {
   maxId = 3;
 
   state = {
@@ -50,12 +58,17 @@ class App extends Component {
     this.setState(state => ({
       showAdmin: !state.showAdmin,
     }));
-    console.log(this.state.showAdmin);
   };
 
   addRating = value => {
-    this.setState({
-      rating: value,
+    this.setState(({ clocks }) => {
+      const newObj = {
+        ...clocks,
+        rating: value,
+      };
+      return {
+        clocks: newObj,
+      };
     });
   };
 
@@ -92,13 +105,24 @@ class App extends Component {
   render() {
     return (
       <>
-        <Header toogle={this.toogle} />
         <BrowserRouter>
+          <Header toogle={this.toogle} />
           <Switch>
-            <Route exact path="/" render={() => <ItemsPage data={this.state} />} />
+            {/* <Route
+              exact
+              path="/"
+              render={() => <ItemsPage data={this.state} addRating={this.addRating} />}
+            /> */}
+            <PrivateRoute
+              exact
+              path="/"
+              showAdmin={this.state.showAdmin}
+              component={() => <ItemsPage data={this.state} addRating={this.addRating} />}
+            />
+
             <Route
               path="/admin"
-              render={() => (
+              component={() => (
                 <AdminPage
                   adminData={this.state}
                   deleteSomething={this.deleteSomething}
@@ -116,5 +140,10 @@ class App extends Component {
     );
   }
 }
+
+PrivateRoute.propTypes = {
+  component: PropTypes.func.isRequired,
+  showAdmin: PropTypes.bool.isRequired,
+};
 
 export default App;

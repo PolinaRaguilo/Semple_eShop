@@ -12,21 +12,21 @@ class UserProfile extends React.Component {
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/600px-User_icon_2.svg.png"
           alt="UserImg"
         />
-        <h4 className="profile_title">Профиль</h4>
-        <button type="button" className="btn btn-outline-primary btn_edit">
-          Редактировать профиль
+        <h4 className="profile-title">Profile</h4>
+        <button type="button" className="btn btn-outline-primary btn-edit">
+          Edit profile
         </button>
-        <table className="table profile_table">
+        <table className="table profile-table">
           <tbody>
             <tr>
               <td>
-                <b>Имя</b>
+                <b>Name</b>
               </td>
               <td>Полина</td>
             </tr>
             <tr>
               <td>
-                <b>Фамилия</b>
+                <b>Surname</b>
               </td>
               <td>Рагило</td>
             </tr>
@@ -39,11 +39,11 @@ class UserProfile extends React.Component {
           </tbody>
         </table>
         <div className="btns">
-          <button type="button" claclassNamess="btn btn-outline-primary btn_editPsw">
-            Изменить пароль
+          <button type="button" className="btn btn-outline-primary btn-editPsw">
+            Change password
           </button>
-          <button type="button" className="btn btn-outline-primary btn_deleteProfile">
-            Удалить профиль
+          <button type="button" className="btn btn-outline-primary btn-deleteProfile">
+            Delete profile
           </button>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import ItemsForAdmin from './ItemsForAdmin/ItemsForAdmin';
 import SearchAdminForm from './SearchAdminForm/SearchAdminForm';
 import UserTable from './UserTable/UserTable';
@@ -16,49 +16,37 @@ class AdminPage extends React.Component {
 
   render() {
     const { adminData } = this.props;
-    if (adminData.showAdmin === true) {
-      return (
-        <>
-          <SearchAdminForm />
-          <Switch>
-            <Route
-              path="/admin/userTable"
-              render={() => (
-                <UserTable usersData={adminData.users} onDeleteUser={this.deleteUser} />
-              )}
-            />
+    return (
+      <>
+        <SearchAdminForm />
+        <Switch>
+          <Route
+            path="/admin/userTable"
+            render={() => <UserTable usersData={adminData.users} onDeleteUser={this.deleteUser} />}
+          />
 
-            <Route
-              path="/admin/itemsTable"
-              render={() => (
-                <ItemsForAdmin
-                  adminData={adminData}
-                  onDeleteClock={this.deleteClock}
-                  onInputChange={this.props.onInputChange}
-                  addNewClock={this.props.addNewClock}
-                />
-              )}
-            />
-          </Switch>
-        </>
-      );
-    }
-    return <Redirect to="/" />;
+          <Route
+            path="/admin/itemsTable"
+            render={() => (
+              <ItemsForAdmin
+                adminData={adminData}
+                onDeleteClock={this.deleteClock}
+                onInputChange={this.props.onInputChange}
+                addNewClock={this.props.addNewClock}
+              />
+            )}
+          />
+        </Switch>
+      </>
+    );
   }
 }
 
 AdminPage.propTypes = {
-  deleteSomething: PropTypes.func,
-  adminData: PropTypes.array,
-  onInputChange: PropTypes.func,
-  addNewClock: PropTypes.func,
-};
-
-AdminPage.defaultProps = {
-  deleteSomething: () => {},
-  adminData: [],
-  onInputChange: () => {},
-  addNewClock: () => {},
+  deleteSomething: PropTypes.func.isRequired,
+  adminData: PropTypes.object.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  addNewClock: PropTypes.func.isRequired,
 };
 
 export default AdminPage;

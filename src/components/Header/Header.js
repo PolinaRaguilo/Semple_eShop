@@ -1,29 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Header.css';
+import { Link } from 'react-router-dom';
 
 class Header extends Component {
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a className="navbar-brand" href="#">
+        <Link to="/" className="navbar-brand">
           eShop
-        </a>
+        </Link>
         <div className=" navbar-collapse  nav-menu-wrapper">
           <ul className="navbar-nav align-items-between">
             <li className="nav-item active">
               <a className="nav-link" href="#">
-                Главная
+                Home
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">
-                Доставка
+                Delivery
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">
-                О нас
+                About
               </a>
             </li>
           </ul>
@@ -32,7 +33,10 @@ class Header extends Component {
           Переключить
         </button>
         <div className="icons-wrapper">
-          <i className="far fa-user-circle" />
+          <Link to="/user">
+            <i className="far fa-user-circle" />
+          </Link>
+
           <i className="cart-icon fa fa-shopping-cart" />
           <i className="fas fa-sign-out-alt" />
         </div>
@@ -42,11 +46,7 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  toogle: PropTypes.func,
-};
-
-Header.defaultProps = {
-  toogle: () => {},
+  toogle: PropTypes.func.isRequired,
 };
 
 export default Header;

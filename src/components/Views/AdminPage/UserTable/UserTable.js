@@ -14,9 +14,7 @@ const UserTable = ({ usersData, onDeleteUser }) => {
         firstName={firstName}
         lastName={lastName}
         email={email}
-        onDeleteUser={() => {
-          onDeleteUser(id);
-        }}
+        onDeleteUser={onDeleteUser}
       />
     );
   });
@@ -25,10 +23,10 @@ const UserTable = ({ usersData, onDeleteUser }) => {
     <table className="container table table-hover">
       <thead className="table-warning">
         <tr>
-          <th scope="col">Имя</th>
-          <th scope="col">Фамилия</th>
+          <th scope="col">Name</th>
+          <th scope="col">Last Name</th>
           <th scope="col">Email</th>
-          <th scope="col">Удалить?</th>
+          <th scope="col">Delete?</th>
         </tr>
       </thead>
       <tbody>{users}</tbody>
@@ -37,11 +35,8 @@ const UserTable = ({ usersData, onDeleteUser }) => {
 };
 
 UserTable.propTypes = {
-  usersData: PropTypes.array,
-  onDeleteUser: PropTypes.func,
+  usersData: PropTypes.array.isRequired,
+  onDeleteUser: PropTypes.func.isRequired,
 };
-UserTable.defaultProps = {
-  usersData: [],
-  onDeleteUser: () => {},
-};
+
 export default UserTable;

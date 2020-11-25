@@ -4,8 +4,12 @@ import PropTypes from 'prop-types';
 import './UserItem.css';
 
 class UserItem extends React.Component {
+  onDeleteUserHandler = () => {
+    this.props.onDeleteUser(this.props.id);
+  };
+
   render() {
-    const { firstName, lastName, email, onDeleteUser } = this.props;
+    const { firstName, lastName, email } = this.props;
 
     return (
       <tr>
@@ -13,8 +17,8 @@ class UserItem extends React.Component {
         <td>{lastName}</td>
         <td>{email}</td>
         <td>
-          <button type="button" className="btn btn-primary btn_delete" onClick={onDeleteUser}>
-            Удалить
+          <button type="button" className="btn btn-primary" onClick={this.onDeleteUserHandler}>
+            Delete
           </button>
         </td>
       </tr>
@@ -23,17 +27,11 @@ class UserItem extends React.Component {
 }
 
 UserItem.propTypes = {
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
-  email: PropTypes.string,
-  onDeleteUser: PropTypes.func,
-};
-
-UserItem.defaultProps = {
-  firstName: 'no information',
-  lastName: 'no information',
-  email: 'no information',
-  onDeleteUser: () => {},
+  id: PropTypes.number.isRequired,
+  firstName: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  onDeleteUser: PropTypes.func.isRequired,
 };
 
 export default UserItem;

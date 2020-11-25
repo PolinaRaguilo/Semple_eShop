@@ -14,8 +14,7 @@ class ItemsForAdmin extends React.Component {
   };
 
   onInputChange = e => {
-    const { name } = e.target;
-    const { value } = e.target;
+    const { name, value } = e.target;
 
     this.setState({
       [name]: value,
@@ -36,16 +35,16 @@ class ItemsForAdmin extends React.Component {
           collection={collection}
           vendorCode={vendorCode}
           price={price}
-          onDeleteClock={() => onDeleteClock(id)}
+          onDeleteClock={onDeleteClock}
         />
       );
     });
     return (
       <>
         <form onSubmit={this.onSubmit}>
-          <div className="form-group add_clock ">
+          <div className="form-group add-clock ">
             <div className="col">
-              <label htmlFor="imgInput">Изображение</label>
+              <label htmlFor="imgInput">Image</label>
               <input
                 type="text"
                 className="form-control"
@@ -55,7 +54,7 @@ class ItemsForAdmin extends React.Component {
                 onChange={this.onInputChange}
               />
 
-              <label htmlFor="brandInput">Бренд</label>
+              <label htmlFor="brandInput">Brand</label>
               <input
                 type="text"
                 className="form-control"
@@ -66,7 +65,7 @@ class ItemsForAdmin extends React.Component {
 
               <div className="form-group">
                 <label className="control-label" htmlFor="priceInput">
-                  Цена
+                  Price
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
@@ -84,7 +83,7 @@ class ItemsForAdmin extends React.Component {
             </div>
 
             <div className="col">
-              <label htmlFor="collectionInput">Коллекция</label>
+              <label htmlFor="collectionInput">Collection</label>
               <input
                 type="text"
                 className="form-control"
@@ -93,7 +92,7 @@ class ItemsForAdmin extends React.Component {
                 onChange={this.onInputChange}
               />
 
-              <label htmlFor="vendorCodeInput">Артикул</label>
+              <label htmlFor="vendorCodeInput">Code</label>
               <input
                 type="text"
                 className="form-control"
@@ -102,22 +101,22 @@ class ItemsForAdmin extends React.Component {
                 onChange={this.onInputChange}
               />
 
-              <button type="submit" className="btn btn-primary btn_add">
+              <button type="submit" className="btn btn-primary btn-add">
                 Добавить
               </button>
             </div>
           </div>
         </form>
-        <table className="table_container table table-hover">
+        <table className="table-container table table-hover">
           <thead className="table-warning">
             <tr>
               <th scope="col">id</th>
-              <th scope="col">Фото</th>
-              <th scope="col">Бренд</th>
-              <th scope="col">Коллекция</th>
-              <th scope="col">Артикул</th>
-              <th scope="col">Цена</th>
-              <th scope="col">Удалить?</th>
+              <th scope="col">Image</th>
+              <th scope="col">Brand</th>
+              <th scope="col">Collection</th>
+              <th scope="col">Code</th>
+              <th scope="col">Price</th>
+              <th scope="col">Delete</th>
             </tr>
           </thead>
           <tbody>{clocksItems}</tbody>
@@ -128,15 +127,9 @@ class ItemsForAdmin extends React.Component {
 }
 
 ItemsForAdmin.propTypes = {
-  adminData: PropTypes.array,
-  addNewClock: PropTypes.func,
-  onDeleteClock: PropTypes.func,
-};
-
-ItemsForAdmin.defaultProps = {
-  addNewClock: () => {},
-  onDeleteClock: () => {},
-  adminData: [],
+  adminData: PropTypes.object.isRequired,
+  addNewClock: PropTypes.func.isRequired,
+  onDeleteClock: PropTypes.func.isRequired,
 };
 
 export default ItemsForAdmin;

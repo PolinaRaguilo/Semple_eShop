@@ -5,7 +5,7 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div className="loginBody">
-        <div className="container">
+        <div className="login-container">
           <div className="card card-container">
             <img
               id="profile-img"
@@ -19,22 +19,22 @@ class LoginForm extends React.Component {
                 type="text"
                 id="inputEmail"
                 className="form-control"
-                placeholder="Логин"
+                placeholder="Login"
                 required
               />
               <input
                 type="password"
                 id="inputPassword"
                 className="form-control"
-                placeholder="Пароль"
+                placeholder="Password"
                 required
               />
               <button className="btn btn-lg btn-primary btn-block btn-signin" type="submit">
-                Войти
+                Sign In
               </button>
             </form>
             <a href="#" className="signUp">
-              Зарегистрироваться
+              Don&#039;t have an account? Sign Up
             </a>
           </div>
         </div>
