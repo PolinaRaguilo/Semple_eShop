@@ -27,6 +27,11 @@ class Header extends Component {
                 About
               </a>
             </li>
+            <li className="nav-item">
+              <Link to="/admin" className="nav-link" href="#">
+                Admin
+              </Link>
+            </li>
           </ul>
         </div>
         <button type="button" className="btn btn-danger" onClick={this.props.toogle}>

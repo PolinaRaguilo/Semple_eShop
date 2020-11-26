@@ -1,19 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Header from '../Header/Header';
 import AdminPage from '../Views/AdminPage/AdminPage';
 import ItemsPage from '../Views/ItemsPage/ItemsPage';
 import LoginPage from '../Views/LoginPage/LoginPage';
 import RegistrationPage from '../Views/RegistrationPage/RegistrationPage';
 import UserPage from '../Views/UserPage/UserPage';
-
-const PrivateRoute = ({ component: Component, showAdmin, ...rest }) => (
-  <Route
-    {...rest}
-    render={props => (showAdmin === false ? <Component {...props} /> : <Redirect to="/admin" />)}
-  />
-);
 
 class App extends React.Component {
   maxId = 3;
@@ -73,10 +66,6 @@ class App extends React.Component {
   };
 
   deleteSomething = (stateS, id) => {
-    // const newData = this.state[stateS].filter(item => item.id !== id);
-    // this.setState({
-    //   [stateS]: newData,
-    // });
     this.setState(prevState => {
       const newData = prevState[stateS].filter(item => item.id !== id);
       return { [stateS]: newData };
@@ -108,20 +97,15 @@ class App extends React.Component {
         <BrowserRouter>
           <Header toogle={this.toogle} />
           <Switch>
-            {/* <Route
+            <Route
               exact
               path="/"
               render={() => <ItemsPage data={this.state} addRating={this.addRating} />}
-            /> */}
-            <PrivateRoute
-              exact
-              path="/"
-              showAdmin={this.state.showAdmin}
-              component={() => <ItemsPage data={this.state} addRating={this.addRating} />}
             />
 
-            <Route
+            <PrivateRoute
               path="/admin"
+              showAdmin={this.state.showAdmin}
               component={() => (
                 <AdminPage
                   adminData={this.state}
@@ -140,10 +124,5 @@ class App extends React.Component {
     );
   }
 }
-
-PrivateRoute.propTypes = {
-  component: PropTypes.func.isRequired,
-  showAdmin: PropTypes.bool.isRequired,
-};
 
 export default App;

@@ -5,19 +5,10 @@ import './OneItem.css';
 
 class OneItem extends React.Component {
   render() {
-    const {
-      id,
-      imageClock,
-      brandClock,
-      collection,
-      vendorCode,
-      price,
-      rating,
-      addRating,
-    } = this.props;
+    const { imageClock, brandClock, collection, vendorCode, price, rating, addRating } = this.props;
 
     return (
-      <div className="col-4" key={id}>
+      <div className="col-4">
         <div className=" product">
           <a href="#">
             <img src={imageClock} alt="" className="product-img" />
@@ -34,13 +25,9 @@ class OneItem extends React.Component {
               value={rating}
               defaultValue={0}
               precision={1}
-              onClick={value => {
+              onChange={value => {
                 addRating(value);
               }}
-              // onChange={newRateValue => {
-              //   this.setState({ rateValue: newRateValue });
-              //   console.log(this.state.rateValue);
-              // }}
             />
           </div>
           <button type="button" className="btn btn-primary">
@@ -53,7 +40,6 @@ class OneItem extends React.Component {
 }
 
 OneItem.propTypes = {
-  id: PropTypes.number.isRequired,
   imageClock: PropTypes.string.isRequired,
   brandClock: PropTypes.string.isRequired,
   collection: PropTypes.string.isRequired,
