@@ -53,14 +53,20 @@ class App extends React.Component {
     }));
   };
 
-  addRating = value => {
+  addRating = (value, id) => {
     this.setState(({ clocks }) => {
-      const newObj = {
-        ...clocks,
-        rating: value,
-      };
+      const newArr = clocks.map(item => {
+        if (item.id === id) {
+          return {
+            ...item,
+            rating: value,
+          };
+        }
+        return item;
+      });
+
       return {
-        clocks: newObj,
+        clocks: newArr,
       };
     });
   };
@@ -83,6 +89,7 @@ class App extends React.Component {
           collection,
           vendorCode,
           price,
+          rating: 0,
         },
       ];
       return {

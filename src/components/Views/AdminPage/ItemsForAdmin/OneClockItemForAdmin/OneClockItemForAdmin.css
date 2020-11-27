@@ -1,3 +1,7 @@
 .clock-img {
   height: 80px;
 }
+
+.fa-star:before {
+  color: gold;
+}

@@ -13,6 +13,7 @@ class ItemList extends React.Component {
       return (
         <OneItem
           key={id}
+          id={id}
           imageClock={imageClock}
           brandClock={brandClock}
           collection={collection}

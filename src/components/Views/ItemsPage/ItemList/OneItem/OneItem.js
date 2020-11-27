@@ -8,38 +8,36 @@ class OneItem extends React.Component {
     const { imageClock, brandClock, collection, vendorCode, price, rating, addRating } = this.props;
 
     return (
-      <div className="col-4">
-        <div className=" product">
-          <a href="#">
-            <img src={imageClock} alt="" className="product-img" />
-          </a>
-          <p className="product-title">
-            <a href="#">{brandClock}</a>
-          </p>
-          <p className="product-collection">Collection: {collection}</p>
-          <p className="product-vendor">Code: {vendorCode}</p>
-          <p className="product-price">Price: ${price}</p>
-          <div>
-            <Rating
-              name="simple-controlled"
-              value={rating}
-              defaultValue={0}
-              precision={1}
-              onChange={value => {
-                addRating(value);
-              }}
-            />
-          </div>
-          <button type="button" className="btn btn-primary">
-            Add to cart
-          </button>
+      <div className="col-4 product">
+        <a href="#">
+          <img src={imageClock} alt="" className="product-img" />
+        </a>
+        <p className="product-title">
+          <a href="#">{brandClock}</a>
+        </p>
+        <p className="product-collection">Collection: {collection}</p>
+        <p className="product-vendor">Code: {vendorCode}</p>
+        <p className="product-price">Price: ${price}</p>
+        <div>
+          <Rating
+            name={vendorCode}
+            defaultValue={rating}
+            precision={1}
+            onChange={newValue => {
+              addRating(newValue.target.defaultValue, this.props.id);
+            }}
+          />
         </div>
+        <button type="button" className="btn btn-primary">
+          Add to cart
+        </button>
       </div>
     );
   }
 }
 
 OneItem.propTypes = {
+  id: PropTypes.number.isRequired,
   imageClock: PropTypes.string.isRequired,
   brandClock: PropTypes.string.isRequired,
   collection: PropTypes.string.isRequired,

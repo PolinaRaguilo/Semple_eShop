@@ -9,7 +9,7 @@ class OneClockItemForAdmin extends React.Component {
   };
 
   render() {
-    const { id, imageClock, brandClock, collection, vendorCode, price } = this.props;
+    const { id, imageClock, brandClock, collection, vendorCode, price, rating } = this.props;
 
     return (
       <tr>
@@ -21,6 +21,10 @@ class OneClockItemForAdmin extends React.Component {
         <td>{collection}</td>
         <td>{vendorCode}</td>
         <td>${price}</td>
+        <td>
+          {rating}
+          <i className="fas fa-star" />
+        </td>
         <td>
           <button type="button" className="btn btn-primary" onClick={this.onDeleteClockHandler}>
             Delete
@@ -38,6 +42,7 @@ OneClockItemForAdmin.propTypes = {
   collection: PropTypes.string.isRequired,
   vendorCode: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
   onDeleteClock: PropTypes.func.isRequired,
 };
 
