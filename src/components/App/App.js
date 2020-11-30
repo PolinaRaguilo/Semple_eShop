@@ -7,6 +7,7 @@ import ItemsPage from '../Views/ItemsPage/ItemsPage';
 import LoginPage from '../Views/LoginPage/LoginPage';
 import RegistrationPage from '../Views/RegistrationPage/RegistrationPage';
 import UserPage from '../Views/UserPage/UserPage';
+import Cart from '../Cart/Cart';
 
 class App extends React.Component {
   maxId = 3;
@@ -38,6 +39,26 @@ class App extends React.Component {
         price: 1500,
         rating: 2,
       },
+      {
+        id: 3,
+        imageClock:
+          'https://cdn21vek.by/img/galleries/1009/136/preview_b/t0984073605200_tissot_5cda9f1025c3f.png',
+        brandClock: 'Tissot',
+        collection: 'T-Sport',
+        vendorCode: 'T098.407.36.052.00',
+        price: 1400,
+        rating: 1,
+      },
+      {
+        id: 4,
+        imageClock:
+          'https://cdn21vek.by/img/galleries/568/868/preview_b/t1166173605701_tissot_5baa150634c75.jpeg',
+        brandClock: 'Tissot',
+        collection: 'T-Sport',
+        vendorCode: 'T116.617.36.057.01',
+        price: 1800,
+        rating: 3,
+      },
     ],
     brands: [
       { id: 1, brand: 'Tissot' },
@@ -45,6 +66,15 @@ class App extends React.Component {
       { id: 3, brand: 'CASIO' },
     ],
     showAdmin: false,
+    openModal: false,
+  };
+
+  onOpenModal = () => {
+    this.setState({ openModal: true });
+  };
+
+  onCloseModal = () => {
+    this.setState({ openModal: false });
   };
 
   toogle = () => {
@@ -102,7 +132,18 @@ class App extends React.Component {
     return (
       <>
         <BrowserRouter>
-          <Header toogle={this.toogle} />
+          <Header
+            toogle={this.toogle}
+            onOpenModal={this.onOpenModal}
+            onCloseModal={this.onCloseModal}
+            isOpen={this.state.openModal}
+          />
+          <Route
+            component={() => (
+              <Cart onCloseModal={this.onCloseModal} isOpen={this.state.openModal} />
+            )}
+          />
+
           <Switch>
             <Route
               exact

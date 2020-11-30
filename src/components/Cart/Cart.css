@@ -1,0 +1,30 @@
+.show {
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.modal {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.close:focus {
+  outline: none;
+}
+
+.total-title {
+  margin-right: 10px !important;
+}
+
+.clock-cart {
+  width: 80px;
+}
+
+.table-light td:not(:nth-child(1)) {
+  vertical-align: middle;
+}
+
+.fa-trash-alt:before {
+  font-size: 25px;
+}

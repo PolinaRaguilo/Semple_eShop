@@ -6,14 +6,14 @@ img {
 .product {
   background: #fff none repeat scroll 0 0;
   border: 1px solid #c0c0c0;
-  width: 265px !important;
+  max-width: 265px;
   overflow: hidden;
   padding: 25px 15px;
   position: relative;
   text-align: center;
   transition: all 0.5s ease 0s;
   margin-bottom: 20px;
-  margin-left: 7px;
+  margin-left: 40px;
 }
 
 .product:hover {

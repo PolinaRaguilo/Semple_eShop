@@ -1,36 +1,50 @@
-
-.navbar-brand{
+.navbar-brand {
   text-transform: none;
   font-size: 20px;
   margin-left: 20px;
 }
-.icons-wrapper{
+.icons-wrapper {
   width: 11%;
 }
 
-.fa-user-circle{
+.fa-user-circle {
   font-size: 30px;
   margin-right: 25px;
 }
 
-.fa-shopping-cart{
+.fa-shopping-cart {
   font-size: 28px;
   margin-right: 15px;
 }
 
-.fa-sign-out-alt{
+.fa-sign-out-alt {
   font-size: 30px;
   margin-left: 12px;
 }
 
-.fa-user-circle::before, .fa-shopping-cart::before, .fa-sign-out-alt::before{
+.fa-user-circle::before,
+.fa-shopping-cart::before,
+.fa-sign-out-alt::before {
   color: white;
 }
 
-.nav-menu-wrapper{
+.nav-menu-wrapper {
   width: 100px;
   display: flex;
   justify-content: space-around;
   border-collapse: collapse;
 }
+.link-user {
+  cursor: pointer;
+}
+.btn-cart {
+  outline: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
 
+.btn-cart:focus {
+  outline: none;
+  border: none;
+}

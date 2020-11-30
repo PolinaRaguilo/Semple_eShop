@@ -38,11 +38,12 @@ class Header extends Component {
           Переключить
         </button>
         <div className="icons-wrapper">
-          <Link to="/user">
+          <Link to="/user" className="link-user">
             <i className="far fa-user-circle" />
           </Link>
-
-          <i className="cart-icon fa fa-shopping-cart" />
+          <button type="button" className="btn-cart" onClick={this.props.onOpenModal}>
+            <i className="cart-icon fa fa-shopping-cart" />
+          </button>
           <i className="fas fa-sign-out-alt" />
         </div>
       </nav>
@@ -52,6 +53,7 @@ class Header extends Component {
 
 Header.propTypes = {
   toogle: PropTypes.func.isRequired,
+  onOpenModal: PropTypes.func.isRequired,
 };
 
 export default Header;
