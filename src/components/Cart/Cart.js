@@ -1,10 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Cart.css';
+import OneItemCart from './OneItemCart/OneItemCart';
 
 class Cart extends React.Component {
   render() {
-    if (this.props.isOpen === true) {
+    const { onCloseModal, isOpen, cartItems, total } = this.props;
+    const clocksForCart = cartItems.map(item => {
+      const { imageClock, brandClock, vendorCode, price } = item;
+      return (
+        <OneItemCart
+          imageClock={imageClock}
+          brandClock={brandClock}
+          vendorCode={vendorCode}
+          price={price}
+        />
+      );
+    });
+    if (isOpen === true) {
       return (
         <div className="modal show">
           <div className="modal-dialog modal-dialog-centered" role="document">
@@ -16,39 +29,23 @@ class Cart extends React.Component {
                   className="close"
                   data-dismiss="modal"
                   aria-label="Close"
-                  onClick={this.props.onCloseModal}
+                  onClick={onCloseModal}
                 >
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div className="modal-body">
                 <table className="table table-hover">
-                  <tbody>
-                    <tr className="table-light">
-                      <td>
-                        <img
-                          src="https://cdn21vek.by/img/galleries/1009/136/preview_b/t0984073605200_tissot_5cda9f1025c3f.png"
-                          alt="cart-clock"
-                          className="clock-cart"
-                        />
-                      </td>
-                      <td>Tissot</td>
-                      <td>T098.407.36.052.00</td>
-                      <td>1500$</td>
-                      <td>
-                        <i className="far fa-trash-alt" />
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody>{clocksForCart}</tbody>
                 </table>
               </div>
               <div className="modal-footer">
-                <p className="total-title">Total: 452$</p>
+                <p className="total-title">Total: {total}$</p>
                 <button
                   type="button"
                   className="btn btn-primary"
                   data-dismiss="modal"
-                  onClick={this.props.onCloseModal}
+                  onClick={onCloseModal}
                 >
                   Close
                 </button>
@@ -65,6 +62,8 @@ class Cart extends React.Component {
 Cart.propTypes = {
   onCloseModal: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  cartItems: PropTypes.array.isRequired,
+  total: PropTypes.number.isRequired,
 };
 
 export default Cart;

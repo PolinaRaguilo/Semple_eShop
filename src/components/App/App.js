@@ -67,6 +67,8 @@ class App extends React.Component {
     ],
     showAdmin: false,
     openModal: false,
+    total: 0,
+    cartItems: [],
   };
 
   onOpenModal = () => {
@@ -75,6 +77,31 @@ class App extends React.Component {
 
   onCloseModal = () => {
     this.setState({ openModal: false });
+  };
+
+  onAddedToCart = id => {
+    const clock = this.state.clocks.find(item => item.id === id);
+    const { imageClock, brandClock, vendorCode, price } = clock;
+    // const clockForCart = {
+    //   imageClock: clock.imageClock,
+    //   brandClock: clock.brandClock,
+    //   vendorCode: clock.vendorCode,
+    //   price: clock.price,
+    // };
+    this.setState(({ cartItems }) => {
+      const newClockArr = [
+        ...cartItems,
+        {
+          imageClock,
+          brandClock,
+          vendorCode,
+          price,
+        },
+      ];
+      return {
+        cartItems: newClockArr,
+      };
+    });
   };
 
   toogle = () => {
@@ -140,7 +167,12 @@ class App extends React.Component {
           />
           <Route
             component={() => (
-              <Cart onCloseModal={this.onCloseModal} isOpen={this.state.openModal} />
+              <Cart
+                onCloseModal={this.onCloseModal}
+                isOpen={this.state.openModal}
+                cartItems={this.state.cartItems}
+                total={this.state.total}
+              />
             )}
           />
 
@@ -148,7 +180,13 @@ class App extends React.Component {
             <Route
               exact
               path="/"
-              render={() => <ItemsPage data={this.state} addRating={this.addRating} />}
+              render={() => (
+                <ItemsPage
+                  data={this.state}
+                  addRating={this.addRating}
+                  onAddedToCart={this.onAddedToCart}
+                />
+              )}
             />
 
             <PrivateRoute

@@ -6,7 +6,7 @@ import OneItem from './OneItem/OneItem';
 
 class ItemList extends React.Component {
   render() {
-    const { dataClocks, brands, addRating } = this.props;
+    const { dataClocks, brands, addRating, onAddedToCart } = this.props;
     const clockItems = dataClocks.map(item => {
       const { id, imageClock, brandClock, collection, vendorCode, price, rating } = item;
 
@@ -21,6 +21,7 @@ class ItemList extends React.Component {
           price={price}
           rating={rating}
           addRating={addRating}
+          onAddedToCart={onAddedToCart}
         />
       );
     });
@@ -58,6 +59,7 @@ ItemList.propTypes = {
   dataClocks: PropTypes.array.isRequired,
   brands: PropTypes.array.isRequired,
   addRating: PropTypes.func.isRequired,
+  onAddedToCart: PropTypes.func.isRequired,
 };
 
 export default ItemList;

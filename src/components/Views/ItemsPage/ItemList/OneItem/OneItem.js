@@ -4,8 +4,21 @@ import PropTypes from 'prop-types';
 import './OneItem.css';
 
 class OneItem extends React.Component {
+  onAddedToCartHandler = () => {
+    this.props.onAddedToCart(this.props.id);
+  };
+
   render() {
-    const { imageClock, brandClock, collection, vendorCode, price, rating, addRating } = this.props;
+    const {
+      id,
+      imageClock,
+      brandClock,
+      collection,
+      vendorCode,
+      price,
+      rating,
+      addRating,
+    } = this.props;
 
     return (
       <div className="col-4 product">
@@ -24,11 +37,11 @@ class OneItem extends React.Component {
             defaultValue={rating}
             precision={1}
             onChange={newValue => {
-              addRating(newValue.target.defaultValue, this.props.id);
+              addRating(newValue.target.defaultValue, id);
             }}
           />
         </div>
-        <button type="button" className="btn btn-primary">
+        <button type="button" className="btn btn-primary" onClick={this.onAddedToCartHandler}>
           Add to cart
         </button>
       </div>
@@ -45,6 +58,7 @@ OneItem.propTypes = {
   price: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
   addRating: PropTypes.func.isRequired,
+  onAddedToCart: PropTypes.func.isRequired,
 };
 
 export default OneItem;
