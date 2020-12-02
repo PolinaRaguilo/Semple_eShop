@@ -5,18 +5,28 @@ import OneItemCart from './OneItemCart/OneItemCart';
 
 class Cart extends React.Component {
   render() {
-    const { onCloseModal, isOpen, cartItems, total } = this.props;
+    const { onCloseModal, isOpen, cartItems, total, deleteItemsCart } = this.props;
     const clocksForCart = cartItems.map(item => {
-      const { imageClock, brandClock, vendorCode, price } = item;
+      const { id, imageClock, brandClock, vendorCode, price } = item;
       return (
-        <OneItemCart
-          imageClock={imageClock}
-          brandClock={brandClock}
-          vendorCode={vendorCode}
-          price={price}
-        />
+        <table className="table table-hover">
+          <tbody>
+            <OneItemCart
+              id={id}
+              imageClock={imageClock}
+              brandClock={brandClock}
+              vendorCode={vendorCode}
+              price={price}
+              deleteItemsCart={deleteItemsCart}
+            />
+          </tbody>
+        </table>
       );
     });
+    const totalPrice = cartItems.reduce((summa, item) => {
+      return summa + total + item.price;
+    }, 0);
+
     if (isOpen === true) {
       return (
         <div className="modal show">
@@ -35,12 +45,17 @@ class Cart extends React.Component {
                 </button>
               </div>
               <div className="modal-body">
-                <table className="table table-hover">
-                  <tbody>{clocksForCart}</tbody>
-                </table>
+                {cartItems.length === 0 ? (
+                  <div className="empty-cart-wrapper">
+                    <i className="fas fa-shopping-cart i-cart" />
+                    <p className="empty">Your cart is empty</p>
+                  </div>
+                ) : (
+                  clocksForCart
+                )}
               </div>
               <div className="modal-footer">
-                <p className="total-title">Total: {total}$</p>
+                <p className="total-title">Total: {totalPrice}$</p>
                 <button
                   type="button"
                   className="btn btn-primary"
@@ -64,6 +79,7 @@ Cart.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   cartItems: PropTypes.array.isRequired,
   total: PropTypes.number.isRequired,
+  deleteItemsCart: PropTypes.func.isRequired,
 };
 
 export default Cart;

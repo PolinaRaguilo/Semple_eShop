@@ -28,3 +28,16 @@
 .fa-trash-alt:before {
   font-size: 25px;
 }
+.empty-cart-wrapper {
+  padding-top: 10px;
+  text-align: center;
+}
+
+.empty {
+  font-weight: 700;
+  font-size: 20px;
+  color: #9ca0a8;
+}
+.i-cart::before {
+  color: #eb6864b5;
+}

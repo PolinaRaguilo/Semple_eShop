@@ -79,19 +79,14 @@ class App extends React.Component {
     this.setState({ openModal: false });
   };
 
-  onAddedToCart = id => {
-    const clock = this.state.clocks.find(item => item.id === id);
-    const { imageClock, brandClock, vendorCode, price } = clock;
-    // const clockForCart = {
-    //   imageClock: clock.imageClock,
-    //   brandClock: clock.brandClock,
-    //   vendorCode: clock.vendorCode,
-    //   price: clock.price,
-    // };
+  onAddedToCart = idClock => {
+    const clock = this.state.clocks.find(item => item.id === idClock);
+    const { id, imageClock, brandClock, vendorCode, price } = clock;
     this.setState(({ cartItems }) => {
       const newClockArr = [
         ...cartItems,
         {
+          id,
           imageClock,
           brandClock,
           vendorCode,
@@ -172,6 +167,7 @@ class App extends React.Component {
                 isOpen={this.state.openModal}
                 cartItems={this.state.cartItems}
                 total={this.state.total}
+                deleteItemsCart={this.deleteSomething}
               />
             )}
           />
