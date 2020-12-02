@@ -41,8 +41,15 @@ class OneItem extends React.Component {
             }}
           />
         </div>
-        <button type="button" className="btn btn-primary" onClick={this.onAddedToCartHandler}>
-          Add to cart
+        <button
+          type="button"
+          className="btn btn-primary add-cart"
+          onClick={this.onAddedToCartHandler}
+        >
+          <span className="beforeClick">Add to cart</span>
+          <span className="afterClick">
+            Added <i className="fas fa-check" />
+          </span>
         </button>
       </div>
     );

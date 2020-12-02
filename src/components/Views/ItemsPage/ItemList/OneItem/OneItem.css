@@ -55,3 +55,23 @@ img {
   font-size: 18px;
   font-weight: 500;
 }
+
+.add-cart .afterClick {
+  display: none;
+}
+
+.add-cart:focus .beforeClick {
+  display: none;
+}
+
+.add-cart:focus .afterClick {
+  display: block;
+  color: #dc3545;
+}
+
+.btn-primary:focus {
+  background-color: #ffedaf;
+  border: none;
+  outline: none;
+}
+
