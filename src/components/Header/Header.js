@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import './Header.css';
 import { Link } from 'react-router-dom';
+import { onOpenModal } from '../../redux/actions/modalActions';
 
 class Header extends Component {
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-        <Link to="/" className="navbar-brand">
+        <Link to="/items" className="navbar-brand">
           eShop
         </Link>
         <div className=" navbar-collapse  nav-menu-wrapper">
@@ -51,9 +53,15 @@ class Header extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onOpenModal: () => dispatch(onOpenModal()),
+  };
+};
+
 Header.propTypes = {
   toogle: PropTypes.func.isRequired,
   onOpenModal: PropTypes.func.isRequired,
 };
 
-export default Header;
+export default connect(null, mapDispatchToProps)(Header);

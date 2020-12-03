@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import './ItemList.css';
 import OneItem from './OneItem/OneItem';
@@ -55,6 +56,13 @@ class ItemList extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    dataClocks: state.clocksReducer,
+    brands: state.brandsReducer,
+  };
+};
+
 ItemList.propTypes = {
   dataClocks: PropTypes.array.isRequired,
   brands: PropTypes.array.isRequired,
@@ -62,4 +70,4 @@ ItemList.propTypes = {
   onAddedToCart: PropTypes.func.isRequired,
 };
 
-export default ItemList;
+export default connect(mapStateToProps, null)(ItemList);

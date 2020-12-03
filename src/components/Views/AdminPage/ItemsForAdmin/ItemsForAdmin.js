@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import OneClockItemForAdmin from './OneClockItemForAdmin/OneClockItemForAdmin';
 
 import './ItemsForAdmin.css';
+import { addNewClock } from '../../../../redux/actions/clocksActions';
 
 class ItemsForAdmin extends React.Component {
   state = {};
@@ -22,9 +24,9 @@ class ItemsForAdmin extends React.Component {
   };
 
   render() {
-    const { adminData, onDeleteClock } = this.props;
+    const { clocks, onDeleteClock } = this.props;
 
-    const clocksItems = adminData.clocks.map(item => {
+    const clocksItems = clocks.map(item => {
       const { id, imageClock, brandClock, collection, vendorCode, price, rating } = item;
       return (
         <OneClockItemForAdmin
@@ -128,10 +130,23 @@ class ItemsForAdmin extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    clocks: state.clocksReducer,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addNewClock: (imageClock, brandClock, collection, vendorCode, price) =>
+      dispatch(addNewClock(imageClock, brandClock, collection, vendorCode, price)),
+  };
+};
+
 ItemsForAdmin.propTypes = {
-  adminData: PropTypes.object.isRequired,
+  clocks: PropTypes.object.isRequired,
   addNewClock: PropTypes.func.isRequired,
   onDeleteClock: PropTypes.func.isRequired,
 };
 
-export default ItemsForAdmin;
+export default connect(mapStateToProps, mapDispatchToProps)(ItemsForAdmin);

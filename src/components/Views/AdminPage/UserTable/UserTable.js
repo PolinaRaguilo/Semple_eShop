@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import UserItem from './UserItem/UserItem';
 
 import './UserTable.css';
@@ -34,9 +35,15 @@ const UserTable = ({ usersData, onDeleteUser }) => {
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    usersData: state.usersReducer,
+  };
+};
+
 UserTable.propTypes = {
   usersData: PropTypes.array.isRequired,
   onDeleteUser: PropTypes.func.isRequired,
 };
 
-export default UserTable;
+export default connect(mapStateToProps, null)(UserTable);

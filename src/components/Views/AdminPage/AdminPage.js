@@ -15,24 +15,21 @@ class AdminPage extends React.Component {
   };
 
   render() {
-    const { adminData } = this.props;
     return (
       <>
         <SearchAdminForm />
         <Switch>
           <Route
             path="/admin/userTable"
-            render={() => <UserTable usersData={adminData.users} onDeleteUser={this.deleteUser} />}
+            render={() => <UserTable onDeleteUser={this.deleteUser} />}
           />
 
           <Route
             path="/admin/itemsTable"
             render={() => (
               <ItemsForAdmin
-                adminData={adminData}
                 onDeleteClock={this.deleteClock}
                 onInputChange={this.props.onInputChange}
-                addNewClock={this.props.addNewClock}
               />
             )}
           />
@@ -44,9 +41,7 @@ class AdminPage extends React.Component {
 
 AdminPage.propTypes = {
   deleteSomething: PropTypes.func.isRequired,
-  adminData: PropTypes.object.isRequired,
   onInputChange: PropTypes.func.isRequired,
-  addNewClock: PropTypes.func.isRequired,
 };
 
 export default AdminPage;

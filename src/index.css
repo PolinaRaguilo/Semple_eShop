@@ -1,3 +1,5 @@
 body {
   background: #ececec;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

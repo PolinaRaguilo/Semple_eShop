@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import './Cart.css';
+
 import OneItemCart from './OneItemCart/OneItemCart';
+import { onCloseModal } from '../../redux/actions/modalActions';
 
 class Cart extends React.Component {
   render() {
-    const { onCloseModal, isOpen, cartItems, total, deleteItemsCart } = this.props;
+    const { isOpen, cartItems, total, deleteItemsCart } = this.props;
     const clocksForCart = cartItems.map(item => {
       const { id, imageClock, brandClock, vendorCode, price } = item;
       return (
@@ -39,7 +42,7 @@ class Cart extends React.Component {
                   className="close"
                   data-dismiss="modal"
                   aria-label="Close"
-                  onClick={onCloseModal}
+                  onClick={this.props.onCloseModal}
                 >
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -60,7 +63,7 @@ class Cart extends React.Component {
                   type="button"
                   className="btn btn-primary"
                   data-dismiss="modal"
-                  onClick={onCloseModal}
+                  onClick={this.props.onCloseModal}
                 >
                   Close
                 </button>
@@ -74,6 +77,18 @@ class Cart extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    isOpen: state.modalReducer.openModal,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onCloseModal: () => dispatch(onCloseModal()),
+  };
+};
+
 Cart.propTypes = {
   onCloseModal: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
@@ -82,4 +97,4 @@ Cart.propTypes = {
   deleteItemsCart: PropTypes.func.isRequired,
 };
 
-export default Cart;
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

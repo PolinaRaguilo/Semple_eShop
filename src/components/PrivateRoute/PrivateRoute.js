@@ -3,7 +3,10 @@ import { Redirect, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const PrivateRoute = ({ component: Component, showAdmin, ...rest }) => (
-  <Route {...rest} render={props => (showAdmin ? <Component {...props} /> : <Redirect to="/" />)} />
+  <Route
+    {...rest}
+    render={props => (showAdmin ? <Component {...props} /> : <Redirect to="/items" />)}
+  />
 );
 
 PrivateRoute.propTypes = {

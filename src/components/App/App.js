@@ -10,73 +10,10 @@ import UserPage from '../Views/UserPage/UserPage';
 import Cart from '../Cart/Cart';
 
 class App extends React.Component {
-  maxId = 3;
-
   state = {
-    users: [
-      { id: 1, firstName: 'Иван', lastName: 'Иванов', email: 'iv2020@mail.ru' },
-      { id: 2, firstName: 'Петр', lastName: 'Петров', email: 'pp2020@mail.ru' },
-      { id: 3, firstName: 'Влад', lastName: 'Сидоров', email: 'vl2020@mail.ru' },
-    ],
-    clocks: [
-      {
-        id: 1,
-        imageClock:
-          'https://cdn21vek.by/img/galleries/107/446/preview_b/t0554171105700_tissot_560d1af9300af.jpeg',
-        brandClock: 'Tissot',
-        collection: 'T-Sport',
-        vendorCode: 'T055.417.11.057.00',
-        price: 1000,
-        rating: 0,
-      },
-      {
-        id: 2,
-        imageClock:
-          'https://cdn21vek.by/img/galleries/781/468/preview_b/t1014172306100_tissot_5bffb202e2065.png',
-        brandClock: 'Tissot',
-        collection: 'T-Classic',
-        vendorCode: 'T101.417.23.061.00',
-        price: 1500,
-        rating: 2,
-      },
-      {
-        id: 3,
-        imageClock:
-          'https://cdn21vek.by/img/galleries/1009/136/preview_b/t0984073605200_tissot_5cda9f1025c3f.png',
-        brandClock: 'Tissot',
-        collection: 'T-Sport',
-        vendorCode: 'T098.407.36.052.00',
-        price: 1400,
-        rating: 1,
-      },
-      {
-        id: 4,
-        imageClock:
-          'https://cdn21vek.by/img/galleries/568/868/preview_b/t1166173605701_tissot_5baa150634c75.jpeg',
-        brandClock: 'Tissot',
-        collection: 'T-Sport',
-        vendorCode: 'T116.617.36.057.01',
-        price: 1800,
-        rating: 3,
-      },
-    ],
-    brands: [
-      { id: 1, brand: 'Tissot' },
-      { id: 2, brand: 'MK' },
-      { id: 3, brand: 'CASIO' },
-    ],
     showAdmin: false,
-    openModal: false,
     total: 0,
     cartItems: [],
-  };
-
-  onOpenModal = () => {
-    this.setState({ openModal: true });
-  };
-
-  onCloseModal = () => {
-    this.setState({ openModal: false });
   };
 
   onAddedToCart = idClock => {
@@ -130,41 +67,14 @@ class App extends React.Component {
     });
   };
 
-  addNewClock = (imageClock, brandClock, collection, vendorCode, price) => {
-    this.setState(({ clocks }) => {
-      const newArr = [
-        ...clocks,
-        {
-          id: ++this.maxId,
-          imageClock,
-          brandClock,
-          collection,
-          vendorCode,
-          price,
-          rating: 0,
-        },
-      ];
-      return {
-        clocks: newArr,
-      };
-    });
-  };
-
   render() {
     return (
       <>
         <BrowserRouter>
-          <Header
-            toogle={this.toogle}
-            onOpenModal={this.onOpenModal}
-            onCloseModal={this.onCloseModal}
-            isOpen={this.state.openModal}
-          />
+          <Header toogle={this.toogle} />
           <Route
             component={() => (
               <Cart
-                onCloseModal={this.onCloseModal}
-                isOpen={this.state.openModal}
                 cartItems={this.state.cartItems}
                 total={this.state.total}
                 deleteItemsCart={this.deleteSomething}
@@ -175,26 +85,16 @@ class App extends React.Component {
           <Switch>
             <Route
               exact
-              path="/"
+              path="/items"
               render={() => (
-                <ItemsPage
-                  data={this.state}
-                  addRating={this.addRating}
-                  onAddedToCart={this.onAddedToCart}
-                />
+                <ItemsPage addRating={this.addRating} onAddedToCart={this.onAddedToCart} />
               )}
             />
 
             <PrivateRoute
               path="/admin"
               showAdmin={this.state.showAdmin}
-              component={() => (
-                <AdminPage
-                  adminData={this.state}
-                  deleteSomething={this.deleteSomething}
-                  addNewClock={this.addNewClock}
-                />
-              )}
+              component={() => <AdminPage deleteSomething={this.deleteSomething} />}
             />
             <Route exact path="/user" component={UserPage} />
             <Route exact path="/login" component={LoginPage} />
