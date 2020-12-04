@@ -20,24 +20,6 @@ class App extends React.Component {
     }));
   };
 
-  addRating = (value, id) => {
-    this.setState(({ clocks }) => {
-      const newArr = clocks.map(item => {
-        if (item.id === id) {
-          return {
-            ...item,
-            rating: value,
-          };
-        }
-        return item;
-      });
-
-      return {
-        clocks: newArr,
-      };
-    });
-  };
-
   deleteSomething = (stateS, id) => {
     this.setState(prevState => {
       const newData = prevState[stateS].filter(item => item.id !== id);
@@ -53,7 +35,7 @@ class App extends React.Component {
           <Route component={() => <Cart deleteItemsCart={this.deleteSomething} />} />
 
           <Switch>
-            <Route exact path="/items" render={() => <ItemsPage addRating={this.addRating} />} />
+            <Route exact path="/items" component={ItemsPage} />
 
             <PrivateRoute
               path="/admin"

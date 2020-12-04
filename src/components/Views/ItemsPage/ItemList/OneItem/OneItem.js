@@ -1,6 +1,8 @@
 import React from 'react';
 import { Rating } from '@material-ui/lab';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { addRating } from '../../../../../redux/actions/clocksActions';
 import './OneItem.css';
 
 class OneItem extends React.Component {
@@ -9,16 +11,7 @@ class OneItem extends React.Component {
   };
 
   render() {
-    const {
-      id,
-      imageClock,
-      brandClock,
-      collection,
-      vendorCode,
-      price,
-      rating,
-      addRating,
-    } = this.props;
+    const { id, imageClock, brandClock, collection, vendorCode, price, rating } = this.props;
 
     return (
       <div className="col-4 product">
@@ -37,7 +30,7 @@ class OneItem extends React.Component {
             defaultValue={rating}
             precision={1}
             onChange={newValue => {
-              addRating(newValue.target.defaultValue, id);
+              this.props.addRating(newValue.target.defaultValue, id);
             }}
           />
         </div>
@@ -68,4 +61,10 @@ OneItem.propTypes = {
   onAddedToCart: PropTypes.func.isRequired,
 };
 
-export default OneItem;
+const mapDispatchToProps = dispatch => {
+  return {
+    addRating: (value, id) => dispatch(addRating(value, id)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(OneItem);

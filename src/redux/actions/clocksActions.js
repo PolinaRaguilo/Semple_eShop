@@ -11,3 +11,11 @@ export const addNewClock = (imageClock, brandClock, collection, vendorCode, pric
     price,
   };
 };
+
+export const addRating = (value, id) => {
+  return {
+    type: 'ADD_RATING',
+    value,
+    id,
+  };
+};

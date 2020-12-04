@@ -56,6 +56,19 @@ const clocksReducer = (state = clocks, action) => {
           rating: 0,
         },
       ];
+    case 'ADD_RATING':
+      return [
+        ...state.map(item => {
+          if (item.id === action.id) {
+            return {
+              ...item,
+              rating: action.value,
+            };
+          }
+          return item;
+        }),
+      ];
+
     default:
       return state;
   }
