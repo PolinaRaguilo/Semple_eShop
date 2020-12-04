@@ -1,13 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import { addToCart } from '../../../../redux/actions/cartActions';
 import './ItemList.css';
 import OneItem from './OneItem/OneItem';
 
 class ItemList extends React.Component {
+  AddToCart = idClock => {
+    const clock = this.props.dataClocks.find(item => item.id === idClock);
+    const { id, imageClock, brandClock, vendorCode, price } = clock;
+    this.props.onAddToCart(id, imageClock, brandClock, vendorCode, price);
+  };
+
   render() {
-    const { dataClocks, brands, addRating, onAddedToCart } = this.props;
+    const { dataClocks, brands, addRating } = this.props;
     const clockItems = dataClocks.map(item => {
       const { id, imageClock, brandClock, collection, vendorCode, price, rating } = item;
 
@@ -22,7 +28,7 @@ class ItemList extends React.Component {
           price={price}
           rating={rating}
           addRating={addRating}
-          onAddedToCart={onAddedToCart}
+          onAddedToCart={this.AddToCart}
         />
       );
     });
@@ -63,11 +69,18 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddToCart: (id, imageClock, brandClock, vendorCode, price) =>
+      dispatch(addToCart(id, imageClock, brandClock, vendorCode, price)),
+  };
+};
+
 ItemList.propTypes = {
   dataClocks: PropTypes.array.isRequired,
   brands: PropTypes.array.isRequired,
   addRating: PropTypes.func.isRequired,
-  onAddedToCart: PropTypes.func.isRequired,
+  onAddToCart: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, null)(ItemList);
+export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

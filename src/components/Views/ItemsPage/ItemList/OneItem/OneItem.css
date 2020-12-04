@@ -69,7 +69,7 @@ img {
   color: #dc3545;
 }
 
-.add-cart .btn-primary:focus {
+.add-cart:focus {
   background-color: #ffedaf;
   border: none;
   outline: none;

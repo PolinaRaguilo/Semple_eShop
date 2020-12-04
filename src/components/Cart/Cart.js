@@ -80,6 +80,8 @@ class Cart extends React.Component {
 const mapStateToProps = state => {
   return {
     isOpen: state.modalReducer.openModal,
+    cartItems: state.cartReducer.cartItems,
+    total: state.cartReducer.total,
   };
 };
 

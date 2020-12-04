@@ -4,14 +4,13 @@ import ItemList from './ItemList/ItemList';
 
 class ItemsPage extends React.Component {
   render() {
-    const { addRating, onAddedToCart } = this.props;
-    return <ItemList addRating={addRating} onAddedToCart={onAddedToCart} />;
+    const { addRating } = this.props;
+    return <ItemList addRating={addRating} />;
   }
 }
 
 ItemsPage.propTypes = {
   addRating: PropTypes.func.isRequired,
-  onAddedToCart: PropTypes.func.isRequired,
 };
 
 export default ItemsPage;

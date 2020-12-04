@@ -12,28 +12,6 @@ import Cart from '../Cart/Cart';
 class App extends React.Component {
   state = {
     showAdmin: false,
-    total: 0,
-    cartItems: [],
-  };
-
-  onAddedToCart = idClock => {
-    const clock = this.state.clocks.find(item => item.id === idClock);
-    const { id, imageClock, brandClock, vendorCode, price } = clock;
-    this.setState(({ cartItems }) => {
-      const newClockArr = [
-        ...cartItems,
-        {
-          id,
-          imageClock,
-          brandClock,
-          vendorCode,
-          price,
-        },
-      ];
-      return {
-        cartItems: newClockArr,
-      };
-    });
   };
 
   toogle = () => {
@@ -72,24 +50,10 @@ class App extends React.Component {
       <>
         <BrowserRouter>
           <Header toogle={this.toogle} />
-          <Route
-            component={() => (
-              <Cart
-                cartItems={this.state.cartItems}
-                total={this.state.total}
-                deleteItemsCart={this.deleteSomething}
-              />
-            )}
-          />
+          <Route component={() => <Cart deleteItemsCart={this.deleteSomething} />} />
 
           <Switch>
-            <Route
-              exact
-              path="/items"
-              render={() => (
-                <ItemsPage addRating={this.addRating} onAddedToCart={this.onAddedToCart} />
-              )}
-            />
+            <Route exact path="/items" render={() => <ItemsPage addRating={this.addRating} />} />
 
             <PrivateRoute
               path="/admin"
