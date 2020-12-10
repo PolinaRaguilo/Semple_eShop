@@ -1,16 +1,4 @@
-/* eslint-disable */
-
-export const fetchUsers = () => async dispatch => {
-  dispatch(requestUsers());
-  try {
-    const response = await fetch('/users.json');
-    const users = await response.json();
-    console.log(users);
-    dispatch(receiveUsers(users));
-  } catch (error) {
-    dispatch(failLoadUsers(error));
-  }
-};
+import Axios from 'axios';
 
 const receiveUsers = users => {
   return {
@@ -30,6 +18,17 @@ const failLoadUsers = error => {
     type: 'USERS/FAIL_LOAD',
     error,
   };
+};
+
+export const fetchUsers = () => async dispatch => {
+  dispatch(requestUsers());
+  try {
+    const response = await Axios.get('/users.json');
+    const users = await response.json();
+    dispatch(receiveUsers(users));
+  } catch (error) {
+    dispatch(failLoadUsers(error));
+  }
 };
 
 export const deleteUser = id => {
