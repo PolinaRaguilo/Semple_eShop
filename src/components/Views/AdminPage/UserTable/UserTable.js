@@ -28,7 +28,7 @@ const UserTable = ({ usersData }) => {
 
 const mapStateToProps = state => {
   return {
-    usersData: state.usersReducer,
+    usersData: state.usersReducer.usersAdmin,
   };
 };
 
