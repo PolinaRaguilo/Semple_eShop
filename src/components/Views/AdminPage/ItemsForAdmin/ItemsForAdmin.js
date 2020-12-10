@@ -24,7 +24,7 @@ class ItemsForAdmin extends React.Component {
   };
 
   render() {
-    const { clocks, onDeleteClock } = this.props;
+    const { clocks } = this.props;
 
     const clocksItems = clocks.map(item => {
       const { id, imageClock, brandClock, collection, vendorCode, price, rating } = item;
@@ -38,7 +38,6 @@ class ItemsForAdmin extends React.Component {
           vendorCode={vendorCode}
           price={price}
           rating={rating}
-          onDeleteClock={onDeleteClock}
         />
       );
     });
@@ -146,7 +145,6 @@ const mapDispatchToProps = dispatch => {
 ItemsForAdmin.propTypes = {
   clocks: PropTypes.object.isRequired,
   addNewClock: PropTypes.func.isRequired,
-  onDeleteClock: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemsForAdmin);

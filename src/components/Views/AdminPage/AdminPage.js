@@ -6,32 +6,24 @@ import SearchAdminForm from './SearchAdminForm/SearchAdminForm';
 import UserTable from './UserTable/UserTable';
 
 class AdminPage extends React.Component {
-  deleteUser = id => {
-    this.props.deleteSomething('users', id);
-  };
+  // deleteUser = id => {
+  //   this.props.deleteSomething('users', id);
+  // };
 
-  deleteClock = id => {
-    this.props.deleteSomething('clocks', id);
-  };
+  // deleteClock = id => {
+  //   this.props.deleteSomething('clocks', id);
+  // };
 
   render() {
     return (
       <>
         <SearchAdminForm />
         <Switch>
-          <Route
-            path="/admin/userTable"
-            render={() => <UserTable onDeleteUser={this.deleteUser} />}
-          />
+          <Route path="/admin/userTable" component={UserTable} />
 
           <Route
             path="/admin/itemsTable"
-            render={() => (
-              <ItemsForAdmin
-                onDeleteClock={this.deleteClock}
-                onInputChange={this.props.onInputChange}
-              />
-            )}
+            render={() => <ItemsForAdmin onInputChange={this.props.onInputChange} />}
           />
         </Switch>
       </>
@@ -40,7 +32,6 @@ class AdminPage extends React.Component {
 }
 
 AdminPage.propTypes = {
-  deleteSomething: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
 };
 

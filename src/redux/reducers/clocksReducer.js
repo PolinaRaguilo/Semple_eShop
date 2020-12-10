@@ -68,6 +68,8 @@ const clocksReducer = (state = clocks, action) => {
           return item;
         }),
       ];
+    case 'DELETE_ITEM/ADMIN_PAGE':
+      return state.filter(user => user.id !== action.id);
 
     default:
       return state;

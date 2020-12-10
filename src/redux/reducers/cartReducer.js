@@ -1,24 +1,20 @@
-const initialState = {
-  total: 0,
-  cartItems: [],
-};
+const itemsInCart = [];
 
-const cartReducer = (state = initialState, action) => {
+const cartReducer = (state = itemsInCart, action) => {
   switch (action.type) {
     case 'ADD_TO_CART':
-      return {
+      return [
         ...state,
-        cartItems: [
-          ...state.cartItems,
-          {
-            id: action.id,
-            imageClock: action.imageClock,
-            brandClock: action.brandClock,
-            vendorCode: action.vendorCode,
-            price: action.price,
-          },
-        ],
-      };
+        {
+          id: action.id,
+          imageClock: action.imageClock,
+          brandClock: action.brandClock,
+          vendorCode: action.vendorCode,
+          price: action.price,
+        },
+      ];
+    case 'DELETE_FROM_CART':
+      return state.filter(item => item.id !== action.id);
     default:
       return state;
   }

@@ -8,7 +8,7 @@ import { onCloseModal } from '../../redux/actions/modalActions';
 
 class Cart extends React.Component {
   render() {
-    const { isOpen, cartItems, total, deleteItemsCart } = this.props;
+    const { isOpen, cartItems } = this.props;
     const clocksForCart = cartItems.map(item => {
       const { id, imageClock, brandClock, vendorCode, price } = item;
       return (
@@ -20,12 +20,12 @@ class Cart extends React.Component {
               brandClock={brandClock}
               vendorCode={vendorCode}
               price={price}
-              deleteItemsCart={deleteItemsCart}
             />
           </tbody>
         </table>
       );
     });
+    const total = 0;
     const totalPrice = cartItems.reduce((summa, item) => {
       return summa + total + item.price;
     }, 0);
@@ -80,8 +80,7 @@ class Cart extends React.Component {
 const mapStateToProps = state => {
   return {
     isOpen: state.modalReducer.openModal,
-    cartItems: state.cartReducer.cartItems,
-    total: state.cartReducer.total,
+    cartItems: state.cartReducer,
   };
 };
 
@@ -95,8 +94,6 @@ Cart.propTypes = {
   onCloseModal: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   cartItems: PropTypes.array.isRequired,
-  total: PropTypes.number.isRequired,
-  deleteItemsCart: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

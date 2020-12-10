@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './OneItemCart.css';
+import { connect } from 'react-redux';
+import { deleteItemFromCart } from '../../../redux/actions/cartActions';
 
 class OneItemCart extends React.Component {
   deleteFromCart = () => {
-    this.props.deleteItemsCart('cartItems', this.props.id);
+    this.props.deleteItemsCart(this.props.id);
   };
 
   render() {
@@ -27,6 +29,12 @@ class OneItemCart extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteItemsCart: id => dispatch(deleteItemFromCart(id)),
+  };
+};
+
 OneItemCart.propTypes = {
   id: PropTypes.number.isRequired,
   imageClock: PropTypes.string.isRequired,
@@ -36,4 +44,4 @@ OneItemCart.propTypes = {
   deleteItemsCart: PropTypes.func.isRequired,
 };
 
-export default OneItemCart;
+export default connect(null, mapDispatchToProps)(OneItemCart);

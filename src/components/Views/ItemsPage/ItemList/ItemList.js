@@ -27,7 +27,6 @@ class ItemList extends React.Component {
           vendorCode={vendorCode}
           price={price}
           rating={rating}
-          // addRating={addRating}
           onAddedToCart={this.AddToCart}
         />
       );
@@ -79,7 +78,6 @@ const mapDispatchToProps = dispatch => {
 ItemList.propTypes = {
   dataClocks: PropTypes.array.isRequired,
   brands: PropTypes.array.isRequired,
-  // addRating: PropTypes.func.isRequired,
   onAddToCart: PropTypes.func.isRequired,
 };
 

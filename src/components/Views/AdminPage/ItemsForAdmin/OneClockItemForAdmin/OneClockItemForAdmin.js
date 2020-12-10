@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './OneClockItemForAdmin.css';
+import { connect } from 'react-redux';
+import { deleteItemAdmin } from '../../../../../redux/actions/clocksActions';
 
 class OneClockItemForAdmin extends React.Component {
   onDeleteClockHandler = () => {
@@ -35,6 +37,12 @@ class OneClockItemForAdmin extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onDeleteClock: id => dispatch(deleteItemAdmin(id)),
+  };
+};
+
 OneClockItemForAdmin.propTypes = {
   id: PropTypes.number.isRequired,
   imageClock: PropTypes.string.isRequired,
@@ -46,4 +54,4 @@ OneClockItemForAdmin.propTypes = {
   onDeleteClock: PropTypes.func.isRequired,
 };
 
-export default OneClockItemForAdmin;
+export default connect(null, mapDispatchToProps)(OneClockItemForAdmin);

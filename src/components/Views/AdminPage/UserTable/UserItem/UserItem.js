@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './UserItem.css';
+import { connect } from 'react-redux';
+import { deleteUser } from '../../../../../redux/actions/usersAction';
 
 class UserItem extends React.Component {
   onDeleteUserHandler = () => {
@@ -26,6 +28,12 @@ class UserItem extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onDeleteUser: id => dispatch(deleteUser(id)),
+  };
+};
+
 UserItem.propTypes = {
   id: PropTypes.number.isRequired,
   firstName: PropTypes.string.isRequired,
@@ -34,4 +42,4 @@ UserItem.propTypes = {
   onDeleteUser: PropTypes.func.isRequired,
 };
 
-export default UserItem;
+export default connect(null, mapDispatchToProps)(UserItem);

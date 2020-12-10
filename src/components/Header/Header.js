@@ -4,8 +4,13 @@ import { connect } from 'react-redux';
 import './Header.css';
 import { Link } from 'react-router-dom';
 import { onOpenModal } from '../../redux/actions/modalActions';
+import { fetchUsers } from '../../redux/actions/usersAction';
 
 class Header extends Component {
+  componentDidMount = () => {
+    this.props.getUsers();
+  };
+
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -56,12 +61,14 @@ class Header extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     onOpenModal: () => dispatch(onOpenModal()),
+    getUsers: () => dispatch(fetchUsers()),
   };
 };
 
 Header.propTypes = {
   toogle: PropTypes.func.isRequired,
   onOpenModal: PropTypes.func.isRequired,
+  getUsers: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Header);

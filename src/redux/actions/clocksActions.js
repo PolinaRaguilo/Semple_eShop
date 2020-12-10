@@ -19,3 +19,10 @@ export const addRating = (value, id) => {
     id,
   };
 };
+
+export const deleteItemAdmin = id => {
+  return {
+    type: 'DELETE_ITEM/ADMIN_PAGE',
+    id,
+  };
+};

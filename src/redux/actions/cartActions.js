@@ -8,3 +8,10 @@ export const addToCart = (id, imageClock, brandClock, vendorCode, price) => {
     price,
   };
 };
+
+export const deleteItemFromCart = id => {
+  return {
+    type: 'DELETE_FROM_CART',
+    id,
+  };
+};

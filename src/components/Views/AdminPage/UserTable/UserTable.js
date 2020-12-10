@@ -5,19 +5,10 @@ import UserItem from './UserItem/UserItem';
 
 import './UserTable.css';
 
-const UserTable = ({ usersData, onDeleteUser }) => {
+const UserTable = ({ usersData }) => {
   const users = usersData.map(item => {
     const { id, firstName, lastName, email } = item;
-    return (
-      <UserItem
-        key={id}
-        id={id}
-        firstName={firstName}
-        lastName={lastName}
-        email={email}
-        onDeleteUser={onDeleteUser}
-      />
-    );
+    return <UserItem key={id} id={id} firstName={firstName} lastName={lastName} email={email} />;
   });
 
   return (
@@ -43,7 +34,6 @@ const mapStateToProps = state => {
 
 UserTable.propTypes = {
   usersData: PropTypes.array.isRequired,
-  onDeleteUser: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, null)(UserTable);
