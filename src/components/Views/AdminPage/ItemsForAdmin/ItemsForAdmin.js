@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import OneClockItemForAdmin from './OneClockItemForAdmin/OneClockItemForAdmin';
+import Spinner from '../../../Spinner/Spinner';
 
 import './ItemsForAdmin.css';
 import { addNewClock } from '../../../../redux/actions/clocksActions';
@@ -41,6 +42,9 @@ class ItemsForAdmin extends React.Component {
         />
       );
     });
+    if (this.props.onLoading) {
+      return <Spinner />;
+    }
     return (
       <>
         <form onSubmit={this.onSubmit}>
@@ -131,7 +135,8 @@ class ItemsForAdmin extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    clocks: state.clocksReducer,
+    clocks: state.clocksReducer.clocksData,
+    onLoading: state.clocksReducer.loadingClocks,
   };
 };
 
@@ -145,6 +150,7 @@ const mapDispatchToProps = dispatch => {
 ItemsForAdmin.propTypes = {
   clocks: PropTypes.object.isRequired,
   addNewClock: PropTypes.func.isRequired,
+  onLoading: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemsForAdmin);

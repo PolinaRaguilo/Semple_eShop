@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { addToCart } from '../../../../redux/actions/cartActions';
 import './ItemList.css';
 import OneItem from './OneItem/OneItem';
+import Spinner from '../../../Spinner/Spinner';
 
 class ItemList extends React.Component {
   AddToCart = idClock => {
@@ -53,7 +54,7 @@ class ItemList extends React.Component {
             </div>
           </div>
           <div className="col-md-8 products">
-            <div className="row">{clockItems}</div>
+            <div className="row"> {this.props.onLoading ? <Spinner /> : clockItems}</div>
           </div>
         </div>
       </div>
@@ -63,8 +64,9 @@ class ItemList extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    dataClocks: state.clocksReducer,
+    dataClocks: state.clocksReducer.clocksData,
     brands: state.brandsReducer,
+    onLoading: state.clocksReducer.loadingClocks,
   };
 };
 
@@ -79,6 +81,7 @@ ItemList.propTypes = {
   dataClocks: PropTypes.array.isRequired,
   brands: PropTypes.array.isRequired,
   onAddToCart: PropTypes.func.isRequired,
+  onLoading: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

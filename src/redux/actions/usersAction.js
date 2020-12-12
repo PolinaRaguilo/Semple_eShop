@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-const receiveUsers = users => {
+const receivedUsers = users => {
   return {
     type: 'USERS/RECEIEVE_USERS',
     users,
@@ -24,8 +24,7 @@ export const fetchUsers = () => async dispatch => {
   dispatch(requestUsers());
   try {
     const response = await Axios.get('/users.json');
-    const users = await response.json();
-    dispatch(receiveUsers(users));
+    dispatch(receivedUsers(response.data));
   } catch (error) {
     dispatch(failLoadUsers(error));
   }

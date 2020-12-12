@@ -4,12 +4,17 @@ import { connect } from 'react-redux';
 import UserItem from './UserItem/UserItem';
 
 import './UserTable.css';
+import Spinner from '../../../Spinner/Spinner';
 
-const UserTable = ({ usersData }) => {
+const UserTable = ({ usersData, onLoading }) => {
   const users = usersData.map(item => {
     const { id, firstName, lastName, email } = item;
     return <UserItem key={id} id={id} firstName={firstName} lastName={lastName} email={email} />;
   });
+
+  if (onLoading) {
+    return <Spinner />;
+  }
 
   return (
     <table className="container table table-hover">
@@ -29,11 +34,13 @@ const UserTable = ({ usersData }) => {
 const mapStateToProps = state => {
   return {
     usersData: state.usersReducer.usersAdmin,
+    onLoading: state.usersReducer.loading,
   };
 };
 
 UserTable.propTypes = {
   usersData: PropTypes.array.isRequired,
+  onLoading: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, null)(UserTable);
