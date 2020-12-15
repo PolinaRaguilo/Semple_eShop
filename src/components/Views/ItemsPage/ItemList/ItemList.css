@@ -3,6 +3,27 @@
   margin-top: 50px;
 }
 
-.filter-title {
-  background-color: #ffedaf;
+.card {
+  margin-left: 20px !important;
+  margin-top: 0 !important;
+}
+
+.brand-wrapper,
+.gender-wrapper {
+  padding-left: 15px;
+}
+
+.MuiFormLabel-root {
+  font-size: 20px !important;
+  padding-top: 10px !important;
+  margin-left: 15px !important;
+}
+
+.price-wrapper {
+  width: 300px;
+  margin-left: 15px;
+}
+
+.MuiFormControlLabel-root {
+  margin-bottom: 0;
 }

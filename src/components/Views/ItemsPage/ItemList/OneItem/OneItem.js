@@ -21,7 +21,7 @@ class OneItem extends React.Component {
         <p className="product-title">
           <a href="#">{brandClock}</a>
         </p>
-        <p className="product-collection">Collection: {collection}</p>
+        <p className="product-collection">Collection: {collection || '-'}</p>
         <p className="product-vendor">Code: {vendorCode}</p>
         <p className="product-price">Price: ${price}</p>
         <div>

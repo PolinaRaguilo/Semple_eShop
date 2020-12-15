@@ -38,5 +38,15 @@
     "vendorCode": "T116.617.36.057.01",
     "price": 1800,
     "rating": 3
+  },
+  {
+    "id": 5,
+    "imageClock":
+      "https://cdn21vek.by/img/galleries/294/621/efr526l1avuef_casio_560aed2fd1a9d.jpeg",
+    "brandClock": "Casio",
+    "collection": "",
+    "vendorCode": "EFR-526L-1AVUEF",
+    "price": 500,
+    "rating": 2
   }
 ]
