@@ -9,3 +9,15 @@ export const userLogout = () => {
     type: 'USER/LOG_OUT',
   };
 };
+
+export const adminLogin = () => {
+  return {
+    type: 'ADMIN/LOG_IN',
+  };
+};
+
+export const adminLogout = () => {
+  return {
+    type: 'ADMIN/LOG_OUT',
+  };
+};

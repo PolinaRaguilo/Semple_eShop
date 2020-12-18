@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { onOpenModal } from '../../redux/actions/modalActions';
 import { fetchUsers } from '../../redux/actions/usersAction';
 import { fetchClocks } from '../../redux/actions/clocksActions';
-import { userLogout } from '../../redux/actions/authorizationAction';
+import { adminLogout, userLogout } from '../../redux/actions/authorizationAction';
 
 class Header extends Component {
   componentDidMount = () => {
@@ -15,11 +15,13 @@ class Header extends Component {
   };
 
   onLogOutHandler = () => {
-    this.props.onLogOut();
+    this.props.onLogOutUser();
+    this.props.onLogOutAdmin();
+    console.log(this.props.logged, this.props.showAdmin);
   };
 
   render() {
-    if (this.props.logged) {
+    if (this.props.logged || this.props.showAdmin) {
       return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
           <Link to="/items" className="navbar-brand">
@@ -42,16 +44,8 @@ class Header extends Component {
                   About
                 </a>
               </li>
-              <li className="nav-item">
-                <Link to="/admin" className="nav-link" href="#">
-                  Admin
-                </Link>
-              </li>
             </ul>
           </div>
-          <button type="button" className="btn btn-danger" onClick={this.props.toogle}>
-            Переключить
-          </button>
           <div className="icons-wrapper">
             <Link to="/user" className="link-user">
               <i className="far fa-user-circle" />
@@ -71,9 +65,6 @@ class Header extends Component {
         <Link to="/items" className="navbar-brand">
           eShop
         </Link>
-        <button type="button" className="btn btn-danger" onClick={this.props.toogle}>
-          Переключить
-        </button>
       </nav>
     );
   }
@@ -82,6 +73,7 @@ class Header extends Component {
 const mapStateToProps = state => {
   return {
     logged: state.authorizationReducer.logged,
+    showAdmin: state.authorizationReducer.showAdmin,
   };
 };
 
@@ -90,17 +82,19 @@ const mapDispatchToProps = dispatch => {
     onOpenModal: () => dispatch(onOpenModal()),
     getUsers: () => dispatch(fetchUsers()),
     getClocks: () => dispatch(fetchClocks()),
-    onLogOut: () => dispatch(userLogout()),
+    onLogOutUser: () => dispatch(userLogout()),
+    onLogOutAdmin: () => dispatch(adminLogout()),
   };
 };
 
 Header.propTypes = {
-  toogle: PropTypes.func.isRequired,
   onOpenModal: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
   getClocks: PropTypes.func.isRequired,
-  onLogOut: PropTypes.func.isRequired,
+  onLogOutUser: PropTypes.func.isRequired,
+  onLogOutAdmin: PropTypes.func.isRequired,
   logged: PropTypes.bool.isRequired,
+  showAdmin: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

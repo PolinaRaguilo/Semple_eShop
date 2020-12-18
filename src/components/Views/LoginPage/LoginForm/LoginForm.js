@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { userLogin } from '../../../../redux/actions/authorizationAction';
+import { adminLogin, userLogin } from '../../../../redux/actions/authorizationAction';
 import './LoginForm.css';
 
 class LoginForm extends React.Component {
@@ -18,16 +18,24 @@ class LoginForm extends React.Component {
     });
   };
 
-  onAuthSubmit = () => {
+  onAuthSubmit = e => {
     const { login, password } = this.state;
+    e.preventDefault();
     if (login === 'polina' && password === '2020') {
-      this.props.onLogin();
+      this.props.onLoginUser();
+    } else if (login === 'admin' && password === 'admin') {
+      this.props.onLoginAdmin();
+    } else {
+      console.log('Error!');
     }
   };
 
   render() {
     if (this.props.logged) {
       return <Redirect to="/items" />;
+    }
+    if (this.props.showAdmin) {
+      return <Redirect to="/admin" />;
     }
     return (
       <div className="loginBody">
@@ -75,18 +83,22 @@ class LoginForm extends React.Component {
 
 LoginForm.propTypes = {
   logged: PropTypes.bool.isRequired,
-  onLogin: PropTypes.func.isRequired,
+  showAdmin: PropTypes.bool.isRequired,
+  onLoginUser: PropTypes.func.isRequired,
+  onLoginAdmin: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
   return {
     logged: state.authorizationReducer.logged,
+    showAdmin: state.authorizationReducer.showAdmin,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLogin: () => dispatch(userLogin()),
+    onLoginUser: () => dispatch(userLogin()),
+    onLoginAdmin: () => dispatch(adminLogin()),
   };
 };
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Header from '../Header/Header';
 import AdminPage from '../Views/AdminPage/AdminPage';
@@ -10,26 +12,26 @@ import UserPage from '../Views/UserPage/UserPage';
 import Cart from '../Cart/Cart';
 
 class App extends React.Component {
-  state = {
-    showAdmin: false,
-  };
-
-  toogle = () => {
-    this.setState(state => ({
-      showAdmin: !state.showAdmin,
-    }));
-  };
+  // toogle = () => {
+  //   this.setState(state => ({
+  //     showAdmin: !state.showAdmin,
+  //   }));
+  // };
 
   render() {
     return (
       <>
         <BrowserRouter>
-          <Header toogle={this.toogle} />
+          <Header />
           <Route component={Cart} />
           <Switch>
             <Route exact path="/" component={LoginPage} />
             <Route exact path="/items" component={ItemsPage} />
-            <PrivateRoute path="/admin" showAdmin={this.state.showAdmin} component={AdminPage} />
+            <PrivateRoute
+              path="/admin"
+              showAdmin={this.props.showAdminPage}
+              component={AdminPage}
+            />
             <Route exact path="/user" component={UserPage} />
             <Route exact path="/registration" component={RegistrationPage} />
             <Route render={() => <h2>Page not found 404</h2>} />
@@ -40,4 +42,14 @@ class App extends React.Component {
   }
 }
 
-export default App;
+App.propTypes = {
+  showAdminPage: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = state => {
+  return {
+    showAdminPage: state.authorizationReducer.showAdmin,
+  };
+};
+
+export default connect(mapStateToProps, null)(App);

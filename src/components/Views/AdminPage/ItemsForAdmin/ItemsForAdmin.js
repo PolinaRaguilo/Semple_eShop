@@ -148,7 +148,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 ItemsForAdmin.propTypes = {
-  clocks: PropTypes.object.isRequired,
+  clocks: PropTypes.array.isRequired,
   addNewClock: PropTypes.func.isRequired,
   onLoading: PropTypes.bool.isRequired,
 };

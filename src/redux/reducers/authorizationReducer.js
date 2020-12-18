@@ -1,5 +1,6 @@
 const initialState = {
   logged: false,
+  showAdmin: false,
 };
 
 const authorizationReducer = (state = initialState, action) => {
@@ -13,6 +14,16 @@ const authorizationReducer = (state = initialState, action) => {
       return {
         ...state,
         logged: false,
+      };
+    case 'ADMIN/LOG_IN':
+      return {
+        ...state,
+        showAdmin: true,
+      };
+    case 'ADMIN/LOG_OUT':
+      return {
+        ...state,
+        showAdmin: false,
       };
     default:
       return state;
