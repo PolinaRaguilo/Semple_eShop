@@ -26,13 +26,11 @@ class App extends React.Component {
         <BrowserRouter>
           <Header toogle={this.toogle} />
           <Route component={Cart} />
-
           <Switch>
+            <Route exact path="/" component={LoginPage} />
             <Route exact path="/items" component={ItemsPage} />
-
             <PrivateRoute path="/admin" showAdmin={this.state.showAdmin} component={AdminPage} />
             <Route exact path="/user" component={UserPage} />
-            <Route exact path="/login" component={LoginPage} />
             <Route exact path="/registration" component={RegistrationPage} />
             <Route render={() => <h2>Page not found 404</h2>} />
           </Switch>

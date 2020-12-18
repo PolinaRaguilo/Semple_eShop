@@ -8,17 +8,17 @@
 }
 
 .fa-user-circle {
-  font-size: 30px;
+  font-size: 27px;
   margin-right: 25px;
 }
 
 .fa-shopping-cart {
-  font-size: 28px;
+  font-size: 27px;
   margin-right: 15px;
 }
 
 .fa-sign-out-alt {
-  font-size: 30px;
+  font-size: 27px;
   margin-left: 12px;
 }
 
@@ -37,14 +37,16 @@
 .link-user {
   cursor: pointer;
 }
-.btn-cart {
+.btn-cart,
+.btn-out {
   outline: none;
   border: none;
   background: transparent;
   cursor: pointer;
 }
 
-.btn-cart:focus {
+.btn-cart:focus,
+.btn-out:focus {
   outline: none;
   border: none;
 }

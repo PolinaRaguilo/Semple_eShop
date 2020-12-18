@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import { addToCart } from '../../../../redux/actions/cartActions';
@@ -99,6 +100,9 @@ class ItemList extends React.Component {
         </RadioGroup>
       );
     });
+    if (this.props.logged === false) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="content">
         <div className="row">
@@ -142,6 +146,7 @@ const mapStateToProps = state => {
   return {
     dataClocks: state.clocksReducer.clocksData,
     onLoading: state.clocksReducer.loadingClocks,
+    logged: state.authorizationReducer.logged,
   };
 };
 
@@ -156,6 +161,7 @@ ItemList.propTypes = {
   dataClocks: PropTypes.array.isRequired,
   onAddToCart: PropTypes.func.isRequired,
   onLoading: PropTypes.bool.isRequired,
+  logged: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

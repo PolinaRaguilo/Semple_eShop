@@ -1,5 +1,6 @@
 .login-container {
   margin: 0 auto;
+  margin-top: 70px;
   text-align: center;
   width: 55%;
 }
@@ -8,6 +9,7 @@
   max-width: 350px;
   padding: 40px 40px;
   border-radius: 20px;
+  margin: 0 auto !important;
 }
 
 .btn {

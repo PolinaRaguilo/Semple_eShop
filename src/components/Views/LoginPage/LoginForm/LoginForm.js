@@ -1,8 +1,34 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { userLogin } from '../../../../redux/actions/authorizationAction';
 import './LoginForm.css';
 
 class LoginForm extends React.Component {
+  state = {
+    login: '',
+    password: '',
+  };
+
+  onInputChange = e => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  onAuthSubmit = () => {
+    const { login, password } = this.state;
+    if (login === 'polina' && password === '2020') {
+      this.props.onLogin();
+    }
+  };
+
   render() {
+    if (this.props.logged) {
+      return <Redirect to="/items" />;
+    }
     return (
       <div className="loginBody">
         <div className="login-container">
@@ -14,19 +40,23 @@ class LoginForm extends React.Component {
               alt="userImg"
             />
             <p id="profile-name" className="profile-name-card" />
-            <form className="form-signin" action="submit">
+            <form className="form-signin" action="submit" onSubmit={this.onAuthSubmit}>
               <input
                 type="text"
+                name="login"
                 id="inputEmail"
                 className="form-control"
                 placeholder="Login"
+                onChange={this.onInputChange}
                 required
               />
               <input
                 type="password"
                 id="inputPassword"
+                name="password"
                 className="form-control"
                 placeholder="Password"
+                onChange={this.onInputChange}
                 required
               />
               <button className="btn btn-lg btn-primary btn-block btn-signin" type="submit">
@@ -43,4 +73,21 @@ class LoginForm extends React.Component {
   }
 }
 
-export default LoginForm;
+LoginForm.propTypes = {
+  logged: PropTypes.bool.isRequired,
+  onLogin: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => {
+  return {
+    logged: state.authorizationReducer.logged,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogin: () => dispatch(userLogin()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
