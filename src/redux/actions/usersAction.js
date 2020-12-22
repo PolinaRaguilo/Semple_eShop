@@ -1,4 +1,5 @@
-import Axios from 'axios';
+// import Axios from 'axios';
+import fbDB from '../../config/fbConfig';
 
 const receivedUsers = users => {
   return {
@@ -23,8 +24,13 @@ const failLoadUsers = error => {
 export const fetchUsers = () => async dispatch => {
   dispatch(requestUsers());
   try {
-    const response = await Axios.get('/users.json');
-    dispatch(receivedUsers(response.data));
+    await fbDB.child('users').on('value', snapshot => {
+      dispatch(receivedUsers(snapshot.val()));
+      console.log(snapshot.val());
+    });
+
+    // const response = await Axios.get('/users');
+    // dispatch(receivedUsers(response.data));
   } catch (error) {
     dispatch(failLoadUsers(error));
   }

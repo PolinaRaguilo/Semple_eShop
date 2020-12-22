@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { adminLogin, userLogin } from '../../../../redux/actions/authorizationAction';
 import './LoginForm.css';
@@ -47,7 +47,6 @@ class LoginForm extends React.Component {
               src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
               alt="userImg"
             />
-            <p id="profile-name" className="profile-name-card" />
             <form className="form-signin" action="submit" onSubmit={this.onAuthSubmit}>
               <input
                 type="text"
@@ -71,9 +70,9 @@ class LoginForm extends React.Component {
                 Sign In
               </button>
             </form>
-            <a href="#" className="signUp">
+            <Link to="/registration" className="signUp">
               Don&#039;t have an account? Sign Up
-            </a>
+            </Link>
           </div>
         </div>
       </div>

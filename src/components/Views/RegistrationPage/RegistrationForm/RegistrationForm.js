@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './RegistrationForm.css';
 
@@ -56,7 +57,7 @@ class RegistrationForm extends React.Component {
                   type="password"
                   id="input-password"
                   className="form-control"
-                  placeholder="Пароль"
+                  placeholder="Password"
                   required
                 />
 
@@ -65,7 +66,7 @@ class RegistrationForm extends React.Component {
                   type="password"
                   id="input-passwordCheck"
                   className="form-control"
-                  placeholder="Подтвердите пароль"
+                  placeholder="Confirm password"
                   required
                 />
               </div>
@@ -74,9 +75,9 @@ class RegistrationForm extends React.Component {
             <button className="btn btn-lg btn-primary btn-block btn-signup" type="submit">
               Sign Up
             </button>
-            <a href="#" className="link-toLogin">
+            <Link to="/" className="link-toLogin">
               Have an account? Sign In
-            </a>
+            </Link>
           </form>
         </div>
       </div>
