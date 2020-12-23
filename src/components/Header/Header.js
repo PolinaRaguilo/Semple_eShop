@@ -17,7 +17,6 @@ class Header extends Component {
   onLogOutHandler = () => {
     this.props.onLogOutUser();
     this.props.onLogOutAdmin();
-    console.log(this.props.logged, this.props.showAdmin);
   };
 
   render() {

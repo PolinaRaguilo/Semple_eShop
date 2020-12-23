@@ -26,7 +26,6 @@ export const fetchUsers = () => async dispatch => {
   try {
     await fbDB.child('users').on('value', snapshot => {
       dispatch(receivedUsers(snapshot.val()));
-      console.log(snapshot.val());
     });
 
     // const response = await Axios.get('/users');

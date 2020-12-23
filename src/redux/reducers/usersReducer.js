@@ -33,5 +33,5 @@ const usersReducer = (state = initialState, action) => {
       return state;
   }
 };
-console.log(initialState.usersAdmin);
+
 export { usersReducer };
