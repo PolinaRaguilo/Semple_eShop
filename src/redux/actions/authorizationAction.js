@@ -21,3 +21,10 @@ export const adminLogout = () => {
     type: 'ADMIN/LOG_OUT',
   };
 };
+
+export const addCurrentUser = user => {
+  return {
+    type: 'CURRENT_USER',
+    user,
+  };
+};

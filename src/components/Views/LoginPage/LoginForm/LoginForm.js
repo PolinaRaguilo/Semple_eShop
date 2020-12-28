@@ -2,7 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { adminLogin, userLogin } from '../../../../redux/actions/authorizationAction';
+import {
+  addCurrentUser,
+  adminLogin,
+  userLogin,
+} from '../../../../redux/actions/authorizationAction';
 import './LoginForm.css';
 
 class LoginForm extends React.Component {
@@ -20,11 +24,14 @@ class LoginForm extends React.Component {
 
   onAuthSubmit = e => {
     const { login, password } = this.state;
+
     e.preventDefault();
     if (login === 'polina' && password === '2020') {
       this.props.onLoginUser();
+      this.props.onAddCurrentUser(login);
     } else if (login === 'admin' && password === 'admin') {
       this.props.onLoginAdmin();
+      this.props.onAddCurrentUser(login);
     } else {
       console.log('Error!');
     }
@@ -85,6 +92,7 @@ LoginForm.propTypes = {
   showAdmin: PropTypes.bool.isRequired,
   onLoginUser: PropTypes.func.isRequired,
   onLoginAdmin: PropTypes.func.isRequired,
+  onAddCurrentUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -98,6 +106,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onLoginUser: () => dispatch(userLogin()),
     onLoginAdmin: () => dispatch(adminLogin()),
+    onAddCurrentUser: user => dispatch(addCurrentUser(user)),
   };
 };
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import './UserProfile.css';
 
@@ -34,7 +36,7 @@ class UserProfile extends React.Component {
               <td>
                 <b>Email</b>
               </td>
-              <td>polina2020@mail.ru</td>
+              <td>{this.props.currentUser}</td>
             </tr>
           </tbody>
         </table>
@@ -51,4 +53,14 @@ class UserProfile extends React.Component {
   }
 }
 
-export default UserProfile;
+const mapStateToProps = state => {
+  return {
+    currentUser: state.authorizationReducer.currentUser,
+  };
+};
+
+UserProfile.propTypes = {
+  currentUser: PropTypes.string.isRequired,
+};
+
+export default connect(mapStateToProps, null)(UserProfile);

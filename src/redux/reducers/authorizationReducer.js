@@ -15,6 +15,7 @@ const authorizationReducer = (state = initialState, action) => {
       return {
         ...state,
         logged: false,
+        currentUser: null,
       };
     case 'ADMIN/LOG_IN':
       return {
@@ -25,6 +26,12 @@ const authorizationReducer = (state = initialState, action) => {
       return {
         ...state,
         showAdmin: false,
+        currentUser: null,
+      };
+    case 'CURRENT_USER':
+      return {
+        ...state,
+        currentUser: action.user,
       };
     default:
       return state;
