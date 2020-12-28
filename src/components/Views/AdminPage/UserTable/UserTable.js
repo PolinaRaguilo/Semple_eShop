@@ -5,8 +5,9 @@ import UserItem from './UserItem/UserItem';
 
 import './UserTable.css';
 import Spinner from '../../../Spinner/Spinner';
+import ErrorLoading from '../../../ErrorLoading/ErrorLoading';
 
-const UserTable = ({ usersData, onLoading }) => {
+const UserTable = ({ usersData, onLoading, onErrorUsers }) => {
   const users = usersData.map(item => {
     const { id, firstName, lastName, email } = item;
     return <UserItem key={id} id={id} firstName={firstName} lastName={lastName} email={email} />;
@@ -14,6 +15,9 @@ const UserTable = ({ usersData, onLoading }) => {
 
   if (onLoading) {
     return <Spinner />;
+  }
+  if (onErrorUsers) {
+    return <ErrorLoading />;
   }
 
   return (
@@ -35,12 +39,14 @@ const mapStateToProps = state => {
   return {
     usersData: state.usersReducer.usersAdmin,
     onLoading: state.usersReducer.loading,
+    onErrorUsers: state.usersReducer.error,
   };
 };
 
 UserTable.propTypes = {
   usersData: PropTypes.array.isRequired,
   onLoading: PropTypes.bool.isRequired,
+  onErrorUsers: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, null)(UserTable);

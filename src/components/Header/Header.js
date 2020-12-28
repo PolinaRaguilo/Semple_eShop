@@ -4,16 +4,9 @@ import { connect } from 'react-redux';
 import './Header.css';
 import { Link } from 'react-router-dom';
 import { onOpenModal } from '../../redux/actions/modalActions';
-import { fetchUsers } from '../../redux/actions/usersAction';
-import { fetchClocks } from '../../redux/actions/clocksActions';
 import { adminLogout, userLogout } from '../../redux/actions/authorizationAction';
 
 class Header extends Component {
-  componentDidMount = () => {
-    this.props.getUsers();
-    this.props.getClocks();
-  };
-
   onLogOutHandler = () => {
     this.props.onLogOutUser();
     this.props.onLogOutAdmin();
@@ -79,8 +72,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onOpenModal: () => dispatch(onOpenModal()),
-    getUsers: () => dispatch(fetchUsers()),
-    getClocks: () => dispatch(fetchClocks()),
     onLogOutUser: () => dispatch(userLogout()),
     onLogOutAdmin: () => dispatch(adminLogout()),
   };
@@ -88,8 +79,6 @@ const mapDispatchToProps = dispatch => {
 
 Header.propTypes = {
   onOpenModal: PropTypes.func.isRequired,
-  getUsers: PropTypes.func.isRequired,
-  getClocks: PropTypes.func.isRequired,
   onLogOutUser: PropTypes.func.isRequired,
   onLogOutAdmin: PropTypes.func.isRequired,
   logged: PropTypes.bool.isRequired,

@@ -6,6 +6,7 @@ import Spinner from '../../../Spinner/Spinner';
 
 import './ItemsForAdmin.css';
 import { addNewClock } from '../../../../redux/actions/clocksActions';
+import ErrorLoading from '../../../ErrorLoading/ErrorLoading';
 
 class ItemsForAdmin extends React.Component {
   state = {};
@@ -44,6 +45,9 @@ class ItemsForAdmin extends React.Component {
     });
     if (this.props.onLoading) {
       return <Spinner />;
+    }
+    if (this.props.onErrorClocks) {
+      return <ErrorLoading />;
     }
     return (
       <>
@@ -137,6 +141,7 @@ const mapStateToProps = state => {
   return {
     clocks: state.clocksReducer.clocksData,
     onLoading: state.clocksReducer.loadingClocks,
+    onErrorClocks: state.clocksReducer.errorClocks,
   };
 };
 
@@ -151,6 +156,7 @@ ItemsForAdmin.propTypes = {
   clocks: PropTypes.array.isRequired,
   addNewClock: PropTypes.func.isRequired,
   onLoading: PropTypes.bool.isRequired,
+  onErrorClocks: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemsForAdmin);

@@ -7,7 +7,7 @@ import Slider from '@material-ui/core/Slider';
 import { addToCart } from '../../../../redux/actions/cartActions';
 import './ItemList.css';
 import OneItem from './OneItem/OneItem';
-// import Spinner from '../../../Spinner/Spinner';
+import Spinner from '../../../Spinner/Spinner';
 import ErrorLoading from '../../../ErrorLoading/ErrorLoading';
 
 class ItemList extends React.Component {
@@ -136,7 +136,7 @@ class ItemList extends React.Component {
           </div>
           <div className="col-md-8 products">
             <div className="row">
-              {/* {this.props.onLoading ? <Spinner /> : clockItems} */}
+              {this.props.onLoading ? <Spinner /> : clockItems}
               {this.props.onError ? <ErrorLoading /> : clockItems}
             </div>
           </div>
@@ -165,7 +165,7 @@ const mapDispatchToProps = dispatch => {
 ItemList.propTypes = {
   dataClocks: PropTypes.array.isRequired,
   onAddToCart: PropTypes.func.isRequired,
-  // onLoading: PropTypes.bool.isRequired,
+  onLoading: PropTypes.bool.isRequired,
   logged: PropTypes.bool.isRequired,
   onError: PropTypes.bool.isRequired,
 };

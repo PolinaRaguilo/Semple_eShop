@@ -1,7 +1,7 @@
 const initialState = {
   clocksData: [],
   loadingClocks: true,
-  errorClocks: true,
+  errorClocks: false,
   typeError: null,
 };
 
@@ -51,6 +51,7 @@ const clocksReducer = (state = initialState, action) => {
       return {
         ...state,
         errorClocks: true,
+        loadingClocks: false,
         typeError: action.error,
       };
     case 'DELETE_ITEM/ADMIN_PAGE':

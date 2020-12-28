@@ -1,6 +1,7 @@
 const initialState = {
   logged: false,
   showAdmin: false,
+  currentUser: null,
 };
 
 const authorizationReducer = (state = initialState, action) => {
