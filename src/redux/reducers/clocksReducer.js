@@ -1,7 +1,7 @@
 const initialState = {
   clocksData: [],
   loadingClocks: true,
-  errorClocks: false,
+  errorClocks: true,
   typeError: null,
 };
 

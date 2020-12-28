@@ -1,0 +1,21 @@
+.error-wrapper {
+  margin: 0 auto;
+  padding-top: 15%;
+}
+.error-icon-wrapper {
+  text-align: center;
+}
+.error-text-wrapper {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #4c5866;
+}
+.error-icon {
+  font-size: 60px;
+}
+
+.wrong-text {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
