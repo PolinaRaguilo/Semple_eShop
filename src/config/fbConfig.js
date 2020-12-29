@@ -10,6 +10,6 @@ const firebaseConfig = {
 };
 
 const fbDatabase = firebase.initializeApp(firebaseConfig);
-const fbDB = fbDatabase.database().ref();
+const fbDB = fbDatabase.database();
 
 export default fbDB;

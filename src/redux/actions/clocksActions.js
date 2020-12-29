@@ -1,7 +1,10 @@
 // import Axios from 'axios';
-import fbDB from '../../config/fbConfig';
+// import fbDB from '../../config/fbConfig';
+import ClocksService from '../../Services/ClocksService';
 
-let maxId = 3;
+let maxId = 5;
+
+const dbClocks = new ClocksService();
 
 const receivedClocks = clocks => {
   return {
@@ -26,19 +29,22 @@ const failLoadClocks = error => {
 export const fetchClocks = () => async dispatch => {
   dispatch(requestClocks());
   try {
-    await fbDB.child('clocks').on('value', snapshot => {
-      dispatch(receivedClocks(snapshot.val()));
+    dbClocks.getAllClocks().on('value', snapshot => {
+      dispatch(receivedClocks(Object.values(snapshot.val())));
     });
-    // const response = await Axios.get('/clocks.json');
-    // dispatch(receivedClocks(response.data));
   } catch (error) {
     dispatch(failLoadClocks(error));
   }
 };
 
-export const addNewClock = (imageClock, brandClock, collection, vendorCode, price) => {
-  return {
-    type: 'ADD_CLOCK_ADMINPAGE',
+export const addNewClock = (
+  imageClock,
+  brandClock,
+  collection,
+  vendorCode,
+  price
+) => async dispatch => {
+  const data = {
     id: ++maxId,
     imageClock,
     brandClock,
@@ -46,6 +52,14 @@ export const addNewClock = (imageClock, brandClock, collection, vendorCode, pric
     vendorCode,
     price,
   };
+  dbClocks
+    .addNewClock(data)
+    .then(() => {
+      dispatch(fetchClocks());
+    })
+    .catch(e => {
+      console.log(e);
+    });
 };
 
 export const addRating = (value, id) => {
