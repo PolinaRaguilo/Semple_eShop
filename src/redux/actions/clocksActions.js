@@ -1,5 +1,3 @@
-// import Axios from 'axios';
-// import fbDB from '../../config/fbConfig';
 import ClocksService from '../../Services/ClocksService';
 
 let maxId = 5;
@@ -29,7 +27,7 @@ const failLoadClocks = error => {
 export const fetchClocks = () => async dispatch => {
   dispatch(requestClocks());
   try {
-    dbClocks.getAllClocks().on('value', snapshot => {
+    await dbClocks.getAllClocks().on('value', snapshot => {
       dispatch(receivedClocks(Object.values(snapshot.val())));
     });
   } catch (error) {

@@ -7,23 +7,6 @@ const initialState = {
 
 const clocksReducer = (state = initialState, action) => {
   switch (action.type) {
-    // case 'ADD_CLOCK_ADMINPAGE':
-    //   return {
-    //     ...state,
-    //     clocksData: [
-    //       ...state.clocksData,
-    //       // action.data,
-    //       // {
-    //       //   id: action.id,
-    //       //   imageClock: action.imageClock,
-    //       //   brandClock: action.brandClock,
-    //       //   collection: action.collection,
-    //       //   vendorCode: action.vendorCode,
-    //       //   price: action.price,
-    //       //   rating: 0,
-    //       // },
-    //     ],
-    //   };
     case 'ADD_RATING':
       return {
         ...state,

@@ -1,5 +1,6 @@
-// import Axios from 'axios';
-import fbDB from '../../config/fbConfig';
+import UsersService from '../../Services/UsersService';
+
+const dbUsers = new UsersService();
 
 const receivedUsers = users => {
   return {
@@ -24,12 +25,9 @@ const failLoadUsers = error => {
 export const fetchUsers = () => async dispatch => {
   dispatch(requestUsers());
   try {
-    await fbDB.child('users').on('value', snapshot => {
-      dispatch(receivedUsers(snapshot.val()));
+    await dbUsers.getAllUsers().on('value', snapshot => {
+      dispatch(receivedUsers(Object.values(snapshot.val())));
     });
-
-    // const response = await Axios.get('/users');
-    // dispatch(receivedUsers(response.data));
   } catch (error) {
     dispatch(failLoadUsers(error));
   }
