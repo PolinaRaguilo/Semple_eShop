@@ -9,7 +9,7 @@ class ClocksService {
   }
 
   addNewClock(clock) {
-    return db.push(clock);
+    return db.child(clock.id).set(clock);
   }
 
   deleteClock(key) {

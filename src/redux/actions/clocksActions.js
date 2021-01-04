@@ -1,6 +1,7 @@
 import ClocksService from '../../Services/ClocksService';
 
-let maxId = 5;
+const newId = `_${1 + Math.floor(Math.random() * 100)}`;
+const defaultRating = 0;
 
 const dbClocks = new ClocksService();
 
@@ -43,14 +44,15 @@ export const addNewClock = (
   price
 ) => async dispatch => {
   const data = {
-    id: ++maxId,
+    id: newId,
     imageClock,
     brandClock,
     collection,
     vendorCode,
     price,
+    rating: defaultRating,
   };
-  dbClocks
+  await dbClocks
     .addNewClock(data)
     .then(() => {
       dispatch(fetchClocks());
@@ -68,9 +70,8 @@ export const addRating = (value, id) => {
   };
 };
 
-export const deleteItemAdmin = id => {
-  return {
-    type: 'DELETE_ITEM/ADMIN_PAGE',
-    id,
-  };
+export const deleteItemAdmin = id => async dispatch => {
+  await dbClocks.deleteClock(id).then(() => {
+    dispatch(fetchClocks());
+  });
 };
