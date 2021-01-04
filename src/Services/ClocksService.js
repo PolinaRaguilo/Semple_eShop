@@ -15,6 +15,10 @@ class ClocksService {
   deleteClock(key) {
     return db.child(key).remove();
   }
+
+  updateClock(value, key) {
+    return db.child(key).update(value);
+  }
 }
 
 export default ClocksService;

@@ -50,12 +50,12 @@ class OneItem extends React.Component {
 }
 
 OneItem.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   imageClock: PropTypes.string.isRequired,
   brandClock: PropTypes.string.isRequired,
   collection: PropTypes.string.isRequired,
   vendorCode: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
   addRating: PropTypes.func.isRequired,
   onAddedToCart: PropTypes.func.isRequired,

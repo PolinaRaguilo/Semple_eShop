@@ -52,22 +52,18 @@ export const addNewClock = (
     price,
     rating: defaultRating,
   };
-  await dbClocks
-    .addNewClock(data)
-    .then(() => {
-      dispatch(fetchClocks());
-    })
-    .catch(e => {
-      console.log(e);
-    });
+  await dbClocks.addNewClock(data).then(() => {
+    dispatch(fetchClocks());
+  });
 };
 
-export const addRating = (value, id) => {
-  return {
+export const addRating = (value, id) => async dispatch => {
+  await dbClocks.updateClock({ rating: value }, id);
+  dispatch({
     type: 'ADD_RATING',
     value,
     id,
-  };
+  });
 };
 
 export const deleteItemAdmin = id => async dispatch => {
