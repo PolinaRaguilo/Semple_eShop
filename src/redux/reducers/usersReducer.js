@@ -24,11 +24,6 @@ const usersReducer = (state = initialState, action) => {
         error: true,
         typeError: action.error,
       };
-    case 'DELETE_USERS':
-      return {
-        ...state,
-        usersAdmin: state.usersAdmin.filter(user => user.id !== action.id),
-      };
     default:
       return state;
   }
