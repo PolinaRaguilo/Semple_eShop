@@ -66,6 +66,15 @@ export const addRating = (value, id) => async dispatch => {
   });
 };
 
+// export const addRating = (value, id) => {
+//
+//   return {
+//     type: 'ADD_RATING',
+//     value,
+//     id,
+//   };
+// };
+
 export const deleteItemAdmin = id => async dispatch => {
   await dbClocks.deleteClock(id).then(() => {
     dispatch(fetchClocks());

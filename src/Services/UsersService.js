@@ -11,6 +11,10 @@ class UsersService {
   deleteUser(key) {
     return db.child(key).remove();
   }
+
+  updateUser(value, key) {
+    return db.child(key).update(value);
+  }
 }
 
 export default UsersService;

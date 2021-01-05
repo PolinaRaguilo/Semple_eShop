@@ -36,3 +36,22 @@
 .btn-editPsw {
   margin-bottom: 10px;
 }
+
+.btn-deleteProfile .afterSend {
+  display: none;
+}
+
+.btn-deleteProfile:focus .beforeSend {
+  display: none;
+}
+
+.btn-deleteProfile:focus .afterSend {
+  display: block;
+  color: white;
+}
+
+.btn-deleteProfile:focus {
+  background-color: #eb6864;
+  border: none;
+  outline: none;
+}

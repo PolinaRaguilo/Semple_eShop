@@ -33,6 +33,11 @@ export const fetchUsers = () => async dispatch => {
   }
 };
 
+export const deleteRequest = id => async dispatch => {
+  await dbUsers.updateUser({ requestDelete: true }, id);
+  dispatch(fetchUsers());
+};
+
 export const deleteUser = id => async dispatch => {
   await dbUsers.deleteUser(id).then(() => {
     dispatch(fetchUsers());

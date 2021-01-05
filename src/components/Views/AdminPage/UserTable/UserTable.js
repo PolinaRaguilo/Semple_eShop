@@ -9,8 +9,17 @@ import ErrorLoading from '../../../ErrorLoading/ErrorLoading';
 
 const UserTable = ({ usersData, onLoading, onErrorUsers }) => {
   const users = usersData.map(item => {
-    const { id, firstName, lastName, email } = item;
-    return <UserItem key={id} id={id} firstName={firstName} lastName={lastName} email={email} />;
+    const { id, firstName, lastName, email, requestDelete } = item;
+    return (
+      <UserItem
+        key={id}
+        id={id}
+        firstName={firstName}
+        lastName={lastName}
+        email={email}
+        requestDelete={requestDelete}
+      />
+    );
   });
 
   if (onLoading) {

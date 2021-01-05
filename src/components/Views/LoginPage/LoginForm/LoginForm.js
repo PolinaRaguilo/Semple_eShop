@@ -26,14 +26,16 @@ class LoginForm extends React.Component {
     const { login, password } = this.state;
 
     e.preventDefault();
-    if (login === 'polina' && password === '2020') {
-      this.props.onLoginUser();
-      this.props.onAddCurrentUser(login);
-    } else if (login === 'admin' && password === 'admin') {
-      this.props.onLoginAdmin();
-      this.props.onAddCurrentUser(login);
-    } else {
-      console.log('Error!');
+    for (let i = 0; i < this.props.usersData.length; i++) {
+      if (login === this.props.usersData[i].email && password === '2020') {
+        this.props.onLoginUser();
+        this.props.onAddCurrentUser(login);
+      } else if (login === 'admin' && password === 'admin') {
+        this.props.onLoginAdmin();
+        this.props.onAddCurrentUser(login);
+      } else {
+        console.log('Error!');
+      }
     }
   };
 
@@ -93,12 +95,14 @@ LoginForm.propTypes = {
   onLoginUser: PropTypes.func.isRequired,
   onLoginAdmin: PropTypes.func.isRequired,
   onAddCurrentUser: PropTypes.func.isRequired,
+  usersData: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => {
   return {
     logged: state.authorizationReducer.logged,
     showAdmin: state.authorizationReducer.showAdmin,
+    usersData: state.usersReducer.usersAdmin,
   };
 };
 

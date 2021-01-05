@@ -11,15 +11,24 @@ class UserItem extends React.Component {
   };
 
   render() {
-    const { firstName, lastName, email } = this.props;
+    const { firstName, lastName, email, requestDelete } = this.props;
 
+    const classes = 'btn btn-primary';
+    const classesDelete = 'btn btn-success';
+    const btns = requestDelete ? classesDelete : classes;
+    const btnDisable = requestDelete ? null : 'disable';
     return (
       <tr>
         <td> {firstName} </td>
         <td>{lastName}</td>
         <td>{email}</td>
         <td>
-          <button type="button" className="btn btn-primary" onClick={this.onDeleteUserHandler}>
+          <button
+            disabled={btnDisable}
+            type="button"
+            className={btns}
+            onClick={this.onDeleteUserHandler}
+          >
             Delete
           </button>
         </td>
@@ -40,6 +49,7 @@ UserItem.propTypes = {
   lastName: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   onDeleteUser: PropTypes.func.isRequired,
+  requestDelete: PropTypes.bool.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(UserItem);
