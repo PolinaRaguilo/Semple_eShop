@@ -101,6 +101,7 @@ class ItemList extends React.Component {
         </RadioGroup>
       );
     });
+
     if (this.props.logged === false) {
       return <Redirect to="/" />;
     }
@@ -136,8 +137,9 @@ class ItemList extends React.Component {
           </div>
           <div className="col-md-8 products">
             <div className="row">
-              {this.props.onLoading ? <Spinner /> : clockItems}
-              {this.props.onError ? <ErrorLoading /> : clockItems}
+              {this.props.onError ? <ErrorLoading /> : null}
+              {this.props.onLoading ? <Spinner /> : null}
+              {!(this.props.onLoading || this.props.onError) ? clockItems : null}
             </div>
           </div>
         </div>

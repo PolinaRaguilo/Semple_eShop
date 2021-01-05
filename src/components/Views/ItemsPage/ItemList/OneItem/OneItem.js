@@ -30,7 +30,7 @@ class OneItem extends React.Component {
             defaultValue={rating}
             precision={1}
             onChange={newValue => {
-              this.props.addRating(newValue.target.defaultValue, id);
+              this.props.addRating(Number(newValue.target.defaultValue), id);
             }}
           />
         </div>

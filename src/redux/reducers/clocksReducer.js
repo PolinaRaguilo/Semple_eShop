@@ -30,6 +30,7 @@ const clocksReducer = (state = initialState, action) => {
       return {
         ...state,
         loadingClocks: true,
+        errorClocks: false,
       };
     case 'CLOCKS/FAIL_LOAD':
       return {

@@ -12,12 +12,6 @@ import UserPage from '../Views/UserPage/UserPage';
 import Cart from '../Cart/Cart';
 
 class App extends React.Component {
-  // toogle = () => {
-  //   this.setState(state => ({
-  //     showAdmin: !state.showAdmin,
-  //   }));
-  // };
-
   render() {
     return (
       <>
