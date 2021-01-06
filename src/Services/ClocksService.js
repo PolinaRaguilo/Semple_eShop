@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
-import fbDB from '../config/fbConfig';
+import fbDatabase from '../config/fbConfig';
 
-const db = fbDB.ref('/clocks');
+const db = fbDatabase.database().ref('/clocks');
 
 class ClocksService {
   getAllClocks() {

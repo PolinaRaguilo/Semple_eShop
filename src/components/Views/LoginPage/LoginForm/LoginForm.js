@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import fbDatabase from '../../../../config/fbConfig';
 import {
   addCurrentUser,
   adminLogin,
@@ -24,18 +25,20 @@ class LoginForm extends React.Component {
 
   onAuthSubmit = e => {
     const { login, password } = this.state;
-
     e.preventDefault();
-    for (let i = 0; i < this.props.usersData.length; i++) {
-      if (login === this.props.usersData[i].email && password === '2020') {
-        this.props.onLoginUser();
-        this.props.onAddCurrentUser(login);
-      } else if (login === 'admin' && password === 'admin') {
-        this.props.onLoginAdmin();
-        this.props.onAddCurrentUser(login);
-      } else {
-        console.log('Error!');
-      }
+
+    if (login === 'admin@admin' && password === 'admin') {
+      this.props.onLoginAdmin();
+      this.props.onAddCurrentUser(login);
+    } else {
+      fbDatabase
+        .auth()
+        .signInWithEmailAndPassword(login, password)
+        .then(() => {
+          this.props.onLoginUser();
+          this.props.onAddCurrentUser(login);
+        })
+        .catch(err => console.log(err.code, err.message));
     }
   };
 
@@ -95,7 +98,6 @@ LoginForm.propTypes = {
   onLoginUser: PropTypes.func.isRequired,
   onLoginAdmin: PropTypes.func.isRequired,
   onAddCurrentUser: PropTypes.func.isRequired,
-  usersData: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => {
