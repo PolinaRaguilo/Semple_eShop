@@ -6,6 +6,9 @@ import fbDatabase from '../../../../config/fbConfig';
 import {
   addCurrentUser,
   adminLogin,
+  errorLogin,
+  onCloseError,
+  passwordError,
   userLogin,
 } from '../../../../redux/actions/authorizationAction';
 import './LoginForm.css';
@@ -15,6 +18,8 @@ class LoginForm extends React.Component {
     login: '',
     password: '',
   };
+
+  errorClasses = 'alert alert-dismissible alert-primary ';
 
   onInputChange = e => {
     const { name, value } = e.target;
@@ -38,7 +43,20 @@ class LoginForm extends React.Component {
           this.props.onLoginUser();
           this.props.onAddCurrentUser(login);
         })
-        .catch(err => console.log(err.code, err.message));
+        // eslint-disable-next-line consistent-return
+        .catch(err => {
+          // eslint-disable-next-line default-case
+          switch (err.code) {
+            case 'auth/invalid-email':
+            case 'auth/user-disabled':
+            case 'auth/user-not-found':
+              this.props.onEmailError(err.message);
+              break;
+            case 'auth/wrong-password':
+              this.props.onPswdError(err.message);
+              break;
+          }
+        });
     }
   };
 
@@ -59,6 +77,25 @@ class LoginForm extends React.Component {
               src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
               alt="userImg"
             />
+            <div
+              className={
+                this.props.openError ? `${this.errorClasses}error-data` : this.errorClasses
+              }
+            >
+              <button
+                type="button"
+                className="close"
+                data-dismiss="alert"
+                onClick={this.props.onCloseError}
+              >
+                &times;
+              </button>
+              <i className="fas fa-exclamation" />
+              <h5>
+                {this.props.isErrorEmail ? this.props.msgEmail : null}
+                {this.props.isErrorPassword ? this.props.msgPassword : null}
+              </h5>
+            </div>
             <form className="form-signin" action="submit" onSubmit={this.onAuthSubmit}>
               <input
                 type="text"
@@ -98,6 +135,14 @@ LoginForm.propTypes = {
   onLoginUser: PropTypes.func.isRequired,
   onLoginAdmin: PropTypes.func.isRequired,
   onAddCurrentUser: PropTypes.func.isRequired,
+  onEmailError: PropTypes.func.isRequired,
+  onPswdError: PropTypes.func.isRequired,
+  msgEmail: PropTypes.string.isRequired,
+  msgPassword: PropTypes.string.isRequired,
+  isErrorEmail: PropTypes.bool.isRequired,
+  isErrorPassword: PropTypes.bool.isRequired,
+  onCloseError: PropTypes.func.isRequired,
+  openError: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -105,6 +150,11 @@ const mapStateToProps = state => {
     logged: state.authorizationReducer.logged,
     showAdmin: state.authorizationReducer.showAdmin,
     usersData: state.usersReducer.usersAdmin,
+    msgEmail: state.authorizationReducer.emailErrorText,
+    msgPassword: state.authorizationReducer.pswdErrorText,
+    isErrorEmail: state.authorizationReducer.emailError,
+    isErrorPassword: state.authorizationReducer.pswdError,
+    openError: state.authorizationReducer.openError,
   };
 };
 
@@ -113,6 +163,9 @@ const mapDispatchToProps = dispatch => {
     onLoginUser: () => dispatch(userLogin()),
     onLoginAdmin: () => dispatch(adminLogin()),
     onAddCurrentUser: user => dispatch(addCurrentUser(user)),
+    onEmailError: msg => dispatch(errorLogin(msg)),
+    onPswdError: msg => dispatch(passwordError(msg)),
+    onCloseError: () => dispatch(onCloseError()),
   };
 };
 

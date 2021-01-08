@@ -2,6 +2,11 @@ const initialState = {
   logged: false,
   showAdmin: false,
   currentUser: null,
+  emailError: false,
+  emailErrorText: '',
+  pswdError: false,
+  pswdErrorText: '',
+  openError: false,
 };
 
 const authorizationReducer = (state = initialState, action) => {
@@ -32,6 +37,27 @@ const authorizationReducer = (state = initialState, action) => {
       return {
         ...state,
         currentUser: action.user,
+      };
+    case 'USER/LOG_IN_ERR_EMAIL':
+      return {
+        ...state,
+        emailError: true,
+        emailErrorText: action.msg,
+        openError: true,
+      };
+    case 'USER/LOG_IN_ERR_PASSWORD':
+      return {
+        ...state,
+        pswdError: true,
+        pswdErrorText: action.msg,
+        openError: true,
+      };
+    case 'USER/CLOSE_ERROR':
+      return {
+        ...state,
+        emailError: false,
+        pswdError: false,
+        openError: false,
       };
     default:
       return state;

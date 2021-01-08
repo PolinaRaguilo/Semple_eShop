@@ -28,3 +28,23 @@ export const addCurrentUser = user => {
     user,
   };
 };
+
+export const errorLogin = msg => {
+  return {
+    type: 'USER/LOG_IN_ERR_EMAIL',
+    msg,
+  };
+};
+
+export const passwordError = msg => {
+  return {
+    type: 'USER/LOG_IN_ERR_PASSWORD',
+    msg,
+  };
+};
+
+export const onCloseError = () => {
+  return {
+    type: 'USER/CLOSE_ERROR',
+  };
+};

@@ -107,3 +107,14 @@
 .signUp:focus {
   color: #687c71;
 }
+.fa-exclamation:before {
+  font-size: 25px;
+}
+
+.alert {
+  display: none;
+}
+
+.error-data {
+  display: block;
+}
