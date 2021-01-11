@@ -2,10 +2,8 @@ const initialState = {
   logged: false,
   showAdmin: false,
   currentUser: null,
-  emailError: false,
-  emailErrorText: '',
-  pswdError: false,
-  pswdErrorText: '',
+  isError: false,
+  errorText: '',
   openError: false,
 };
 
@@ -38,25 +36,17 @@ const authorizationReducer = (state = initialState, action) => {
         ...state,
         currentUser: action.user,
       };
-    case 'USER/LOG_IN_ERR_EMAIL':
+    case 'USER/LOG_IN_ERROR':
       return {
         ...state,
-        emailError: true,
-        emailErrorText: action.msg,
-        openError: true,
-      };
-    case 'USER/LOG_IN_ERR_PASSWORD':
-      return {
-        ...state,
-        pswdError: true,
-        pswdErrorText: action.msg,
+        isError: true,
+        errorText: action.msg,
         openError: true,
       };
     case 'USER/CLOSE_ERROR':
       return {
         ...state,
-        emailError: false,
-        pswdError: false,
+        isError: false,
         openError: false,
       };
     default:

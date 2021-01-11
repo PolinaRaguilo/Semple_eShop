@@ -8,7 +8,6 @@ import {
   adminLogin,
   errorLogin,
   onCloseError,
-  passwordError,
   userLogin,
 } from '../../../../redux/actions/authorizationAction';
 import './LoginForm.css';
@@ -50,10 +49,8 @@ class LoginForm extends React.Component {
             case 'auth/invalid-email':
             case 'auth/user-disabled':
             case 'auth/user-not-found':
-              this.props.onEmailError(err.message);
-              break;
             case 'auth/wrong-password':
-              this.props.onPswdError(err.message);
+              this.props.onErrorMsg(err.message);
               break;
           }
         });
@@ -91,10 +88,7 @@ class LoginForm extends React.Component {
                 &times;
               </button>
               <i className="fas fa-exclamation" />
-              <h5>
-                {this.props.isErrorEmail ? this.props.msgEmail : null}
-                {this.props.isErrorPassword ? this.props.msgPassword : null}
-              </h5>
+              <h5>{this.props.isError ? this.props.msgError : null}</h5>
             </div>
             <form className="form-signin" action="submit" onSubmit={this.onAuthSubmit}>
               <input
@@ -135,12 +129,9 @@ LoginForm.propTypes = {
   onLoginUser: PropTypes.func.isRequired,
   onLoginAdmin: PropTypes.func.isRequired,
   onAddCurrentUser: PropTypes.func.isRequired,
-  onEmailError: PropTypes.func.isRequired,
-  onPswdError: PropTypes.func.isRequired,
-  msgEmail: PropTypes.string.isRequired,
-  msgPassword: PropTypes.string.isRequired,
-  isErrorEmail: PropTypes.bool.isRequired,
-  isErrorPassword: PropTypes.bool.isRequired,
+  onErrorMsg: PropTypes.func.isRequired,
+  msgError: PropTypes.string.isRequired,
+  isError: PropTypes.bool.isRequired,
   onCloseError: PropTypes.func.isRequired,
   openError: PropTypes.bool.isRequired,
 };
@@ -150,10 +141,8 @@ const mapStateToProps = state => {
     logged: state.authorizationReducer.logged,
     showAdmin: state.authorizationReducer.showAdmin,
     usersData: state.usersReducer.usersAdmin,
-    msgEmail: state.authorizationReducer.emailErrorText,
-    msgPassword: state.authorizationReducer.pswdErrorText,
-    isErrorEmail: state.authorizationReducer.emailError,
-    isErrorPassword: state.authorizationReducer.pswdError,
+    msgError: state.authorizationReducer.errorText,
+    isError: state.authorizationReducer.isError,
     openError: state.authorizationReducer.openError,
   };
 };
@@ -163,8 +152,7 @@ const mapDispatchToProps = dispatch => {
     onLoginUser: () => dispatch(userLogin()),
     onLoginAdmin: () => dispatch(adminLogin()),
     onAddCurrentUser: user => dispatch(addCurrentUser(user)),
-    onEmailError: msg => dispatch(errorLogin(msg)),
-    onPswdError: msg => dispatch(passwordError(msg)),
+    onErrorMsg: msg => dispatch(errorLogin(msg)),
     onCloseError: () => dispatch(onCloseError()),
   };
 };

@@ -1,5 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import fbDatabase from '../../../../config/fbConfig';
+import { addNewUser } from '../../../../redux/actions/usersAction';
 
 import './RegistrationForm.css';
 
@@ -9,7 +13,6 @@ class RegistrationForm extends React.Component {
     lastName: '',
     email: '',
     password: '',
-    passwordCheck: '',
   };
 
   onInputChange = e => {
@@ -20,9 +23,17 @@ class RegistrationForm extends React.Component {
   };
 
   onRegistrationSubmit = e => {
-    // const { firstName, lastName, email, password, passwordCheck } = this.state;
+    const { firstName, lastName, email, password } = this.state;
     e.preventDefault();
-    console.log(this.state);
+    fbDatabase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        this.props.addNewUser(firstName, lastName, email);
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
   };
 
   render() {
@@ -62,12 +73,9 @@ class RegistrationForm extends React.Component {
                   onChange={this.onInputChange}
                   required
                 />
-
-                <label htmlFor="input-email">
-                  Enter your email
-                  <br />
-                  (your login):
-                </label>
+              </div>
+              <div className="col">
+                <label htmlFor="input-email">Enter your email (your login):</label>
                 <input
                   type="email"
                   id="input-email"
@@ -77,8 +85,6 @@ class RegistrationForm extends React.Component {
                   onChange={this.onInputChange}
                   required
                 />
-              </div>
-              <div className="col password-col">
                 <label htmlFor="input-password">Enter your password:</label>
                 <input
                   type="password"
@@ -86,17 +92,6 @@ class RegistrationForm extends React.Component {
                   name="password"
                   className="form-control"
                   placeholder="Password"
-                  onChange={this.onInputChange}
-                  required
-                />
-
-                <label htmlFor="input-passwordCheck">Confirm your password:</label>
-                <input
-                  type="password"
-                  name="passwordCheck"
-                  id="input-passwordCheck"
-                  className="form-control"
-                  placeholder="Confirm password"
                   onChange={this.onInputChange}
                   required
                 />
@@ -116,4 +111,14 @@ class RegistrationForm extends React.Component {
   }
 }
 
-export default RegistrationForm;
+const mapDispatchToProps = dispatch => {
+  return {
+    addNewUser: (firstName, lastName, email) => dispatch(addNewUser(firstName, lastName, email)),
+  };
+};
+
+RegistrationForm.propTypes = {
+  addNewUser: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(RegistrationForm);

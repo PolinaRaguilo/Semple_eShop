@@ -15,6 +15,10 @@ class UsersService {
   updateUser(value, key) {
     return db.child(key).update(value);
   }
+
+  addNewUser(user) {
+    return db.child(user.id).set(user);
+  }
 }
 
 export default UsersService;

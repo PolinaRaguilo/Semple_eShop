@@ -16,10 +16,6 @@
   cursor: default;
 }
 
-.password-col {
-  margin-top: 40px;
-}
-
 .card {
   background-color: #f7f7f7;
   padding: 20px 25px 30px;
@@ -41,7 +37,7 @@
   font-size: 21px;
   font-weight: bold;
   text-align: center;
-  margin: 10px 0 0;
+  margin: 10px 0 5px;
 }
 
 .reauth-email {

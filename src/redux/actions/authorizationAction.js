@@ -31,14 +31,7 @@ export const addCurrentUser = user => {
 
 export const errorLogin = msg => {
   return {
-    type: 'USER/LOG_IN_ERR_EMAIL',
-    msg,
-  };
-};
-
-export const passwordError = msg => {
-  return {
-    type: 'USER/LOG_IN_ERR_PASSWORD',
+    type: 'USER/LOG_IN_ERROR',
     msg,
   };
 };

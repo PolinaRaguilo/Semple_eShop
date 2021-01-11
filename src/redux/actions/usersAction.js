@@ -1,6 +1,7 @@
 import UsersService from '../../Services/UsersService';
 
 const dbUsers = new UsersService();
+const newIdUser = `_${1 + Math.floor(Math.random() * 100)}`;
 
 const receivedUsers = users => {
   return {
@@ -40,6 +41,19 @@ export const deleteRequest = id => async dispatch => {
 
 export const deleteUser = id => async dispatch => {
   await dbUsers.deleteUser(id).then(() => {
+    dispatch(fetchUsers());
+  });
+};
+
+export const addNewUser = (firstName, lastName, email) => async dispatch => {
+  const newUser = {
+    id: newIdUser,
+    firstName,
+    lastName,
+    email,
+    requestDelete: false,
+  };
+  await dbUsers.addNewUser(newUser).then(() => {
     dispatch(fetchUsers());
   });
 };
