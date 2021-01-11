@@ -5,6 +5,9 @@ const initialState = {
   isError: false,
   errorText: '',
   openError: false,
+  registrationErrorText: '',
+  registrationError: false,
+  success: false,
 };
 
 const authorizationReducer = (state = initialState, action) => {
@@ -13,12 +16,14 @@ const authorizationReducer = (state = initialState, action) => {
       return {
         ...state,
         logged: true,
+        success: false,
       };
     case 'USER/LOG_OUT':
       return {
         ...state,
         logged: false,
         currentUser: null,
+        success: false,
       };
     case 'ADMIN/LOG_IN':
       return {
@@ -49,6 +54,30 @@ const authorizationReducer = (state = initialState, action) => {
         isError: false,
         openError: false,
       };
+    case 'NEW_USER/ERROR':
+      return {
+        ...state,
+        registrationErrorText: action.msg,
+        registrationError: true,
+      };
+    case 'NEW_USER/CLOSE_ERROR':
+      return {
+        ...state,
+        registrationError: false,
+        openErrorRegistration: false,
+      };
+    case 'NEW_USER/SUCCESS':
+      return {
+        ...state,
+        registrationError: false,
+        success: true,
+      };
+    case 'NEW_USER/SUCCESS_CLOSE':
+      return {
+        ...state,
+        success: false,
+      };
+
     default:
       return state;
   }

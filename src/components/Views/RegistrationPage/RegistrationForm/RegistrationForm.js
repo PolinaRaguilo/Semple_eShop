@@ -2,10 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { AlertTitle } from '@material-ui/lab';
+import Alert from '@material-ui/lab/Alert';
 import fbDatabase from '../../../../config/fbConfig';
 import { addNewUser } from '../../../../redux/actions/usersAction';
 
 import './RegistrationForm.css';
+import {
+  errorNewUser,
+  onSuccessHide,
+  onSuccessRegistration,
+} from '../../../../redux/actions/authorizationAction';
 
 class RegistrationForm extends React.Component {
   state = {
@@ -22,6 +29,10 @@ class RegistrationForm extends React.Component {
     });
   };
 
+  onSuccessHandler = () => {
+    this.props.onSuccessClose();
+  };
+
   onRegistrationSubmit = e => {
     const { firstName, lastName, email, password } = this.state;
     e.preventDefault();
@@ -30,9 +41,17 @@ class RegistrationForm extends React.Component {
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
         this.props.addNewUser(firstName, lastName, email);
+        this.props.onSuccess();
       })
       .catch(err => {
-        console.log(err.message);
+        // eslint-disable-next-line default-case
+        switch (err.code) {
+          case 'auth/email-already-in-use':
+          case 'auth/invalid-email':
+          case 'auth/weak-password':
+            this.props.onError(err.message);
+            break;
+        }
       });
   };
 
@@ -49,6 +68,22 @@ class RegistrationForm extends React.Component {
           <p id="profile-name" className="profile-name-card">
             Sign Up
           </p>
+          {this.props.successNewUser ? (
+            <Alert severity="success">
+              <AlertTitle>Success</AlertTitle>
+              You have successfully registered in eShop.
+              <br />
+              <Link to="/" onClick={this.onSuccessHandler}>
+                Click to enter the site as a registered user!
+              </Link>
+            </Alert>
+          ) : null}
+          {this.props.registrationError ? (
+            <Alert severity="error">
+              <AlertTitle>Error</AlertTitle>
+              {this.props.regErrorText}
+            </Alert>
+          ) : null}
           <form className="form-signin" action="submit" onSubmit={this.onRegistrationSubmit}>
             <div className="row">
               <div className="col">
@@ -111,14 +146,31 @@ class RegistrationForm extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    registrationError: state.authorizationReducer.registrationError,
+    regErrorText: state.authorizationReducer.registrationErrorText,
+    successNewUser: state.authorizationReducer.success,
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     addNewUser: (firstName, lastName, email) => dispatch(addNewUser(firstName, lastName, email)),
+    onError: msg => dispatch(errorNewUser(msg)),
+    onSuccess: () => dispatch(onSuccessRegistration()),
+    onSuccessClose: () => dispatch(onSuccessHide()),
   };
 };
 
 RegistrationForm.propTypes = {
   addNewUser: PropTypes.func.isRequired,
+  onError: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
+  onSuccessClose: PropTypes.func.isRequired,
+  registrationError: PropTypes.bool.isRequired,
+  regErrorText: PropTypes.string.isRequired,
+  successNewUser: PropTypes.bool.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(RegistrationForm);
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);

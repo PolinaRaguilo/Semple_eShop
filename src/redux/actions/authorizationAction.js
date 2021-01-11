@@ -36,8 +36,33 @@ export const errorLogin = msg => {
   };
 };
 
+export const errorNewUser = msg => {
+  return {
+    type: 'NEW_USER/ERROR',
+    msg,
+  };
+};
+
 export const onCloseError = () => {
   return {
     type: 'USER/CLOSE_ERROR',
+  };
+};
+
+export const onCloseErrorReg = () => {
+  return {
+    type: 'NEW_USER/CLOSE_ERROR',
+  };
+};
+
+export const onSuccessRegistration = () => {
+  return {
+    type: 'NEW_USER/SUCCESS',
+  };
+};
+
+export const onSuccessHide = () => {
+  return {
+    type: 'NEW_USER/SUCCESS_CLOSE',
   };
 };
