@@ -4,9 +4,36 @@ import PropTypes from 'prop-types';
 
 import './UserProfile.css';
 import { deleteRequest } from '../../../../redux/actions/usersAction';
+import {
+  closeEditProfile,
+  openEditProfile,
+  updateInf,
+} from '../../../../redux/actions/profileActions';
 
 class UserProfile extends React.Component {
   currUser = this.props.users.find(user => user.email === this.props.currentUser);
+
+  state = {
+    firstName: this.currUser.firstName,
+    lastName: this.currUser.lastName,
+  };
+
+  onUpdateInformation = () => {
+    try {
+      this.props.onEditClose();
+      this.props.onUpdateInf(this.currUser.id, this.state.firstName, this.state.lastName);
+      // window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  onInputChange = e => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
+  };
 
   onRequestHandler = () => {
     this.props.onRequestDelete(this.currUser.id);
@@ -22,7 +49,22 @@ class UserProfile extends React.Component {
           alt="UserImg"
         />
         <h4 className="profile-title">Profile</h4>
-        <button type="button" className="btn btn-outline-primary btn-edit">
+        <button
+          type="button"
+          className={
+            this.props.isEdit
+              ? 'btn btn-outline-primary show-save'
+              : 'btn btn-outline-primary btn-save'
+          }
+          onClick={this.onUpdateInformation}
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          className="btn btn-outline-primary btn-edit"
+          onClick={this.props.onEdit}
+        >
           Edit profile
         </button>
         <table className="table profile-table">
@@ -31,13 +73,39 @@ class UserProfile extends React.Component {
               <td>
                 <b>Name</b>
               </td>
-              <td>{this.currUser.firstName}</td>
+              <td>
+                {this.props.isEdit ? (
+                  <input
+                    type="text"
+                    className="form-control edit-inputs"
+                    name="firstName"
+                    value={this.state.firstName}
+                    onChange={this.onInputChange}
+                    required
+                  />
+                ) : (
+                  this.currUser.firstName
+                )}
+              </td>
             </tr>
             <tr>
               <td>
                 <b>Surname</b>
               </td>
-              <td>{this.currUser.lastName}</td>
+              <td>
+                {this.props.isEdit ? (
+                  <input
+                    type="text"
+                    name="lastName"
+                    className="form-control edit-inputs"
+                    value={this.state.lastName}
+                    onChange={this.onInputChange}
+                    required
+                  />
+                ) : (
+                  this.currUser.lastName
+                )}
+              </td>
             </tr>
             <tr>
               <td>
@@ -71,12 +139,16 @@ const mapStateToProps = state => {
   return {
     currentUser: state.authorizationReducer.currentUser,
     users: state.usersReducer.usersAdmin,
+    isEdit: state.profileReducer.openEdit,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onRequestDelete: id => dispatch(deleteRequest(id)),
+    onEdit: () => dispatch(openEditProfile()),
+    onEditClose: () => dispatch(closeEditProfile()),
+    onUpdateInf: (id, newName, newSurname) => dispatch(updateInf(id, newName, newSurname)),
   };
 };
 
@@ -84,6 +156,10 @@ UserProfile.propTypes = {
   currentUser: PropTypes.string.isRequired,
   onRequestDelete: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
+  isEdit: PropTypes.bool.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onEditClose: PropTypes.func.isRequired,
+  onUpdateInf: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

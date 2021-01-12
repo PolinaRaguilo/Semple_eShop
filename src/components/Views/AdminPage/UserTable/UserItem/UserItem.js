@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import './UserItem.css';
 import { connect } from 'react-redux';
+import './UserItem.css';
+
 import { deleteUser } from '../../../../../redux/actions/usersAction';
 
 class UserItem extends React.Component {

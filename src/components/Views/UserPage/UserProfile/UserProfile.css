@@ -24,6 +24,14 @@
 .btn-edit {
   float: right;
   margin-bottom: 10px;
+  margin-right: 10px;
+}
+.show-save {
+  display: block;
+  float: right;
+}
+.btn-save {
+  display: none;
 }
 
 .btns {
@@ -54,4 +62,9 @@
   background-color: #eb6864;
   border: none;
   outline: none;
+}
+
+.edit-inputs {
+  width: 55%;
+  border: 2px solid #d75374;
 }

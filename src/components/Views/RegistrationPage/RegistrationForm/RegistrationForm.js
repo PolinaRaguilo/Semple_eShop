@@ -29,6 +29,15 @@ class RegistrationForm extends React.Component {
     });
   };
 
+  clearInputs = () => {
+    this.setState({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+    });
+  };
+
   onSuccessHandler = () => {
     this.props.onSuccessClose();
   };
@@ -40,8 +49,9 @@ class RegistrationForm extends React.Component {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
-        this.props.addNewUser(firstName, lastName, email);
         this.props.onSuccess();
+        this.props.addNewUser(firstName, lastName, email);
+        this.clearInputs();
       })
       .catch(err => {
         // eslint-disable-next-line default-case
@@ -95,6 +105,7 @@ class RegistrationForm extends React.Component {
                   className="form-control"
                   placeholder="Name"
                   onChange={this.onInputChange}
+                  value={this.state.firstName}
                   required
                 />
 
@@ -106,6 +117,7 @@ class RegistrationForm extends React.Component {
                   className="form-control"
                   placeholder="Surname"
                   onChange={this.onInputChange}
+                  value={this.state.lastName}
                   required
                 />
               </div>
@@ -118,6 +130,7 @@ class RegistrationForm extends React.Component {
                   className="form-control"
                   placeholder="Email"
                   onChange={this.onInputChange}
+                  value={this.state.email}
                   required
                 />
                 <label htmlFor="input-password">Enter your password:</label>
@@ -128,6 +141,7 @@ class RegistrationForm extends React.Component {
                   className="form-control"
                   placeholder="Password"
                   onChange={this.onInputChange}
+                  value={this.state.password}
                   required
                 />
               </div>
