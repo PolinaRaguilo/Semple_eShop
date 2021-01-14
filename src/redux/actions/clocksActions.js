@@ -51,6 +51,7 @@ export const addNewClock = (
     vendorCode,
     price,
     rating: defaultRating,
+    editClock: false,
   };
   await dbClocks.addNewClock(data).then(() => {
     dispatch(fetchClocks());
@@ -66,14 +67,35 @@ export const addRating = (value, id) => async dispatch => {
   });
 };
 
-// export const addRating = (value, id) => {
-//
-//   return {
-//     type: 'ADD_RATING',
-//     value,
-//     id,
-//   };
-// };
+export const onEditClock = (id, value) => async dispatch => {
+  await dbClocks.updateClock({ editClock: value }, id).then(() => {
+    dispatch(fetchClocks());
+  });
+};
+
+export const onSaveUpdateClock = (
+  id,
+  newImageClock,
+  newBrand,
+  newCollection,
+  newCode,
+  newPrice
+) => async dispatch => {
+  await dbClocks
+    .updateClock(
+      {
+        imageClock: newImageClock,
+        brandClock: newBrand,
+        collection: newCollection,
+        vendorCode: newCode,
+        price: newPrice,
+      },
+      id
+    )
+    .then(() => {
+      dispatch(fetchClocks());
+    });
+};
 
 export const deleteItemAdmin = id => async dispatch => {
   await dbClocks.deleteClock(id).then(() => {

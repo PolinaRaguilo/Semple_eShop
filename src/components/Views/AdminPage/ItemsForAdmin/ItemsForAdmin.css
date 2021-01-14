@@ -1,7 +1,8 @@
 .table-container {
   background-color: white;
   margin: 0 auto;
-  width: 50%;
+  width: 90%;
+  text-align: center;
 }
 
 .add-clock {

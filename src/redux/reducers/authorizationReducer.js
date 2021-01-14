@@ -17,6 +17,7 @@ const authorizationReducer = (state = initialState, action) => {
         ...state,
         logged: true,
         success: false,
+        currentUser: action.user,
       };
     case 'USER/LOG_OUT':
       return {
@@ -29,17 +30,13 @@ const authorizationReducer = (state = initialState, action) => {
       return {
         ...state,
         showAdmin: true,
+        currentUser: action.admin,
       };
     case 'ADMIN/LOG_OUT':
       return {
         ...state,
         showAdmin: false,
         currentUser: null,
-      };
-    case 'CURRENT_USER':
-      return {
-        ...state,
-        currentUser: action.user,
       };
     case 'USER/LOG_IN_ERROR':
       return {

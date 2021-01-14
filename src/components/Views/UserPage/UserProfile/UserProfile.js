@@ -19,13 +19,8 @@ class UserProfile extends React.Component {
   };
 
   onUpdateInformation = () => {
-    try {
-      this.props.onEditClose();
-      this.props.onUpdateInf(this.currUser.id, this.state.firstName, this.state.lastName);
-      // window.location.reload();
-    } catch (err) {
-      console.log(err);
-    }
+    this.props.onEditClose();
+    this.props.onUpdateInf(this.currUser.id, this.state.firstName, this.state.lastName);
   };
 
   onInputChange = e => {

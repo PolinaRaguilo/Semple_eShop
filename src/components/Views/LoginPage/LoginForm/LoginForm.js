@@ -4,7 +4,6 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import fbDatabase from '../../../../config/fbConfig';
 import {
-  addCurrentUser,
   adminLogin,
   errorLogin,
   onCloseError,
@@ -32,15 +31,13 @@ class LoginForm extends React.Component {
     e.preventDefault();
 
     if (login === 'admin@admin' && password === 'admin') {
-      this.props.onLoginAdmin();
-      this.props.onAddCurrentUser(login);
+      this.props.onLoginAdmin(login);
     } else {
       fbDatabase
         .auth()
         .signInWithEmailAndPassword(login, password)
         .then(() => {
-          this.props.onLoginUser();
-          this.props.onAddCurrentUser(login);
+          this.props.onLoginUser(login);
         })
         // eslint-disable-next-line consistent-return
         .catch(err => {
@@ -128,7 +125,6 @@ LoginForm.propTypes = {
   showAdmin: PropTypes.bool.isRequired,
   onLoginUser: PropTypes.func.isRequired,
   onLoginAdmin: PropTypes.func.isRequired,
-  onAddCurrentUser: PropTypes.func.isRequired,
   onErrorMsg: PropTypes.func.isRequired,
   msgError: PropTypes.string.isRequired,
   isError: PropTypes.bool.isRequired,
@@ -149,9 +145,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLoginUser: () => dispatch(userLogin()),
-    onLoginAdmin: () => dispatch(adminLogin()),
-    onAddCurrentUser: user => dispatch(addCurrentUser(user)),
+    onLoginUser: user => dispatch(userLogin(user)),
+    onLoginAdmin: admin => dispatch(adminLogin(admin)),
     onErrorMsg: msg => dispatch(errorLogin(msg)),
     onCloseError: () => dispatch(onCloseError()),
   };

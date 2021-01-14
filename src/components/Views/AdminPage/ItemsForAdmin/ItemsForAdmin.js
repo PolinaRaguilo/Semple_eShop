@@ -29,7 +29,7 @@ class ItemsForAdmin extends React.Component {
     const { clocks } = this.props;
 
     const clocksItems = clocks.map(item => {
-      const { id, imageClock, brandClock, collection, vendorCode, price, rating } = item;
+      const { id, imageClock, brandClock, collection, vendorCode, price, rating, editClock } = item;
       return (
         <OneClockItemForAdmin
           key={id}
@@ -40,6 +40,7 @@ class ItemsForAdmin extends React.Component {
           vendorCode={vendorCode}
           price={price}
           rating={rating}
+          editClock={editClock}
         />
       );
     });
@@ -127,7 +128,7 @@ class ItemsForAdmin extends React.Component {
               <th scope="col">Code</th>
               <th scope="col">Price</th>
               <th scope="col">Rating</th>
-              <th scope="col">Delete</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>{clocksItems}</tbody>
