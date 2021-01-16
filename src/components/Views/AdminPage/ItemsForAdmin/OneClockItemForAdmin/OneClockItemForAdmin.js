@@ -16,6 +16,7 @@ class OneClockItemForAdmin extends React.Component {
     newCollection: this.props.collection,
     newCode: this.props.vendorCode,
     newPrice: this.props.price,
+    newGender: this.props.gender,
   };
 
   onDeleteClockHandler = () => {
@@ -27,9 +28,17 @@ class OneClockItemForAdmin extends React.Component {
   };
 
   onSaveClock = () => {
-    const { newImageClock, newBrand, newCollection, newCode, newPrice } = this.state;
+    const { newImageClock, newBrand, newCollection, newCode, newPrice, newGender } = this.state;
     this.props.onEditClock(this.props.id, false);
-    this.props.onSaveEdit(this.props.id, newImageClock, newBrand, newCollection, newCode, newPrice);
+    this.props.onSaveEdit(
+      this.props.id,
+      newImageClock,
+      newBrand,
+      newCollection,
+      newCode,
+      newPrice,
+      newGender
+    );
   };
 
   onInputChange = e => {
@@ -41,7 +50,6 @@ class OneClockItemForAdmin extends React.Component {
 
   render() {
     const {
-      id,
       imageClock,
       brandClock,
       collection,
@@ -49,11 +57,11 @@ class OneClockItemForAdmin extends React.Component {
       price,
       rating,
       editClock,
+      gender,
     } = this.props;
 
     return (
       <tr>
-        <td>{id}</td>
         <td>
           {editClock ? (
             <input
@@ -65,6 +73,19 @@ class OneClockItemForAdmin extends React.Component {
             />
           ) : (
             <img src={imageClock} alt="img" className="clock-img" />
+          )}
+        </td>
+        <td>
+          {editClock ? (
+            <input
+              className="form-control"
+              type="text"
+              value={this.state.newGender}
+              onChange={this.onInputChange}
+              name="newGender"
+            />
+          ) : (
+            gender
           )}
         </td>
         <td>
@@ -157,8 +178,10 @@ const mapDispatchToProps = dispatch => {
   return {
     onDeleteClock: id => dispatch(deleteItemAdmin(id)),
     onEditClock: (id, value) => dispatch(onEditClock(id, value)),
-    onSaveEdit: (id, newImageClock, newBrand, newCollection, newCode, newPrice) =>
-      dispatch(onSaveUpdateClock(id, newImageClock, newBrand, newCollection, newCode, newPrice)),
+    onSaveEdit: (id, newImageClock, newBrand, newCollection, newCode, newPrice, newGender) =>
+      dispatch(
+        onSaveUpdateClock(id, newImageClock, newBrand, newCollection, newCode, newPrice, newGender)
+      ),
   };
 };
 
@@ -170,6 +193,7 @@ OneClockItemForAdmin.propTypes = {
   vendorCode: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
+  gender: PropTypes.string.isRequired,
   editClock: PropTypes.bool.isRequired,
   onDeleteClock: PropTypes.func.isRequired,
   onEditClock: PropTypes.func.isRequired,

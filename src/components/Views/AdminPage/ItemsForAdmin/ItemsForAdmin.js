@@ -12,9 +12,9 @@ class ItemsForAdmin extends React.Component {
   state = {};
 
   onSubmit = e => {
-    const { imageClock, brandClock, collection, vendorCode, price } = this.state;
+    const { imageClock, brandClock, collection, vendorCode, price, gender } = this.state;
     e.preventDefault();
-    this.props.addNewClock(imageClock, brandClock, collection, vendorCode, price);
+    this.props.addNewClock(imageClock, brandClock, collection, vendorCode, price, gender);
   };
 
   onInputChange = e => {
@@ -29,7 +29,17 @@ class ItemsForAdmin extends React.Component {
     const { clocks } = this.props;
 
     const clocksItems = clocks.map(item => {
-      const { id, imageClock, brandClock, collection, vendorCode, price, rating, editClock } = item;
+      const {
+        id,
+        imageClock,
+        brandClock,
+        collection,
+        vendorCode,
+        price,
+        rating,
+        editClock,
+        gender,
+      } = item;
       return (
         <OneClockItemForAdmin
           key={id}
@@ -39,6 +49,7 @@ class ItemsForAdmin extends React.Component {
           collection={collection}
           vendorCode={vendorCode}
           price={price}
+          gender={gender}
           rating={rating}
           editClock={editClock}
         />
@@ -112,6 +123,18 @@ class ItemsForAdmin extends React.Component {
                 onChange={this.onInputChange}
               />
 
+              <label htmlFor="choose-gender">Gender</label>
+              <select
+                className="custom-select"
+                id="choose-gender"
+                name="gender"
+                onChange={this.onInputChange}
+              >
+                <option value="">None</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+
               <button type="submit" className="btn btn-primary btn-add">
                 Добавить
               </button>
@@ -121,8 +144,8 @@ class ItemsForAdmin extends React.Component {
         <table className="table-container table table-hover">
           <thead className="table-warning">
             <tr>
-              <th scope="col">id</th>
               <th scope="col">Image</th>
+              <th scope="col">Gender</th>
               <th scope="col">Brand</th>
               <th scope="col">Collection</th>
               <th scope="col">Code</th>
@@ -148,8 +171,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addNewClock: (imageClock, brandClock, collection, vendorCode, price) =>
-      dispatch(addNewClock(imageClock, brandClock, collection, vendorCode, price)),
+    addNewClock: (imageClock, brandClock, collection, vendorCode, price, gender) =>
+      dispatch(addNewClock(imageClock, brandClock, collection, vendorCode, price, gender)),
   };
 };
 

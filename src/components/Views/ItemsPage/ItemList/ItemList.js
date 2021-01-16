@@ -133,6 +133,9 @@ class ItemList extends React.Component {
                   step={100}
                 />
               </div>
+              <button type="button" className="btn btn-primary">
+                Search
+              </button>
             </div>
           </div>
           <div className="col-md-8 products">

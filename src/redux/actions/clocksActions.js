@@ -41,7 +41,8 @@ export const addNewClock = (
   brandClock,
   collection,
   vendorCode,
-  price
+  price,
+  gender
 ) => async dispatch => {
   const data = {
     id: newId,
@@ -50,6 +51,7 @@ export const addNewClock = (
     collection,
     vendorCode,
     price,
+    gender,
     rating: defaultRating,
     editClock: false,
   };
@@ -79,7 +81,8 @@ export const onSaveUpdateClock = (
   newBrand,
   newCollection,
   newCode,
-  newPrice
+  newPrice,
+  newGender
 ) => async dispatch => {
   await dbClocks
     .updateClock(
@@ -89,6 +92,7 @@ export const onSaveUpdateClock = (
         collection: newCollection,
         vendorCode: newCode,
         price: newPrice,
+        gender: newGender,
       },
       id
     )
