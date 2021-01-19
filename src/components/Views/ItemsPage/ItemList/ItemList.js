@@ -20,7 +20,7 @@ class ItemList extends React.Component {
   maxPrice = Math.max(...this.clockForPrice);
 
   state = {
-    value: 'All',
+    brandValue: 'All',
     gender: 'All',
     priceValue: [this.minPrice, this.maxPrice],
     brands: [
@@ -37,7 +37,7 @@ class ItemList extends React.Component {
   };
 
   handleChange = event => {
-    this.setState({ value: event.target.value });
+    this.setState({ brandValue: event.target.value });
   };
 
   handleChangeGender = event => {
@@ -81,7 +81,7 @@ class ItemList extends React.Component {
           key={id}
           aria-label="brand"
           name={brand}
-          value={this.state.value}
+          value={this.state.brandValue}
           onChange={this.handleChange}
           className="one-radio"
         >

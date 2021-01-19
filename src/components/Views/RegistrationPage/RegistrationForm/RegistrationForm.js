@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import * as yup from 'yup';
+// import * as yup from 'yup';
 import { Link } from 'react-router-dom';
 import { AlertTitle } from '@material-ui/lab';
 import Alert from '@material-ui/lab/Alert';
 import fbDatabase from '../../../../config/fbConfig';
 import { addNewUser } from '../../../../redux/actions/usersAction';
-
 import './RegistrationForm.css';
 import {
   errorNewUser,
@@ -44,7 +43,7 @@ class RegistrationForm extends React.Component {
     this.props.onSuccessClose();
   };
 
-  onRegistrationSubmit = async e => {
+  onRegistrationSubmit = e => {
     const { firstName, lastName, email, password } = this.state;
     const dataCheck = {
       firstName,
@@ -53,30 +52,32 @@ class RegistrationForm extends React.Component {
       password,
     };
     e.preventDefault();
-    const isValid = await registrationSchema.isValid(dataCheck);
 
-    if (isValid) {
-      fbDatabase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          this.props.onSuccess();
-          this.props.addNewUser(firstName, lastName, email);
-          this.clearInputs();
-        })
-        .catch(err => {
-          // eslint-disable-next-line default-case
-          switch (err.code) {
-            case 'auth/email-already-in-use':
-            case 'auth/invalid-email':
-            case 'auth/weak-password':
-              this.props.onError(err.message);
-              break;
-          }
-        });
-    } else {
-      console.log(yup.ValidationError);
-    }
+    registrationSchema
+      .validate(dataCheck)
+      .then(() => {
+        fbDatabase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then(() => {
+            this.props.onSuccess();
+            this.props.addNewUser(firstName, lastName, email);
+            this.clearInputs();
+          })
+          .catch(err => {
+            // eslint-disable-next-line default-case
+            switch (err.code) {
+              case 'auth/email-already-in-use':
+              case 'auth/invalid-email':
+              case 'auth/weak-password':
+                this.props.onError(err.message);
+                break;
+            }
+          });
+      })
+      .catch(errVal => {
+        this.props.onError(errVal.errors.join(''));
+      });
   };
 
   render() {
@@ -108,7 +109,6 @@ class RegistrationForm extends React.Component {
               {this.props.regErrorText}
             </Alert>
           ) : null}
-
           <form className="form-signin" action="submit" onSubmit={this.onRegistrationSubmit}>
             <div className="row">
               <div className="col">
