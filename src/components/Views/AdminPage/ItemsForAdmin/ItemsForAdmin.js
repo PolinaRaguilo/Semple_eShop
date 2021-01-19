@@ -14,7 +14,7 @@ class ItemsForAdmin extends React.Component {
   onSubmit = e => {
     const { imageClock, brandClock, collection, vendorCode, price, gender } = this.state;
     e.preventDefault();
-    this.props.addNewClock(imageClock, brandClock, collection, vendorCode, price, gender);
+    this.props.addNewClock(imageClock, brandClock, collection, vendorCode, Number(price), gender);
   };
 
   onInputChange = e => {

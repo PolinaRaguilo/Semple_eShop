@@ -95,7 +95,6 @@ class LoginForm extends React.Component {
                 className="form-control"
                 placeholder="Login"
                 onChange={this.onInputChange}
-                required
               />
               <input
                 type="password"
@@ -104,7 +103,6 @@ class LoginForm extends React.Component {
                 className="form-control"
                 placeholder="Password"
                 onChange={this.onInputChange}
-                required
               />
               <button className="btn btn-lg btn-primary btn-block btn-signin" type="submit">
                 Sign In

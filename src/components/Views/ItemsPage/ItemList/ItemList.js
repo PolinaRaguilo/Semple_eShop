@@ -11,10 +11,18 @@ import Spinner from '../../../Spinner/Spinner';
 import ErrorLoading from '../../../ErrorLoading/ErrorLoading';
 
 class ItemList extends React.Component {
+  clockForPrice = this.props.dataClocks.map(clock => {
+    return clock.price;
+  });
+
+  minPrice = Math.min(...this.clockForPrice);
+
+  maxPrice = Math.max(...this.clockForPrice);
+
   state = {
     value: 'All',
     gender: 'All',
-    priceValue: [700, 2000],
+    priceValue: [this.minPrice, this.maxPrice],
     brands: [
       { id: 1, brand: 'All' },
       { id: 2, brand: 'Tissot' },

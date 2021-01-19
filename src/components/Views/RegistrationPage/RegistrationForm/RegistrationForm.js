@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import * as yup from 'yup';
 import { Link } from 'react-router-dom';
 import { AlertTitle } from '@material-ui/lab';
 import Alert from '@material-ui/lab/Alert';
@@ -13,6 +14,7 @@ import {
   onSuccessHide,
   onSuccessRegistration,
 } from '../../../../redux/actions/authorizationAction';
+import registrationSchema from '../../../../Validation/RegistrationSchema';
 
 class RegistrationForm extends React.Component {
   state = {
@@ -42,27 +44,39 @@ class RegistrationForm extends React.Component {
     this.props.onSuccessClose();
   };
 
-  onRegistrationSubmit = e => {
+  onRegistrationSubmit = async e => {
     const { firstName, lastName, email, password } = this.state;
+    const dataCheck = {
+      firstName,
+      lastName,
+      email,
+      password,
+    };
     e.preventDefault();
-    fbDatabase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        this.props.onSuccess();
-        this.props.addNewUser(firstName, lastName, email);
-        this.clearInputs();
-      })
-      .catch(err => {
-        // eslint-disable-next-line default-case
-        switch (err.code) {
-          case 'auth/email-already-in-use':
-          case 'auth/invalid-email':
-          case 'auth/weak-password':
-            this.props.onError(err.message);
-            break;
-        }
-      });
+    const isValid = await registrationSchema.isValid(dataCheck);
+
+    if (isValid) {
+      fbDatabase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          this.props.onSuccess();
+          this.props.addNewUser(firstName, lastName, email);
+          this.clearInputs();
+        })
+        .catch(err => {
+          // eslint-disable-next-line default-case
+          switch (err.code) {
+            case 'auth/email-already-in-use':
+            case 'auth/invalid-email':
+            case 'auth/weak-password':
+              this.props.onError(err.message);
+              break;
+          }
+        });
+    } else {
+      console.log(yup.ValidationError);
+    }
   };
 
   render() {
@@ -94,6 +108,7 @@ class RegistrationForm extends React.Component {
               {this.props.regErrorText}
             </Alert>
           ) : null}
+
           <form className="form-signin" action="submit" onSubmit={this.onRegistrationSubmit}>
             <div className="row">
               <div className="col">
@@ -106,7 +121,6 @@ class RegistrationForm extends React.Component {
                   placeholder="Name"
                   onChange={this.onInputChange}
                   value={this.state.firstName}
-                  required
                 />
 
                 <label htmlFor="input-LastName">Enter your surname:</label>
@@ -118,20 +132,18 @@ class RegistrationForm extends React.Component {
                   placeholder="Surname"
                   onChange={this.onInputChange}
                   value={this.state.lastName}
-                  required
                 />
               </div>
               <div className="col">
                 <label htmlFor="input-email">Enter your email (your login):</label>
                 <input
-                  type="email"
+                  type="text"
                   id="input-email"
                   name="email"
                   className="form-control"
                   placeholder="Email"
                   onChange={this.onInputChange}
                   value={this.state.email}
-                  required
                 />
                 <label htmlFor="input-password">Enter your password:</label>
                 <input
@@ -142,7 +154,6 @@ class RegistrationForm extends React.Component {
                   placeholder="Password"
                   onChange={this.onInputChange}
                   value={this.state.password}
-                  required
                 />
               </div>
             </div>
