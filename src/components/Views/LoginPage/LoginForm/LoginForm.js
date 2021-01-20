@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import fbDatabase from '../../../../config/fbConfig';
+import loginSchema from '../../../../Validation/LoginValidation';
 import {
   adminLogin,
   errorLogin,
@@ -29,29 +30,39 @@ class LoginForm extends React.Component {
   onAuthSubmit = e => {
     const { login, password } = this.state;
     e.preventDefault();
-
-    if (login === 'admin@admin' && password === 'admin') {
-      this.props.onLoginAdmin(login);
-    } else {
-      fbDatabase
-        .auth()
-        .signInWithEmailAndPassword(login, password)
-        .then(() => {
-          this.props.onLoginUser(login);
-        })
-        // eslint-disable-next-line consistent-return
-        .catch(err => {
-          // eslint-disable-next-line default-case
-          switch (err.code) {
-            case 'auth/invalid-email':
-            case 'auth/user-disabled':
-            case 'auth/user-not-found':
-            case 'auth/wrong-password':
-              this.props.onErrorMsg(err.message);
-              break;
-          }
-        });
-    }
+    const checkData = {
+      login,
+      password,
+    };
+    loginSchema
+      .validate(checkData)
+      .then(() => {
+        if (login === 'admin@admin' && password === 'admin') {
+          this.props.onLoginAdmin(login);
+        } else {
+          fbDatabase
+            .auth()
+            .signInWithEmailAndPassword(login, password)
+            .then(() => {
+              this.props.onLoginUser(login);
+            })
+            // eslint-disable-next-line consistent-return
+            .catch(err => {
+              // eslint-disable-next-line default-case
+              switch (err.code) {
+                case 'auth/invalid-email':
+                case 'auth/user-disabled':
+                case 'auth/user-not-found':
+                case 'auth/wrong-password':
+                  this.props.onErrorMsg(err.message);
+                  break;
+              }
+            });
+        }
+      })
+      .catch(errLogin => {
+        this.props.onErrorMsg(errLogin.errors.join(''));
+      });
   };
 
   render() {
