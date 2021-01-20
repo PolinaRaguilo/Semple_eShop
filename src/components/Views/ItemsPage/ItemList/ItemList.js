@@ -9,6 +9,7 @@ import './ItemList.css';
 import OneItem from './OneItem/OneItem';
 import Spinner from '../../../Spinner/Spinner';
 import ErrorLoading from '../../../ErrorLoading/ErrorLoading';
+import { filterClocks } from '../../../../redux/actions/clocksActions';
 
 class ItemList extends React.Component {
   clockForPrice = this.props.dataClocks.map(clock => {
@@ -52,6 +53,12 @@ class ItemList extends React.Component {
     const clock = this.props.dataClocks.find(item => item.id === idClock);
     const { id, imageClock, brandClock, vendorCode, price } = clock;
     this.props.onAddToCart(id, imageClock, brandClock, vendorCode, price);
+  };
+
+  onFilterHnadler = () => {
+    const { brandValue, gender } = this.state;
+    console.log(brandValue, gender);
+    this.props.filterItems(brandValue.toLowerCase(), this.props.forFilterData);
   };
 
   render() {
@@ -141,7 +148,7 @@ class ItemList extends React.Component {
                   step={100}
                 />
               </div>
-              <button type="button" className="btn btn-primary">
+              <button type="button" className="btn btn-primary" onClick={this.onFilterHnadler}>
                 Search
               </button>
             </div>
@@ -165,6 +172,7 @@ const mapStateToProps = state => {
     onLoading: state.clocksReducer.loadingClocks,
     onError: state.clocksReducer.errorClocks,
     logged: state.authorizationReducer.logged,
+    forFilterData: state.clocksReducer.forFilter,
   };
 };
 
@@ -172,15 +180,18 @@ const mapDispatchToProps = dispatch => {
   return {
     onAddToCart: (id, imageClock, brandClock, vendorCode, price) =>
       dispatch(addToCart(id, imageClock, brandClock, vendorCode, price)),
+    filterItems: (brand, items) => dispatch(filterClocks(brand, items)),
   };
 };
 
 ItemList.propTypes = {
   dataClocks: PropTypes.array.isRequired,
+  forFilterData: PropTypes.array.isRequired,
   onAddToCart: PropTypes.func.isRequired,
   onLoading: PropTypes.bool.isRequired,
   logged: PropTypes.bool.isRequired,
   onError: PropTypes.bool.isRequired,
+  filterItems: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

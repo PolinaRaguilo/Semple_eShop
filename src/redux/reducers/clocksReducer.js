@@ -3,6 +3,7 @@ const initialState = {
   loadingClocks: true,
   errorClocks: false,
   typeError: null,
+  forFilter: [],
 };
 
 const clocksReducer = (state = initialState, action) => {
@@ -24,6 +25,7 @@ const clocksReducer = (state = initialState, action) => {
       return {
         ...state,
         clocksData: action.clocks,
+        forFilter: action.clocks,
         loadingClocks: false,
       };
     case 'CLOCKS/REQUEST_CLOCKS':
@@ -38,6 +40,13 @@ const clocksReducer = (state = initialState, action) => {
         errorClocks: true,
         loadingClocks: false,
         typeError: action.error,
+      };
+    case 'CLOCKS/FILTRATION':
+      // eslint-disable-next-line no-debugger
+      // debugger;
+      return {
+        ...state,
+        clocksData: action.filteredList,
       };
     default:
       return state;

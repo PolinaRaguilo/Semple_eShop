@@ -106,3 +106,11 @@ export const deleteItemAdmin = id => async dispatch => {
     dispatch(fetchClocks());
   });
 };
+
+export const filterClocks = (brandFilter, data) => {
+  const filteredList = data.filter(item => item.brandClock.toLowerCase() === brandFilter);
+  return {
+    type: 'CLOCKS/FILTRATION',
+    filteredList,
+  };
+};
