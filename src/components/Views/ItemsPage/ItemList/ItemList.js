@@ -57,8 +57,11 @@ class ItemList extends React.Component {
 
   onFilterHnadler = () => {
     const { brandValue, gender } = this.state;
-    console.log(brandValue, gender);
-    this.props.filterItems(brandValue.toLowerCase(), this.props.forFilterData);
+    this.props.filterItems(
+      gender.toLowerCase(),
+      brandValue.toLowerCase(),
+      this.props.forFilterData
+    );
   };
 
   render() {
@@ -180,7 +183,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onAddToCart: (id, imageClock, brandClock, vendorCode, price) =>
       dispatch(addToCart(id, imageClock, brandClock, vendorCode, price)),
-    filterItems: (brand, items) => dispatch(filterClocks(brand, items)),
+    filterItems: (gender, brand, items) => dispatch(filterClocks(gender, brand, items)),
   };
 };
 

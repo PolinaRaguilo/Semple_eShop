@@ -42,8 +42,6 @@ const clocksReducer = (state = initialState, action) => {
         typeError: action.error,
       };
     case 'CLOCKS/FILTRATION':
-      // eslint-disable-next-line no-debugger
-      // debugger;
       return {
         ...state,
         clocksData: action.filteredList,

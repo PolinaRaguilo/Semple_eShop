@@ -107,8 +107,20 @@ export const deleteItemAdmin = id => async dispatch => {
   });
 };
 
-export const filterClocks = (brandFilter, data) => {
-  const filteredList = data.filter(item => item.brandClock.toLowerCase() === brandFilter);
+export const filterClocks = (genderFilter, brandFilter, data) => {
+  let filteredList;
+  if (brandFilter.toLowerCase() === 'all' && genderFilter.toLowerCase() === 'all') {
+    filteredList = data;
+  } else if (brandFilter.toLowerCase() === 'all' && genderFilter.toLowerCase() !== 'all') {
+    filteredList = data.filter(item => item.gender.toLowerCase() === genderFilter);
+  } else if (brandFilter.toLowerCase() !== 'all' && genderFilter.toLowerCase() === 'all') {
+    filteredList = data.filter(item => item.brandClock.toLowerCase() === brandFilter);
+  } else {
+    filteredList = data
+      .filter(item => item.brandClock.toLowerCase() === brandFilter)
+      .filter(item => item.gender.toLowerCase() === genderFilter);
+  }
+
   return {
     type: 'CLOCKS/FILTRATION',
     filteredList,
