@@ -1,10 +1,12 @@
-.btn-delete {
+.btn-delete,
+.btn-plus,
+.btn-minus {
   outline: none;
   border: none;
   background: transparent;
   cursor: pointer;
 }
-.btn-delete:focus {
-  outline: none;
-  border: none;
+
+.count-wrapper {
+  font-size: 18px;
 }

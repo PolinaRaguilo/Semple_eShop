@@ -10,7 +10,7 @@ class Cart extends React.Component {
   render() {
     const { isOpen, cartItems } = this.props;
     const clocksForCart = cartItems.map(item => {
-      const { id, imageClock, brandClock, vendorCode, price } = item;
+      const { id, imageClock, brandClock, price, count } = item;
       return (
         <table className="table table-hover">
           <tbody>
@@ -18,8 +18,8 @@ class Cart extends React.Component {
               id={id}
               imageClock={imageClock}
               brandClock={brandClock}
-              vendorCode={vendorCode}
               price={price}
+              count={count}
             />
           </tbody>
         </table>
@@ -27,7 +27,7 @@ class Cart extends React.Component {
     });
     const total = 0;
     const totalPrice = cartItems.reduce((summa, item) => {
-      return summa + total + item.price;
+      return summa + total + item.price * item.count;
     }, 0);
 
     if (isOpen === true) {
