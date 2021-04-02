@@ -1,6 +1,7 @@
 import ClocksService from '../../Services/ClocksService';
 
-const newId = `_${1 + Math.floor(Math.random() * 100)}`;
+// const newId = Date.now();
+const newId = `_${Math.random().toString(36).substr(2, 9)}`;
 const defaultRating = 0;
 
 const dbClocks = new ClocksService();

@@ -27,3 +27,17 @@
 .MuiFormControlLabel-root {
   margin-bottom: 0;
 }
+
+.products {
+  margin-left: 70px;
+}
+
+.filter-block {
+  margin-left: 20px;
+}
+
+.pagination__items.pagination__items ul {
+  justify-content: center;
+  margin-bottom: 30px;
+  margin-left: -100px;
+}

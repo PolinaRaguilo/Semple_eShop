@@ -1,13 +1,14 @@
 .registration-container {
   margin: 0 auto;
-  margin-top: 25px;
+  margin-top: 100px;
   width: 80%;
 }
 
 .card-container.card {
-  max-width: 52%;
+  max-width: 45%;
   padding: 40px 40px;
   border-radius: 20px;
+  margin-top: 70px;
 }
 
 .btn {
@@ -87,7 +88,8 @@
 }
 
 .link-toLogin {
-  margin-left: 30%;
+  display: block;
+  text-align: center;
 }
 .link-toLogin:hover,
 .link-toLogin:focus {

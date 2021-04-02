@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
+import { Pagination } from '@material-ui/lab';
 import { addToCart } from '../../../../redux/actions/cartActions';
 import './ItemList.css';
 import OneItem from './OneItem/OneItem';
@@ -35,6 +37,11 @@ class ItemList extends React.Component {
       { id: 2, gender: 'Male' },
       { id: 3, gender: 'Female' },
     ],
+    currPage: 1,
+  };
+
+  onChangePage = (e, page) => {
+    this.setState({ currPage: page });
   };
 
   handleChange = event => {
@@ -66,8 +73,11 @@ class ItemList extends React.Component {
 
   render() {
     const { dataClocks } = this.props;
+    const indexOfLastPost = this.state.currPage * 8;
+    const indexOfFirstPost = indexOfLastPost - 8;
+    const currentArr = dataClocks.slice(indexOfFirstPost, indexOfLastPost);
 
-    const clockItems = dataClocks.map(item => {
+    const clockItems = currentArr.map(item => {
       const { id, imageClock, brandClock, collection, vendorCode, price, rating } = item;
       return (
         <OneItem
@@ -126,7 +136,7 @@ class ItemList extends React.Component {
     return (
       <div className="content">
         <div className="row">
-          <div className="col">
+          <div className="col-md-3 filter-block">
             <div className="card border-primary mb-3 wrapper">
               <div className="brand-wrapper">
                 <FormControl component="fieldset">
@@ -156,12 +166,20 @@ class ItemList extends React.Component {
               </button>
             </div>
           </div>
-          <div className="col-md-8 products">
+          <div className="col-md products">
             <div className="row">
               {this.props.onError ? <ErrorLoading /> : null}
               {this.props.onLoading ? <Spinner /> : null}
               {!(this.props.onLoading || this.props.onError) ? clockItems : null}
             </div>
+            {this.props.dataClocks.length >= 8 && (
+              <Pagination
+                className="pagination__items"
+                color="secondary"
+                count={Math.ceil(this.props.dataClocks.length / 8)}
+                onChange={(e, page) => this.onChangePage(e, page)}
+              />
+            )}
           </div>
         </div>
       </div>
