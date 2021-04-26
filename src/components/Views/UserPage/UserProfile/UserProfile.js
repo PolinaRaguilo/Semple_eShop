@@ -9,6 +9,8 @@ import {
   openEditProfile,
   updateInf,
 } from '../../../../redux/actions/profileActions';
+import Spinner from '../../../Spinner/Spinner';
+import ChangePassword from '../../../ChangePassword/ChangePassword';
 
 class UserProfile extends React.Component {
   currUser = this.props.users.find(user => user.email === this.props.currentUser);
@@ -16,6 +18,7 @@ class UserProfile extends React.Component {
   state = {
     firstName: this.currUser.firstName,
     lastName: this.currUser.lastName,
+    isOpenChange: false,
   };
 
   onUpdateInformation = () => {
@@ -34,98 +37,117 @@ class UserProfile extends React.Component {
     this.props.onRequestDelete(this.currUser.id);
   };
 
+  onOpenChangeModal = () => {
+    this.setState({ isOpenChange: true });
+  };
+
+  onCloseChangeModal = () => {
+    this.setState({ isOpenChange: false });
+  };
+
   render() {
+    if (this.props.loading) {
+      return <Spinner />;
+    }
+
     return (
-      <div className="container">
-        <img
-          id="profile-img"
-          className="profile-img-card"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/600px-User_icon_2.svg.png"
-          alt="UserImg"
-        />
-        <h4 className="profile-title">Profile</h4>
-        <button
-          type="button"
-          className={
-            this.props.isEdit
-              ? 'btn btn-outline-primary show-save'
-              : 'btn btn-outline-primary btn-save'
-          }
-          onClick={this.onUpdateInformation}
-        >
-          Save
-        </button>
-        <button
-          type="button"
-          className="btn btn-outline-primary btn-edit"
-          onClick={this.props.onEdit}
-        >
-          Edit profile
-        </button>
-        <table className="table profile-table">
-          <tbody>
-            <tr>
-              <td>
-                <b>Name</b>
-              </td>
-              <td>
-                {this.props.isEdit ? (
-                  <input
-                    type="text"
-                    className="form-control edit-inputs"
-                    name="firstName"
-                    value={this.state.firstName}
-                    onChange={this.onInputChange}
-                    required
-                  />
-                ) : (
-                  this.currUser.firstName
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <b>Surname</b>
-              </td>
-              <td>
-                {this.props.isEdit ? (
-                  <input
-                    type="text"
-                    name="lastName"
-                    className="form-control edit-inputs"
-                    value={this.state.lastName}
-                    onChange={this.onInputChange}
-                    required
-                  />
-                ) : (
-                  this.currUser.lastName
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <b>Email</b>
-              </td>
-              <td>{this.currUser.email}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div className="btns">
-          <button type="button" className="btn btn-outline-primary btn-editPsw">
-            Change password
+      <>
+        <div className="container">
+          <img
+            id="profile-img"
+            className="profile-img-card"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/600px-User_icon_2.svg.png"
+            alt="UserImg"
+          />
+          <h4 className="profile-title">Profile</h4>
+          <button
+            type="button"
+            className={
+              this.props.isEdit
+                ? 'btn btn-outline-primary show-save'
+                : 'btn btn-outline-primary btn-save'
+            }
+            onClick={this.onUpdateInformation}
+          >
+            Save
           </button>
           <button
             type="button"
-            className="btn btn-outline-primary btn-deleteProfile"
-            onClick={this.onRequestHandler}
+            className="btn btn-outline-primary btn-edit"
+            onClick={this.props.onEdit}
           >
-            <span className="beforeSend">Delete profile</span>
-            <span className="afterSend">
-              You sent the request to delete <i className="fas fa-user-slash" />
-            </span>
+            Edit profile
           </button>
+          <table className="table profile-table">
+            <tbody>
+              <tr>
+                <td>
+                  <b>Name</b>
+                </td>
+                <td>
+                  {this.props.isEdit ? (
+                    <input
+                      type="text"
+                      className="form-control edit-inputs"
+                      name="firstName"
+                      value={this.state.firstName}
+                      onChange={this.onInputChange}
+                      required
+                    />
+                  ) : (
+                    this.currUser.firstName
+                  )}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Surname</b>
+                </td>
+                <td>
+                  {this.props.isEdit ? (
+                    <input
+                      type="text"
+                      name="lastName"
+                      className="form-control edit-inputs"
+                      value={this.state.lastName}
+                      onChange={this.onInputChange}
+                      required
+                    />
+                  ) : (
+                    this.currUser.lastName
+                  )}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Email</b>
+                </td>
+                <td>{this.currUser.email}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="btns">
+            <button
+              type="button"
+              className="btn btn-outline-primary btn-editPsw"
+              onClick={this.onOpenChangeModal}
+            >
+              Change password
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline-primary btn-deleteProfile"
+              onClick={this.onRequestHandler}
+            >
+              <span className="beforeSend">Delete profile</span>
+              <span className="afterSend">
+                You sent the request to delete <i className="fas fa-user-slash" />
+              </span>
+            </button>
+          </div>
         </div>
-      </div>
+        {this.state.isOpenChange && <ChangePassword onCloseModal={this.onCloseChangeModal} />}
+      </>
     );
   }
 }
@@ -134,6 +156,7 @@ const mapStateToProps = state => {
   return {
     currentUser: state.authorizationReducer.currentUser,
     users: state.usersReducer.usersAdmin,
+    loading: state.usersReducer.loading,
     isEdit: state.profileReducer.openEdit,
   };
 };
@@ -155,6 +178,7 @@ UserProfile.propTypes = {
   onEdit: PropTypes.func.isRequired,
   onEditClose: PropTypes.func.isRequired,
   onUpdateInf: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

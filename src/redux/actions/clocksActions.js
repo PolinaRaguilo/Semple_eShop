@@ -1,7 +1,6 @@
+import { nanoid } from 'nanoid';
 import ClocksService from '../../Services/ClocksService';
 
-// const newId = Date.now();
-const newId = `_${Math.random().toString(36).substr(2, 9)}`;
 const defaultRating = 0;
 
 const dbClocks = new ClocksService();
@@ -46,7 +45,7 @@ export const addNewClock = (
   gender
 ) => async dispatch => {
   const data = {
-    id: newId,
+    id: nanoid(5),
     imageClock,
     brandClock,
     collection,
