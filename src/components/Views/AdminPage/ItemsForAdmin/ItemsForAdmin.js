@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Pagination } from '@material-ui/lab';
 import OneClockItemForAdmin from './OneClockItemForAdmin/OneClockItemForAdmin';
 import Spinner from '../../../Spinner/Spinner';
-
 import './ItemsForAdmin.css';
 import { addNewClock } from '../../../../redux/actions/clocksActions';
 import ErrorLoading from '../../../ErrorLoading/ErrorLoading';
 
 class ItemsForAdmin extends React.Component {
-  state = {};
+  state = {
+    currentPage: 1,
+  };
 
   onSubmit = e => {
     const { imageClock, brandClock, collection, vendorCode, price, gender } = this.state;
@@ -25,10 +27,17 @@ class ItemsForAdmin extends React.Component {
     });
   };
 
+  onChangePage = (e, page) => {
+    this.setState({ currentPage: page });
+  };
+
   render() {
     const { clocks } = this.props;
+    const indexOfLastItem = this.state.currentPage * 4;
+    const indexOfFirstItem = indexOfLastItem - 4;
+    const currentClocks = clocks.slice(indexOfFirstItem, indexOfLastItem);
 
-    const clocksItems = clocks.map(item => {
+    const clocksItems = currentClocks.map(item => {
       const {
         id,
         imageClock,
@@ -156,6 +165,14 @@ class ItemsForAdmin extends React.Component {
           </thead>
           <tbody>{clocksItems}</tbody>
         </table>
+        {this.props.clocks.length >= 4 && (
+          <Pagination
+            className="pagination__admin-items"
+            color="secondary"
+            count={Math.ceil(this.props.clocks.length / 4)}
+            onChange={(e, page) => this.onChangePage(e, page)}
+          />
+        )}
       </>
     );
   }

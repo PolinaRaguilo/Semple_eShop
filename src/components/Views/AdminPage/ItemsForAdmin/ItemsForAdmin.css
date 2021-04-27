@@ -16,3 +16,9 @@
   margin-bottom: 20px;
   float: right;
 }
+
+.pagination__admin-items {
+  position: absolute;
+  left: 45%;
+  margin-top: 20px;
+}

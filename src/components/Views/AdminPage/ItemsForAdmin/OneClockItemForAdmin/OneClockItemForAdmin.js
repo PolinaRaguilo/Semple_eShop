@@ -61,7 +61,7 @@ class OneClockItemForAdmin extends React.Component {
     } = this.props;
 
     return (
-      <tr>
+      <tr className="tr__hover">
         <td>
           {editClock ? (
             <input

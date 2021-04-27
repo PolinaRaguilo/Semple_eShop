@@ -16,3 +16,7 @@
 .btn-hide {
   display: none;
 }
+
+.tr__hover:hover.tr__hover:hover {
+  background-color: #faf8e3;
+}
