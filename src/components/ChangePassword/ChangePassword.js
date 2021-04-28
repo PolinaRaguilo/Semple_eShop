@@ -79,7 +79,7 @@ class ChangePassword extends Component {
                 data-dismiss="modal"
                 onClick={this.onChangeSubmit}
               >
-                Save
+                Ok
               </button>
               <button
                 type="button"

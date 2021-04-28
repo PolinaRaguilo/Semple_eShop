@@ -120,3 +120,14 @@
 .error-data {
   display: block;
 }
+
+.btn__forget {
+  border: none;
+  background-color: transparent;
+  color: #c03a37;
+}
+
+.btn__forget:hover {
+  color: #687c71;
+  text-decoration: underline;
+}

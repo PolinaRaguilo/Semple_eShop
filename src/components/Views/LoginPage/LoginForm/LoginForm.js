@@ -12,11 +12,13 @@ import {
   userLogin,
 } from '../../../../redux/actions/authorizationAction';
 import './LoginForm.css';
+import ChangePassword from '../../../ChangePassword/ChangePassword';
 
 class LoginForm extends React.Component {
   state = {
     login: '',
     password: '',
+    resetPassword: false,
   };
 
   errorClasses = 'alert alert-dismissible alert-primary ';
@@ -26,6 +28,14 @@ class LoginForm extends React.Component {
     this.setState({
       [name]: value,
     });
+  };
+
+  onResetTrue = () => {
+    this.setState({ resetPassword: true });
+  };
+
+  onResetFalse = () => {
+    this.setState({ resetPassword: false });
   };
 
   onAuthSubmit = e => {
@@ -75,58 +85,64 @@ class LoginForm extends React.Component {
     }
 
     return (
-      <div className="loginBody">
-        <div className="login-container">
-          <div className="card card-container">
-            <img
-              id="profile-img"
-              className="profile-img-card"
-              src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-              alt="userImg"
-            />
-            <div
-              className={
-                this.props.openError ? `${this.errorClasses}error-data` : this.errorClasses
-              }
-            >
-              <button
-                type="button"
-                className="close"
-                data-dismiss="alert"
-                onClick={this.props.onCloseError}
+      <>
+        <div className="loginBody">
+          <div className="login-container">
+            <div className="card card-container">
+              <img
+                id="profile-img"
+                className="profile-img-card"
+                src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                alt="userImg"
+              />
+              <div
+                className={
+                  this.props.openError ? `${this.errorClasses}error-data` : this.errorClasses
+                }
               >
-                &times;
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="alert"
+                  onClick={this.props.onCloseError}
+                >
+                  &times;
+                </button>
+                <i className="fas fa-exclamation" />
+                <h5>{this.props.isError ? this.props.msgError : null}</h5>
+              </div>
+              <form className="form-signin" action="submit" onSubmit={this.onAuthSubmit}>
+                <input
+                  type="text"
+                  name="login"
+                  id="inputEmail"
+                  className="form-control"
+                  placeholder="Login"
+                  onChange={this.onInputChange}
+                />
+                <input
+                  type="password"
+                  id="inputPassword"
+                  name="password"
+                  className="form-control"
+                  placeholder="Password"
+                  onChange={this.onInputChange}
+                />
+                <button className="btn btn-lg btn-primary btn-block btn-signin" type="submit">
+                  Sign In
+                </button>
+              </form>
+              <Link to="/registration" className="signUp">
+                Don&#039;t have an account? Sign Up
+              </Link>
+              <button type="button" onClick={this.onResetTrue} className="btn__forget">
+                Forgot your password?
               </button>
-              <i className="fas fa-exclamation" />
-              <h5>{this.props.isError ? this.props.msgError : null}</h5>
             </div>
-            <form className="form-signin" action="submit" onSubmit={this.onAuthSubmit}>
-              <input
-                type="text"
-                name="login"
-                id="inputEmail"
-                className="form-control"
-                placeholder="Login"
-                onChange={this.onInputChange}
-              />
-              <input
-                type="password"
-                id="inputPassword"
-                name="password"
-                className="form-control"
-                placeholder="Password"
-                onChange={this.onInputChange}
-              />
-              <button className="btn btn-lg btn-primary btn-block btn-signin" type="submit">
-                Sign In
-              </button>
-            </form>
-            <Link to="/registration" className="signUp">
-              Don&#039;t have an account? Sign Up
-            </Link>
           </div>
         </div>
-      </div>
+        {this.state.resetPassword && <ChangePassword onCloseModal={this.onResetFalse} />}
+      </>
     );
   }
 }
