@@ -71,7 +71,7 @@ class UserProfile extends React.Component {
           >
             Save
           </button>
-          {this.props.showAdmin === true && (
+          {localStorage.getItem('currentUser') !== 'admin@admin' && (
             <button
               type="button"
               className="btn btn-outline-primary btn-edit"
@@ -130,7 +130,7 @@ class UserProfile extends React.Component {
             </tbody>
           </table>
           <div className="btns">
-            {!this.props.showAdmin === true && (
+            {localStorage.getItem('currentUser') !== 'admin@admin' && (
               <>
                 <button
                   type="button"
@@ -185,7 +185,7 @@ UserProfile.propTypes = {
   onEditClose: PropTypes.func.isRequired,
   onUpdateInf: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  showAdmin: PropTypes.bool.isRequired,
+  // showAdmin: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

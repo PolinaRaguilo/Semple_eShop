@@ -29,7 +29,7 @@ class App extends React.Component {
             <Route exact path="/items" component={ItemsPage} />
             <PrivateRoute
               path="/admin"
-              showAdmin={localStorage.getItem('currentUser') === 'admin@admin'}
+              showAdmin={this.props.showAdminPage}
               component={AdminPage}
             />
             <Route exact path="/user" component={UserPage} />

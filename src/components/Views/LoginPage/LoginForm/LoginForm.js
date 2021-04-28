@@ -72,7 +72,7 @@ class LoginForm extends React.Component {
       return <Redirect to="/items" />;
     }
     if (this.props.showAdmin) {
-      return <Redirect to="/admin" />;
+      return <Redirect to="/admin/userTable" />;
     }
     return (
       <div className="loginBody">

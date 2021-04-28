@@ -52,7 +52,7 @@ class Header extends Component {
         </div>
 
         <div className="icons-wrapper">
-          <Link to="/user" className="link-user">
+          <Link to="/" className="link-user">
             <i className="far fa-user-circle" />
           </Link>
 
