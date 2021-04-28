@@ -73,7 +73,6 @@ class Header extends Component {
 
 const mapStateToProps = state => {
   return {
-    logged: state.authorizationReducer.logged,
     showAdmin: state.authorizationReducer.showAdmin,
   };
 };
@@ -90,7 +89,6 @@ Header.propTypes = {
   onOpenModal: PropTypes.func.isRequired,
   onLogOutUser: PropTypes.func.isRequired,
   onLogOutAdmin: PropTypes.func.isRequired,
-  // logged: PropTypes.bool.isRequired,
   showAdmin: PropTypes.bool.isRequired,
 };
 
