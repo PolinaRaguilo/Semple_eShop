@@ -10,8 +10,13 @@ import LoginPage from '../Views/LoginPage/LoginPage';
 import RegistrationPage from '../Views/RegistrationPage/RegistrationPage';
 import UserPage from '../Views/UserPage/UserPage';
 import Cart from '../Cart/Cart';
+import { fetchUsers } from '../../redux/actions/usersAction';
 
 class App extends React.Component {
+  componentDidMount = () => {
+    this.props.getUsers();
+  };
+
   render() {
     return (
       <>
@@ -45,5 +50,14 @@ const mapStateToProps = state => {
     showAdminPage: state.authorizationReducer.showAdmin,
   };
 };
+const mapDispatchToProps = dispatch => {
+  return {
+    getUsers: () => dispatch(fetchUsers()),
+  };
+};
 
-export default connect(mapStateToProps, null)(App);
+App.propTypes = {
+  getUsers: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

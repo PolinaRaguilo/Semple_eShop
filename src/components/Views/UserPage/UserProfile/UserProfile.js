@@ -13,7 +13,7 @@ import Spinner from '../../../Spinner/Spinner';
 import ChangePassword from '../../../ChangePassword/ChangePassword';
 
 class UserProfile extends React.Component {
-  currUser = this.props.users.find(user => user.email === this.props.currentUser);
+  currUser = this.props.users.find(user => user.email === localStorage.getItem('currentUser'));
 
   state = {
     firstName: this.currUser.firstName,
@@ -71,13 +71,16 @@ class UserProfile extends React.Component {
           >
             Save
           </button>
-          <button
-            type="button"
-            className="btn btn-outline-primary btn-edit"
-            onClick={this.props.onEdit}
-          >
-            Edit profile
-          </button>
+          {!this.props.showAdmin && (
+            <button
+              type="button"
+              className="btn btn-outline-primary btn-edit"
+              onClick={this.props.onEdit}
+            >
+              Edit profile
+            </button>
+          )}
+
           <table className="table profile-table">
             <tbody>
               <tr>
@@ -127,23 +130,27 @@ class UserProfile extends React.Component {
             </tbody>
           </table>
           <div className="btns">
-            <button
-              type="button"
-              className="btn btn-outline-primary btn-editPsw"
-              onClick={this.onOpenChangeModal}
-            >
-              Change password
-            </button>
-            <button
-              type="button"
-              className="btn btn-outline-primary btn-deleteProfile"
-              onClick={this.onRequestHandler}
-            >
-              <span className="beforeSend">Delete profile</span>
-              <span className="afterSend">
-                You sent the request to delete <i className="fas fa-user-slash" />
-              </span>
-            </button>
+            {!this.props.showAdmin && (
+              <>
+                <button
+                  type="button"
+                  className="btn btn-outline-primary btn-editPsw"
+                  onClick={this.onOpenChangeModal}
+                >
+                  Change password
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-primary btn-deleteProfile"
+                  onClick={this.onRequestHandler}
+                >
+                  <span className="beforeSend">Delete profile</span>
+                  <span className="afterSend">
+                    You sent the request to delete <i className="fas fa-user-slash" />
+                  </span>
+                </button>
+              </>
+            )}
           </div>
         </div>
         {this.state.isOpenChange && <ChangePassword onCloseModal={this.onCloseChangeModal} />}
@@ -154,10 +161,10 @@ class UserProfile extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.authorizationReducer.currentUser,
     users: state.usersReducer.usersAdmin,
     loading: state.usersReducer.loading,
     isEdit: state.profileReducer.openEdit,
+    showAdmin: state.authorizationReducer.showAdmin,
   };
 };
 
@@ -171,7 +178,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 UserProfile.propTypes = {
-  currentUser: PropTypes.string.isRequired,
   onRequestDelete: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
   isEdit: PropTypes.bool.isRequired,
@@ -179,6 +185,7 @@ UserProfile.propTypes = {
   onEditClose: PropTypes.func.isRequired,
   onUpdateInf: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  showAdmin: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
