@@ -50,9 +50,7 @@ class LoginForm extends React.Component {
       .then(() => {
         if (login === 'admin@admin' && password === 'admin') {
           this.props.onLoginAdmin(login);
-        } else if (this.props.usersData.find(item => item.email === login) !== -1) {
-          this.props.onErrorMsg('No such user');
-        } else if (this.props.usersData.find(item => item.email === login) === -1) {
+        } else {
           fbDatabase
             .auth()
             .signInWithEmailAndPassword(login, password)
