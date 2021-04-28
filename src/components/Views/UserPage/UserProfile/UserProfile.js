@@ -13,7 +13,7 @@ import Spinner from '../../../Spinner/Spinner';
 import ChangePassword from '../../../ChangePassword/ChangePassword';
 
 class UserProfile extends React.Component {
-  currUser = this.props.users.find(user => user.email === localStorage.getItem('currentUser'));
+  currUser = this.props.users.find(user => user.email === this.props.currentUser);
 
   state = {
     firstName: this.currUser.firstName,
@@ -71,7 +71,7 @@ class UserProfile extends React.Component {
           >
             Save
           </button>
-          {localStorage.getItem('currentUser') !== 'admin@admin' && (
+          {this.props.showAdmin === false && (
             <button
               type="button"
               className="btn btn-outline-primary btn-edit"
@@ -130,7 +130,7 @@ class UserProfile extends React.Component {
             </tbody>
           </table>
           <div className="btns">
-            {localStorage.getItem('currentUser') !== 'admin@admin' && (
+            {this.props.showAdmin === false && (
               <>
                 <button
                   type="button"
@@ -165,6 +165,7 @@ const mapStateToProps = state => {
     loading: state.usersReducer.loading,
     isEdit: state.profileReducer.openEdit,
     showAdmin: state.authorizationReducer.showAdmin,
+    currentUser: state.authorizationReducer.currentUser,
   };
 };
 
@@ -185,7 +186,8 @@ UserProfile.propTypes = {
   onEditClose: PropTypes.func.isRequired,
   onUpdateInf: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  // showAdmin: PropTypes.bool.isRequired,
+  showAdmin: PropTypes.bool.isRequired,
+  currentUser: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

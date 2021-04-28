@@ -18,7 +18,7 @@ class UserItem extends React.Component {
     const btns = requestDelete ? classesDelete : classes;
     const btnDisable = requestDelete ? null : 'disable';
     return (
-      <tr>
+      <tr className="tr__user">
         <td> {firstName} </td>
         <td>{lastName}</td>
         <td>{email}</td>
