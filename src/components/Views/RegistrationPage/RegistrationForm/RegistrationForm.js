@@ -67,6 +67,8 @@ class RegistrationForm extends React.Component {
             // eslint-disable-next-line default-case
             switch (err.code) {
               case 'auth/email-already-in-use':
+                this.props.onError('Please, choose another login. This email is already in use');
+                break;
               case 'auth/invalid-email':
               case 'auth/weak-password':
                 this.props.onError(err.message);

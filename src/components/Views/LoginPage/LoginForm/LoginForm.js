@@ -50,7 +50,9 @@ class LoginForm extends React.Component {
       .then(() => {
         if (login === 'admin@admin' && password === 'admin') {
           this.props.onLoginAdmin(login);
-        } else {
+        } else if (this.props.usersData.find(item => item.email === login) !== -1) {
+          this.props.onErrorMsg('No such user');
+        } else if (this.props.usersData.find(item => item.email === login) === -1) {
           fbDatabase
             .auth()
             .signInWithEmailAndPassword(login, password)
@@ -77,6 +79,7 @@ class LoginForm extends React.Component {
   };
 
   render() {
+    console.log(this.props.usersData.find(item => item.email === this.state.login) === -1);
     if (this.props.logged) {
       return <Redirect to="/items" />;
     }
@@ -157,6 +160,7 @@ LoginForm.propTypes = {
   isError: PropTypes.bool.isRequired,
   onCloseError: PropTypes.func.isRequired,
   openError: PropTypes.bool.isRequired,
+  usersData: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => {
