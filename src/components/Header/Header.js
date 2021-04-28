@@ -12,17 +12,47 @@ class Header extends Component {
   onLogOutHandler = () => {
     this.props.onLogOutUser();
     this.props.onLogOutAdmin();
-    localStorage.removeItem('currentUser');
+    // localStorage.removeItem('currentUser');
     fbDatabase.auth().signOut();
   };
 
   render() {
-    if (localStorage.getItem('currentUser') === null) {
+    if (this.props.logged || this.props.showAdmin) {
       return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
           <Link to="/items" className="navbar-brand">
             eShop
           </Link>
+          <div className=" navbar-collapse  nav-menu-wrapper">
+            <ul className="navbar-nav align-items-between">
+              <li className="nav-item active">
+                <a className="nav-link" href="#">
+                  Home
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+                  Delivery
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+                  About
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className="icons-wrapper">
+            <Link to="/user" className="link-user">
+              <i className="far fa-user-circle" />
+            </Link>
+            <button type="button" className="btn-cart" onClick={this.props.onOpenModal}>
+              <i className="cart-icon fa fa-shopping-cart" />
+            </button>
+            <button type="button" className="btn-out" onClick={this.onLogOutHandler}>
+              <i className="fas fa-sign-out-alt" />
+            </button>
+          </div>
         </nav>
       );
     }
@@ -31,41 +61,6 @@ class Header extends Component {
         <Link to="/items" className="navbar-brand">
           eShop
         </Link>
-        <div className=" navbar-collapse  nav-menu-wrapper">
-          <ul className="navbar-nav align-items-between">
-            <li className="nav-item active">
-              <a className="nav-link" href="#">
-                Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Delivery
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                About
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div className="icons-wrapper">
-          <Link to="/" className="link-user">
-            <i className="far fa-user-circle" />
-          </Link>
-
-          {localStorage.getItem('currentUser') !== 'admin@admin' && (
-            <button type="button" className="btn-cart" onClick={this.props.onOpenModal}>
-              <i className="cart-icon fa fa-shopping-cart" />
-            </button>
-          )}
-
-          <button type="button" className="btn-out" onClick={this.onLogOutHandler}>
-            <i className="fas fa-sign-out-alt" />
-          </button>
-        </div>
       </nav>
     );
   }

@@ -27,12 +27,20 @@ const authorizationReducer = (state = initialState, action) => {
         success: false,
       };
     case 'ADMIN/LOG_IN':
+      localStorage.setItem(
+        'authReducer',
+        JSON.stringify({ ...state, showAdmin: true, currentUser: action.admin })
+      );
       return {
         ...state,
         showAdmin: true,
         currentUser: action.admin,
       };
     case 'ADMIN/LOG_OUT':
+      localStorage.setItem(
+        'authReducer',
+        JSON.stringify({ ...state, showAdmin: false, currentUser: null })
+      );
       return {
         ...state,
         showAdmin: false,
@@ -76,6 +84,7 @@ const authorizationReducer = (state = initialState, action) => {
       };
 
     default:
+      // localStorage.setItem('authReducer', JSON.stringify(state));
       return state;
   }
 };

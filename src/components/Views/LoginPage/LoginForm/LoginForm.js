@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
@@ -38,14 +39,12 @@ class LoginForm extends React.Component {
       .validate(checkData)
       .then(() => {
         if (login === 'admin@admin' && password === 'admin') {
-          localStorage.setItem('currentUser', login);
           this.props.onLoginAdmin(login);
         } else {
           fbDatabase
             .auth()
             .signInWithEmailAndPassword(login, password)
             .then(() => {
-              localStorage.setItem('currentUser', login);
               this.props.onLoginUser(login);
             })
             // eslint-disable-next-line consistent-return
@@ -74,6 +73,7 @@ class LoginForm extends React.Component {
     if (this.props.showAdmin) {
       return <Redirect to="/admin/userTable" />;
     }
+
     return (
       <div className="loginBody">
         <div className="login-container">
