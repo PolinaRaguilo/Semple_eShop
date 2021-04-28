@@ -210,7 +210,7 @@ ItemList.propTypes = {
   forFilterData: PropTypes.array.isRequired,
   onAddToCart: PropTypes.func.isRequired,
   onLoading: PropTypes.bool.isRequired,
-
+  // logged: PropTypes.bool.isRequired,
   onError: PropTypes.bool.isRequired,
   filterItems: PropTypes.func.isRequired,
 };

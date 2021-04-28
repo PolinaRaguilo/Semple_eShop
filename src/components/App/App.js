@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -28,7 +29,7 @@ class App extends React.Component {
             <Route exact path="/items" component={ItemsPage} />
             <PrivateRoute
               path="/admin"
-              showAdmin={this.props.showAdminPage}
+              showAdmin={localStorage.getItem('currentUser') === 'admin@admin'}
               component={AdminPage}
             />
             <Route exact path="/user" component={UserPage} />

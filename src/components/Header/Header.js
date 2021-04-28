@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -9,10 +10,9 @@ import fbDatabase from '../../config/fbConfig';
 
 class Header extends Component {
   onLogOutHandler = () => {
-    localStorage.removeItem('currentUser');
-
     this.props.onLogOutUser();
     this.props.onLogOutAdmin();
+    localStorage.removeItem('currentUser');
     fbDatabase.auth().signOut();
   };
 
@@ -56,7 +56,7 @@ class Header extends Component {
             <i className="far fa-user-circle" />
           </Link>
 
-          {!this.props.showAdmin && (
+          {localStorage.getItem('currentUser') !== 'admin@admin' && (
             <button type="button" className="btn-cart" onClick={this.props.onOpenModal}>
               <i className="cart-icon fa fa-shopping-cart" />
             </button>
@@ -74,6 +74,7 @@ class Header extends Component {
 const mapStateToProps = state => {
   return {
     showAdmin: state.authorizationReducer.showAdmin,
+    logged: state.authorizationReducer.logged,
   };
 };
 
@@ -90,6 +91,7 @@ Header.propTypes = {
   onLogOutUser: PropTypes.func.isRequired,
   onLogOutAdmin: PropTypes.func.isRequired,
   showAdmin: PropTypes.bool.isRequired,
+  logged: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

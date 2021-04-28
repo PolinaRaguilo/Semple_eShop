@@ -71,7 +71,7 @@ class UserProfile extends React.Component {
           >
             Save
           </button>
-          {!this.props.showAdmin && (
+          {this.props.showAdmin === true && (
             <button
               type="button"
               className="btn btn-outline-primary btn-edit"
@@ -130,7 +130,7 @@ class UserProfile extends React.Component {
             </tbody>
           </table>
           <div className="btns">
-            {!this.props.showAdmin && (
+            {!this.props.showAdmin === true && (
               <>
                 <button
                   type="button"

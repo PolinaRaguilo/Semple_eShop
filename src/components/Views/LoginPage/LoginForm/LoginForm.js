@@ -39,14 +39,14 @@ class LoginForm extends React.Component {
       .then(() => {
         if (login === 'admin@admin' && password === 'admin') {
           localStorage.setItem('currentUser', login);
-          this.props.onLoginAdmin();
+          this.props.onLoginAdmin(login);
         } else {
           fbDatabase
             .auth()
             .signInWithEmailAndPassword(login, password)
             .then(() => {
               localStorage.setItem('currentUser', login);
-              this.props.onLoginUser();
+              this.props.onLoginUser(login);
             })
             // eslint-disable-next-line consistent-return
             .catch(err => {
