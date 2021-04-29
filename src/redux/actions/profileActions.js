@@ -20,3 +20,9 @@ export const updateInf = (id, newName, newSurname) => async dispatch => {
     dispatch(fetchUsers());
   });
 };
+
+export const updateImg = (id, imageUrl) => async dispatch => {
+  await dbUser.updateUser({ imgUrl: imageUrl }, id).then(() => {
+    dispatch(fetchUsers());
+  });
+};

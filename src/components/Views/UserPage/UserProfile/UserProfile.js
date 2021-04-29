@@ -1,3 +1,5 @@
+/* eslint-disable no-debugger */
+/* eslint-disable no-restricted-globals */
 /* eslint-disable react/no-unused-state */
 import React from 'react';
 import { connect } from 'react-redux';
@@ -8,6 +10,7 @@ import { deleteRequest } from '../../../../redux/actions/usersAction';
 import {
   closeEditProfile,
   openEditProfile,
+  updateImg,
   updateInf,
 } from '../../../../redux/actions/profileActions';
 import Spinner from '../../../Spinner/Spinner';
@@ -15,24 +18,28 @@ import ChangePassword from '../../../ChangePassword/ChangePassword';
 import { fbStorage } from '../../../../config/fbConfig';
 
 class UserProfile extends React.Component {
-  currUser = this.props.users.find(user => user.email === this.props.currentUser);
+  currentUser = this.props.users.find(user => user.email === this.props.currentUser);
 
   state = {
-    firstName: this.currUser.firstName,
-    lastName: this.currUser.lastName,
+    firstName: this.currentUser.firstName,
+    lastName: this.currentUser.lastName,
     isOpenChange: false,
     imageUpload: null,
     progress: 0,
+    nameImg: '',
   };
 
   handleChangeImage = e => {
     if (e.target.files[0]) {
       this.setState({ imageUpload: e.target.files[0] });
+      this.setState({ nameImg: e.target.files[0].name });
     }
   };
 
   uploadHandle = e => {
     e.preventDefault();
+    // this.setState(prevState => ({ nameImg: prevState.imageUpload.name }));
+
     const uploadTask = fbStorage
       .ref(`/usersAvatar/${this.state.imageUpload.name}`)
       .put(this.state.imageUpload);
@@ -51,8 +58,7 @@ class UserProfile extends React.Component {
           .child(this.state.imageUpload.name)
           .getDownloadURL()
           .then(url => {
-            console.log(url);
-            // setUrl(url);
+            this.props.onUpdateImage(this.currentUser.id, url);
           });
       }
     );
@@ -60,7 +66,7 @@ class UserProfile extends React.Component {
 
   onUpdateInformation = () => {
     this.props.onEditClose();
-    this.props.onUpdateInf(this.currUser.id, this.state.firstName, this.state.lastName);
+    this.props.onUpdateInf(this.currentUser.id, this.state.firstName, this.state.lastName);
   };
 
   onInputChange = e => {
@@ -71,7 +77,7 @@ class UserProfile extends React.Component {
   };
 
   onRequestHandler = () => {
-    this.props.onRequestDelete(this.currUser.id);
+    this.props.onRequestDelete(this.currentUser.id);
   };
 
   onOpenChangeModal = () => {
@@ -83,7 +89,7 @@ class UserProfile extends React.Component {
   };
 
   render() {
-    console.log(this.state.imageUpload);
+    const currUser = this.props.users.find(user => user.email === this.props.currentUser);
     if (this.props.loading) {
       return <Spinner />;
     }
@@ -94,47 +100,56 @@ class UserProfile extends React.Component {
           <img
             id="profile-img"
             className="profile-img-card"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/600px-User_icon_2.svg.png"
+            src={
+              currUser.imgUrl === '' || currUser.imgUrl === undefined
+                ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/600px-User_icon_2.svg.png'
+                : currUser.imgUrl
+            }
             alt="UserImg"
           />
           <h4 className="profile-title">Profile</h4>
-          <div className="btnWrap">
-            <form action="submit">
-              <label htmlFor="upload" className="upload-label">
-                Upload avatar
-              </label>
-              <div className="div__upload">
-                <span className="span__URL"> URL </span>
+          {this.props.showAdmin === false && (
+            <div className="btnWrap">
+              <form action="submit">
+                <label htmlFor="upload" className="upload-label">
+                  Upload avatar
+                </label>
+                {this.state.nameImg !== '' && (
+                  <>
+                    <div className="div__upload">
+                      <span className="span__URL"> {this.state.nameImg.substr(0, 40)}... </span>
+                      <button
+                        type="submit"
+                        className="btn btn-outline-primary"
+                        onClick={this.uploadHandle}
+                      >
+                        Upload
+                      </button>
+                    </div>
+                    <progress value={this.state.progress} max="100" />
+                  </>
+                )}
+
+                <input
+                  type="file"
+                  id="upload"
+                  className="upload-file__hide"
+                  onChange={this.handleChangeImage}
+                />
+              </form>
+              <div className="btnEditWrap">
                 <button
-                  type="submit"
-                  className="btn btn-outline-primary"
-                  onClick={this.uploadHandle}
+                  type="button"
+                  className={
+                    this.props.isEdit
+                      ? 'btn btn-outline-primary show-save'
+                      : 'btn btn-outline-primary btn-save'
+                  }
+                  onClick={this.onUpdateInformation}
                 >
-                  Upload
+                  Save
                 </button>
-              </div>
 
-              <input
-                type="file"
-                id="upload"
-                className="upload-file__hide"
-                onChange={this.handleChangeImage}
-              />
-            </form>
-            <div className="btnEditWrap">
-              <button
-                type="button"
-                className={
-                  this.props.isEdit
-                    ? 'btn btn-outline-primary show-save'
-                    : 'btn btn-outline-primary btn-save'
-                }
-                onClick={this.onUpdateInformation}
-              >
-                Save
-              </button>
-
-              {this.props.showAdmin === false && (
                 <button
                   type="button"
                   className="btn btn-outline-primary btn-edit"
@@ -142,9 +157,9 @@ class UserProfile extends React.Component {
                 >
                   Edit profile
                 </button>
-              )}
+              </div>
             </div>
-          </div>
+          )}
 
           <table className="table profile-table">
             <tbody>
@@ -163,7 +178,7 @@ class UserProfile extends React.Component {
                       required
                     />
                   ) : (
-                    this.currUser.firstName
+                    currUser.firstName
                   )}
                 </td>
               </tr>
@@ -182,7 +197,7 @@ class UserProfile extends React.Component {
                       required
                     />
                   ) : (
-                    this.currUser.lastName
+                    currUser.lastName
                   )}
                 </td>
               </tr>
@@ -190,7 +205,7 @@ class UserProfile extends React.Component {
                 <td>
                   <b>Email</b>
                 </td>
-                <td>{this.currUser.email}</td>
+                <td>{currUser.email}</td>
               </tr>
             </tbody>
           </table>
@@ -240,6 +255,7 @@ const mapDispatchToProps = dispatch => {
     onEdit: () => dispatch(openEditProfile()),
     onEditClose: () => dispatch(closeEditProfile()),
     onUpdateInf: (id, newName, newSurname) => dispatch(updateInf(id, newName, newSurname)),
+    onUpdateImage: (id, urlImg) => dispatch(updateImg(id, urlImg)),
   };
 };
 
@@ -250,6 +266,7 @@ UserProfile.propTypes = {
   onEdit: PropTypes.func.isRequired,
   onEditClose: PropTypes.func.isRequired,
   onUpdateInf: PropTypes.func.isRequired,
+  onUpdateImage: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   showAdmin: PropTypes.bool.isRequired,
   currentUser: PropTypes.string.isRequired,
