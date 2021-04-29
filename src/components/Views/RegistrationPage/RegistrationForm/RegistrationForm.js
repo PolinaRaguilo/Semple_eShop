@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AlertTitle } from '@material-ui/lab';
 import Alert from '@material-ui/lab/Alert';
-import fbDatabase from '../../../../config/fbConfig';
+import { fbDatabase } from '../../../../config/fbConfig';
 import { addNewUser } from '../../../../redux/actions/usersAction';
 import './RegistrationForm.css';
 import {

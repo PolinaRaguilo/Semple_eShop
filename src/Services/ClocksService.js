@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import fbDatabase from '../config/fbConfig';
+import { fbDatabase } from '../config/fbConfig';
 
 const db = fbDatabase.database().ref('/clocks');
 

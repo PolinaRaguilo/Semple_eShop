@@ -10,6 +10,6 @@ const firebaseConfig = {
   appId: '1:259614706999:web:0194c75222bd333c919eb2',
 };
 
-const fbDatabase = firebase.initializeApp(firebaseConfig);
+export const fbDatabase = firebase.initializeApp(firebaseConfig);
 
-export default fbDatabase;
+export const fbStorage = firebase.storage();

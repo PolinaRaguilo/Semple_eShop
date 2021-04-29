@@ -6,7 +6,7 @@ import './Header.css';
 import { Link } from 'react-router-dom';
 import { onOpenModal } from '../../redux/actions/modalActions';
 import { adminLogout, userLogout } from '../../redux/actions/authorizationAction';
-import fbDatabase from '../../config/fbConfig';
+import { fbDatabase } from '../../config/fbConfig';
 
 class Header extends Component {
   onLogOutHandler = () => {

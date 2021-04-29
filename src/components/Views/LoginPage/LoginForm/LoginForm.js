@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import fbDatabase from '../../../../config/fbConfig';
+import { fbDatabase } from '../../../../config/fbConfig';
 import loginSchema from '../../../../Validation/LoginValidation';
 import {
   adminLogin,
