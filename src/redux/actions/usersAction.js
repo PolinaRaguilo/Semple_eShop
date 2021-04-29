@@ -1,7 +1,7 @@
+import { nanoid } from 'nanoid';
 import UsersService from '../../Services/UsersService';
 
 const dbUsers = new UsersService();
-const newIdUser = `_${1 + Math.floor(Math.random() * 100)}`;
 
 const receivedUsers = users => {
   return {
@@ -47,11 +47,12 @@ export const deleteUser = id => async dispatch => {
 
 export const addNewUser = (firstName, lastName, email) => async dispatch => {
   const newUser = {
-    id: newIdUser,
+    id: nanoid(3),
     firstName,
     lastName,
     email,
     requestDelete: false,
+    imgUrl: '',
   };
   await dbUsers.addNewUser(newUser).then(() => {
     dispatch(fetchUsers());
