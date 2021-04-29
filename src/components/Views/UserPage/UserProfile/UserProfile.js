@@ -38,7 +38,6 @@ class UserProfile extends React.Component {
 
   uploadHandle = e => {
     e.preventDefault();
-    // this.setState(prevState => ({ nameImg: prevState.imageUpload.name }));
 
     const uploadTask = fbStorage
       .ref(`/usersAvatar/${this.state.imageUpload.name}`)
@@ -59,7 +58,8 @@ class UserProfile extends React.Component {
           .getDownloadURL()
           .then(url => {
             this.props.onUpdateImage(this.currentUser.id, url);
-          });
+          })
+          .then(() => this.setState({ nameImg: '' }));
       }
     );
   };
