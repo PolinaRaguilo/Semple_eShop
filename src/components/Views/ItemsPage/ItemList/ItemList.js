@@ -194,6 +194,7 @@ const mapStateToProps = state => {
     onError: state.clocksReducer.errorClocks,
     logged: state.authorizationReducer.logged,
     forFilterData: state.clocksReducer.forFilter,
+    // currentUser: state.authorizationReducer.currentUser,
   };
 };
 
@@ -213,6 +214,7 @@ ItemList.propTypes = {
   logged: PropTypes.bool.isRequired,
   onError: PropTypes.bool.isRequired,
   filterItems: PropTypes.func.isRequired,
+  // currentUser: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

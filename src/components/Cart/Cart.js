@@ -8,23 +8,30 @@ import { onCloseModal } from '../../redux/actions/modalActions';
 
 class Cart extends React.Component {
   render() {
+    const cartsFromLocal = JSON.parse(localStorage.getItem('cartsUsers'));
+    const cartOfCurrent =
+      this.props.currentUser === null ? [] : cartsFromLocal[`cart-${this.props.currentUser}`];
+
     const { isOpen, cartItems } = this.props;
-    const clocksForCart = cartItems.map(item => {
-      const { id, imageClock, brandClock, price, count } = item;
-      return (
-        <table className="table table-hover">
-          <tbody>
-            <OneItemCart
-              id={id}
-              imageClock={imageClock}
-              brandClock={brandClock}
-              price={price}
-              count={count}
-            />
-          </tbody>
-        </table>
-      );
-    });
+    const clocksForCart =
+      cartOfCurrent === undefined
+        ? []
+        : cartOfCurrent.map(item => {
+            const { id, imageClock, brandClock, price, count } = item;
+            return (
+              <table className="table table-hover">
+                <tbody>
+                  <OneItemCart
+                    id={id}
+                    imageClock={imageClock}
+                    brandClock={brandClock}
+                    price={price}
+                    count={count}
+                  />
+                </tbody>
+              </table>
+            );
+          });
     const total = 0;
     const totalPrice = cartItems.reduce((summa, item) => {
       return summa + total + item.price * item.count;
@@ -48,7 +55,7 @@ class Cart extends React.Component {
                 </button>
               </div>
               <div className="modal-body">
-                {cartItems.length === 0 ? (
+                {cartOfCurrent.length === 0 ? (
                   <div className="empty-cart-wrapper">
                     <i className="fas fa-shopping-cart i-cart" />
                     <p className="empty">Your cart is empty</p>
@@ -73,6 +80,7 @@ class Cart extends React.Component {
         </div>
       );
     }
+    // }
     return null;
   }
 }
@@ -81,6 +89,8 @@ const mapStateToProps = state => {
   return {
     isOpen: state.modalReducer.openModal,
     cartItems: state.cartReducer,
+    currentUser: state.authorizationReducer.currentUser,
+    showAdmin: state.authorizationReducer.currentUser,
   };
 };
 
@@ -94,6 +104,8 @@ Cart.propTypes = {
   onCloseModal: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   cartItems: PropTypes.array.isRequired,
+  currentUser: PropTypes.string.isRequired,
+  // showAdmin: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
