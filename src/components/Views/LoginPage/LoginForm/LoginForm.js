@@ -51,6 +51,7 @@ class LoginForm extends React.Component {
         if (login === 'admin@admin' && password === 'admin') {
           this.props.onLoginAdmin(login);
         } else {
+          this.kd();
           fbDatabase
             .auth()
             .signInWithEmailAndPassword(login, password)
@@ -77,7 +78,7 @@ class LoginForm extends React.Component {
   };
 
   render() {
-    console.log(this.props.usersData.find(item => item.email === this.state.login) === -1);
+    // console.log(this.props.usersData.find(item => item.email === this.state.login) === -1);
     if (this.props.logged) {
       return <Redirect to="/items" />;
     }

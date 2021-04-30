@@ -6,7 +6,12 @@ import './UserItem.css';
 import { deleteUser } from '../../../../../redux/actions/usersAction';
 
 class UserItem extends React.Component {
+  cartOfUser = JSON.parse(localStorage.getItem('cartsUsers'));
+
   onDeleteUserHandler = () => {
+    const cartOfUser = JSON.parse(localStorage.getItem('cartsUsers'));
+    delete cartOfUser[`cart-${this.props.email}`];
+    localStorage.setItem('cartsUsers', JSON.stringify(cartOfUser));
     this.props.onDeleteUser(this.props.id);
   };
 

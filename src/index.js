@@ -10,6 +10,11 @@ import mainReducer from './redux/reducers';
 function saveToLocal(state) {
   const SerState = JSON.stringify(state);
   localStorage.setItem('authReducer', SerState);
+  const prevCart = JSON.parse(localStorage.getItem('cartsUsers'));
+  if (prevCart === null) {
+    const cartJson = JSON.stringify({});
+    localStorage.setItem('cartsUsers', cartJson);
+  }
 }
 
 function loadFromLocal() {
