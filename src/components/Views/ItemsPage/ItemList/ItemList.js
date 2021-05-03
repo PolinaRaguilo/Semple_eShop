@@ -1,11 +1,19 @@
+/* eslint-disable react/no-unused-state */
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core';
-import Slider from '@material-ui/core/Slider';
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+} from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
+
 import { addToCart } from '../../../../redux/actions/cartActions';
 import './ItemList.css';
 import OneItem from './OneItem/OneItem';
@@ -18,14 +26,13 @@ class ItemList extends React.Component {
     return clock.price;
   });
 
-  minPrice = Math.min(...this.clockForPrice);
-
   maxPrice = Math.max(...this.clockForPrice);
 
   state = {
     brandValue: 'All',
     gender: 'All',
-    priceValue: [this.minPrice, this.maxPrice],
+    minPrice: 0,
+    maxPrice: this.maxPrice,
     brands: [
       { id: 1, brand: 'All' },
       { id: 2, brand: 'Tissot' },
@@ -40,6 +47,17 @@ class ItemList extends React.Component {
     currPage: 1,
   };
 
+  onFilterHnadler = () => {
+    const { brandValue, gender } = this.state;
+    this.props.filterItems(
+      gender.toLowerCase(),
+      brandValue.toLowerCase(),
+      this.props.forFilterData,
+      Number(this.state.minPrice),
+      Number(this.state.maxPrice)
+    );
+  };
+
   onChangePage = (e, page) => {
     this.setState({ currPage: page });
   };
@@ -52,23 +70,15 @@ class ItemList extends React.Component {
     this.setState({ gender: event.target.value });
   };
 
-  handleChangePrice = (event, newValue) => {
-    this.setState({ priceValue: newValue });
+  onChangePrice = event => {
+    const value = event.target.value.replace(/\D+/g, '');
+    this.setState({ [event.target.name]: value });
   };
 
   AddToCart = idClock => {
     const clock = this.props.dataClocks.find(item => item.id === idClock);
     const { id, imageClock, brandClock, vendorCode, price } = clock;
     this.props.onAddToCart(id, imageClock, brandClock, vendorCode, price);
-  };
-
-  onFilterHnadler = () => {
-    const { brandValue, gender } = this.state;
-    this.props.filterItems(
-      gender.toLowerCase(),
-      brandValue.toLowerCase(),
-      this.props.forFilterData
-    );
   };
 
   render() {
@@ -152,14 +162,22 @@ class ItemList extends React.Component {
               </div>
               <div className="price-wrapper">
                 <FormLabel component="legend">Price:</FormLabel>
-                <Slider
-                  value={this.state.priceValue}
-                  onChange={this.handleChangePrice}
-                  valueLabelDisplay="auto"
-                  min={400}
-                  max={5000}
-                  step={100}
-                />
+                <div className="price__wrapper">
+                  <p className="price__label">From:</p>
+                  <TextField
+                    className="input__price"
+                    name="minPrice"
+                    onChange={this.onChangePrice}
+                    value={this.state.minPrice}
+                  />
+                  <p className="price__label">to:</p>
+                  <TextField
+                    className="input__price"
+                    name="maxPrice"
+                    onChange={this.onChangePrice}
+                    value={this.state.maxPrice}
+                  />
+                </div>
               </div>
               <button type="button" className="btn btn-primary" onClick={this.onFilterHnadler}>
                 Search
@@ -194,7 +212,6 @@ const mapStateToProps = state => {
     onError: state.clocksReducer.errorClocks,
     logged: state.authorizationReducer.logged,
     forFilterData: state.clocksReducer.forFilter,
-    // currentUser: state.authorizationReducer.currentUser,
   };
 };
 
@@ -202,7 +219,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onAddToCart: (id, imageClock, brandClock, vendorCode, price) =>
       dispatch(addToCart(id, imageClock, brandClock, vendorCode, price)),
-    filterItems: (gender, brand, items) => dispatch(filterClocks(gender, brand, items)),
+    filterItems: (gender, brand, items, minPrice, maxPrice) =>
+      dispatch(filterClocks(gender, brand, items, minPrice, maxPrice)),
   };
 };
 
@@ -214,7 +232,6 @@ ItemList.propTypes = {
   logged: PropTypes.bool.isRequired,
   onError: PropTypes.bool.isRequired,
   filterItems: PropTypes.func.isRequired,
-  // currentUser: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

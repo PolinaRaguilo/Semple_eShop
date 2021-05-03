@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import { nanoid } from 'nanoid';
 import ClocksService from '../../Services/ClocksService';
 
@@ -107,18 +108,23 @@ export const deleteItemAdmin = id => async dispatch => {
   });
 };
 
-export const filterClocks = (genderFilter, brandFilter, data) => {
+export const filterClocks = (genderFilter, brandFilter, data, minPrice, maxPrice) => {
   let filteredList;
   if (brandFilter.toLowerCase() === 'all' && genderFilter.toLowerCase() === 'all') {
-    filteredList = data;
+    filteredList = data.filter(item => item.price >= minPrice && item.price <= maxPrice);
   } else if (brandFilter.toLowerCase() === 'all' && genderFilter.toLowerCase() !== 'all') {
-    filteredList = data.filter(item => item.gender.toLowerCase() === genderFilter);
+    filteredList = data
+      .filter(item => item.gender.toLowerCase() === genderFilter)
+      .filter(item => item.price >= minPrice && item.price <= maxPrice);
   } else if (brandFilter.toLowerCase() !== 'all' && genderFilter.toLowerCase() === 'all') {
-    filteredList = data.filter(item => item.brandClock.toLowerCase() === brandFilter);
+    filteredList = data
+      .filter(item => item.brandClock.toLowerCase() === brandFilter)
+      .filter(item => item.price >= minPrice && item.price <= maxPrice);
   } else {
     filteredList = data
       .filter(item => item.brandClock.toLowerCase() === brandFilter)
-      .filter(item => item.gender.toLowerCase() === genderFilter);
+      .filter(item => item.gender.toLowerCase() === genderFilter)
+      .filter(item => item.price >= minPrice && item.price <= maxPrice);
   }
 
   return {

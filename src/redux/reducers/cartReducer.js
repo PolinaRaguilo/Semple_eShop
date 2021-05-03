@@ -3,7 +3,7 @@ const itemsInCart = [];
 const cartReducer = (state = itemsInCart, action) => {
   const allCarts = JSON.parse(localStorage.getItem('cartsUsers'));
   const cartOfCurrent =
-    localStorage.getItem('currUser') === null
+    localStorage.getItem('currUser') === null || localStorage.getItem('currUser') === 'admin@admin'
       ? []
       : allCarts[`cart-${localStorage.getItem('currUser')}`];
   const itemIndex = cartOfCurrent.findIndex(({ id }) => id === action.id);
