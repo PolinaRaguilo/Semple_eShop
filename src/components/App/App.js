@@ -9,7 +9,7 @@ import ItemsPage from '../Views/ItemsPage/ItemsPage';
 import LoginPage from '../Views/LoginPage/LoginPage';
 import RegistrationPage from '../Views/RegistrationPage/RegistrationPage';
 import UserPage from '../Views/UserPage/UserPage';
-import Cart from '../Cart/Cart';
+// import Cart from '../Cart/Cart';
 import { fetchUsers } from '../../redux/actions/usersAction';
 
 class App extends React.Component {
@@ -22,7 +22,7 @@ class App extends React.Component {
       <>
         <BrowserRouter>
           <Header />
-          <Route component={Cart} />
+          {/* <Route component={Cart} /> */}
           <Switch>
             <Route exact path="/" component={LoginPage} />
             <Route exact path="/items" component={ItemsPage} />

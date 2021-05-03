@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { onOpenModal } from '../../redux/actions/modalActions';
 import { adminLogout, userLogout } from '../../redux/actions/authorizationAction';
 import { fbDatabase } from '../../config/fbConfig';
+import Cart from '../Cart/Cart';
 
 class Header extends Component {
   onLogOutHandler = () => {
@@ -57,6 +58,7 @@ class Header extends Component {
               <i className="fas fa-sign-out-alt" />
             </button>
           </div>
+          {this.props.isOpen && <Cart />}
         </nav>
       );
     }
@@ -72,6 +74,7 @@ class Header extends Component {
 
 const mapStateToProps = state => {
   return {
+    isOpen: state.modalReducer.openModal,
     showAdmin: state.authorizationReducer.showAdmin,
     logged: state.authorizationReducer.logged,
   };
@@ -87,6 +90,8 @@ const mapDispatchToProps = dispatch => {
 
 Header.propTypes = {
   onOpenModal: PropTypes.func.isRequired,
+
+  isOpen: PropTypes.bool.isRequired,
   onLogOutUser: PropTypes.func.isRequired,
   onLogOutAdmin: PropTypes.func.isRequired,
   showAdmin: PropTypes.bool.isRequired,
