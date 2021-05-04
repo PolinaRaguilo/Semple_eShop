@@ -1,5 +1,5 @@
-/* eslint-disable react/no-unused-state */
-/* eslint-disable no-unused-vars */
+/* eslint-disable prefer-const */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -13,8 +13,6 @@ import {
   TextField,
 } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
-
-import { addToCart } from '../../../../redux/actions/cartActions';
 import './ItemList.css';
 import OneItem from './OneItem/OneItem';
 import Spinner from '../../../Spinner/Spinner';
@@ -76,9 +74,47 @@ class ItemList extends React.Component {
   };
 
   AddToCart = idClock => {
+    const cartsFromLocal = JSON.parse(localStorage.getItem('cartsUsers'));
+
+    const cartOfCurrent =
+      this.props.currentUser === null ? [] : cartsFromLocal[`cart-${this.props.currentUser}`];
+
+    let newClockCart;
+    let newCart;
+    let newAllCart;
     const clock = this.props.dataClocks.find(item => item.id === idClock);
     const { id, imageClock, brandClock, vendorCode, price } = clock;
-    this.props.onAddToCart(id, imageClock, brandClock, vendorCode, price);
+    const itemIndex = cartOfCurrent.findIndex(item => item.id === id);
+    const clockItem = cartOfCurrent[itemIndex];
+    if (clockItem !== undefined) {
+      newClockCart = {
+        ...clockItem,
+        count: clockItem.count + 1,
+      };
+    } else {
+      newClockCart = {
+        id,
+        imageClock,
+        brandClock,
+        vendorCode,
+        price,
+        count: 1,
+      };
+    }
+    if (itemIndex < 0) {
+      newCart = [...cartOfCurrent, newClockCart];
+    } else {
+      newCart = [
+        ...cartOfCurrent.slice(0, itemIndex),
+        newClockCart,
+        ...cartOfCurrent.slice(itemIndex + 1),
+      ];
+    }
+    newAllCart = {
+      ...cartsFromLocal,
+      [`cart-${localStorage.getItem('currUser')}`]: newCart,
+    };
+    localStorage.setItem('cartsUsers', JSON.stringify(newAllCart));
   };
 
   render() {
@@ -212,13 +248,12 @@ const mapStateToProps = state => {
     onError: state.clocksReducer.errorClocks,
     logged: state.authorizationReducer.logged,
     forFilterData: state.clocksReducer.forFilter,
+    currentUser: state.authorizationReducer.currentUser,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddToCart: (id, imageClock, brandClock, vendorCode, price) =>
-      dispatch(addToCart(id, imageClock, brandClock, vendorCode, price)),
     filterItems: (gender, brand, items, minPrice, maxPrice) =>
       dispatch(filterClocks(gender, brand, items, minPrice, maxPrice)),
   };
@@ -227,11 +262,11 @@ const mapDispatchToProps = dispatch => {
 ItemList.propTypes = {
   dataClocks: PropTypes.array.isRequired,
   forFilterData: PropTypes.array.isRequired,
-  onAddToCart: PropTypes.func.isRequired,
   onLoading: PropTypes.bool.isRequired,
   logged: PropTypes.bool.isRequired,
   onError: PropTypes.bool.isRequired,
   filterItems: PropTypes.func.isRequired,
+  currentUser: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);
