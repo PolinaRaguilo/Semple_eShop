@@ -12,9 +12,11 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Typography,
 } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import './ItemList.css';
+
 import OneItem from './OneItem/OneItem';
 import Spinner from '../../../Spinner/Spinner';
 import ErrorLoading from '../../../ErrorLoading/ErrorLoading';
@@ -121,22 +123,31 @@ class ItemList extends React.Component {
     const indexOfFirstPost = indexOfLastPost - 8;
     const currentArr = dataClocks.slice(indexOfFirstPost, indexOfLastPost);
 
-    const clockItems = currentArr.map(item => {
-      const { id, imageClock, brandClock, collection, vendorCode, price, rating } = item;
-      return (
-        <OneItem
-          key={id}
-          id={id}
-          imageClock={imageClock}
-          brandClock={brandClock}
-          collection={collection}
-          vendorCode={vendorCode}
-          price={price}
-          rating={rating}
-          onAddedToCart={this.AddToCart}
-        />
+    const clockItems =
+      currentArr.length === 0 ? (
+        <Typography className="no__results">
+          <i className="far fa-frown" />
+          No results
+          <i className="far fa-frown" />
+        </Typography>
+      ) : (
+        currentArr.map(item => {
+          const { id, imageClock, brandClock, collection, vendorCode, price, rating } = item;
+          return (
+            <OneItem
+              key={id}
+              id={id}
+              imageClock={imageClock}
+              brandClock={brandClock}
+              collection={collection}
+              vendorCode={vendorCode}
+              price={price}
+              rating={rating}
+              onAddedToCart={this.AddToCart}
+            />
+          );
+        })
       );
-    });
 
     const brandsList = this.state.brands.map(item => {
       const { id, brand } = item;
@@ -222,6 +233,7 @@ class ItemList extends React.Component {
             <div className="row">
               {this.props.onError ? <ErrorLoading /> : null}
               {this.props.onLoading ? <Spinner /> : null}
+
               {!(this.props.onLoading || this.props.onError) ? clockItems : null}
             </div>
             {this.props.dataClocks.length >= 8 && (

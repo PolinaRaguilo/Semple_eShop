@@ -42,12 +42,6 @@ class RegistrationForm extends React.Component {
     this.props.onSuccessClose();
   };
 
-  cartForNewUser = () => {
-    const prevCart = JSON.parse(localStorage.getItem('cartsUsers'));
-    const newCart = { ...prevCart, [`cart-${this.state.email}`]: [] };
-    localStorage.setItem('cartsUsers', JSON.stringify(newCart));
-  };
-
   onRegistrationSubmit = e => {
     const { firstName, lastName, email, password } = this.state;
     const dataCheck = {
@@ -61,7 +55,6 @@ class RegistrationForm extends React.Component {
     registrationSchema
       .validate(dataCheck)
       .then(() => {
-        this.cartForNewUser();
         fbDatabase
           .auth()
           .createUserWithEmailAndPassword(email, password)

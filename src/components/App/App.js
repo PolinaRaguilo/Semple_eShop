@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Typography } from '@material-ui/core';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Header from '../Header/Header';
 import AdminPage from '../Views/AdminPage/AdminPage';
@@ -9,8 +10,8 @@ import ItemsPage from '../Views/ItemsPage/ItemsPage';
 import LoginPage from '../Views/LoginPage/LoginPage';
 import RegistrationPage from '../Views/RegistrationPage/RegistrationPage';
 import UserPage from '../Views/UserPage/UserPage';
-// import Cart from '../Cart/Cart';
 import { fetchUsers } from '../../redux/actions/usersAction';
+import './App.css';
 
 class App extends React.Component {
   componentDidMount = () => {
@@ -22,7 +23,6 @@ class App extends React.Component {
       <>
         <BrowserRouter>
           <Header />
-          {/* <Route component={Cart} /> */}
           <Switch>
             <Route exact path="/" component={LoginPage} />
             <Route exact path="/items" component={ItemsPage} />
@@ -33,7 +33,15 @@ class App extends React.Component {
             />
             <Route exact path="/user" component={UserPage} />
             <Route exact path="/registration" component={RegistrationPage} />
-            <Route render={() => <h2>Page not found 404</h2>} />
+            <Route
+              render={() => (
+                <Typography className="notFound">
+                  <i className="fas fa-bomb" />
+                  Page not found 404
+                  <i className="fas fa-bomb" />
+                </Typography>
+              )}
+            />
           </Switch>
         </BrowserRouter>
       </>
