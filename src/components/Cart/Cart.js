@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable prefer-const */
 
 import React from 'react';
@@ -7,30 +8,32 @@ import './Cart.css';
 
 import OneItemCart from './OneItemCart/OneItemCart';
 import { onCloseModal } from '../../redux/actions/modalActions';
+import { updateCart } from '../../redux/actions/profileActions';
 
 class Cart extends React.Component {
-  FromLocal = JSON.parse(localStorage.getItem('cartsUsers'));
+  user = this.props.users.find(item => item.email === this.props.currentUser);
 
-  cartCurrent =
-    this.props.currentUser === null ? [] : this.FromLocal[`cart-${this.props.currentUser}`];
+  userCart = this.user.cart;
+
+  convertCart = this.userCart === '' ? [] : this.userCart;
 
   state = {
-    itemsCart: this.cartCurrent,
+    itemsCart: this.convertCart,
   };
 
   AddToCart = idClock => {
-    const cartsFromLocal = JSON.parse(localStorage.getItem('cartsUsers'));
-
-    const cartOfCurrent =
-      this.props.currentUser === null ? [] : cartsFromLocal[`cart-${this.props.currentUser}`];
+    const user = this.props.users.find(item => item.email === this.props.currentUser);
+    const userCart = user.cart;
+    const convertCart = userCart === '' ? [] : userCart;
 
     let newClockCart;
     let newCart;
-    let newAllCart;
     const clock = this.props.dataClocks.find(item => item.id === idClock);
     const { id, imageClock, brandClock, vendorCode, price } = clock;
-    const itemIndex = cartOfCurrent.findIndex(item => item.id === id);
-    const clockItem = cartOfCurrent[itemIndex];
+
+    const itemIndex = convertCart.findIndex(item => item.id === id);
+
+    const clockItem = convertCart[itemIndex];
     if (clockItem !== undefined) {
       newClockCart = {
         ...clockItem,
@@ -47,89 +50,78 @@ class Cart extends React.Component {
       };
     }
     if (itemIndex < 0) {
-      newCart = [...cartOfCurrent, newClockCart];
+      newCart = [...convertCart, newClockCart];
     } else {
       newCart = [
-        ...cartOfCurrent.slice(0, itemIndex),
+        ...convertCart.slice(0, itemIndex),
         newClockCart,
-        ...cartOfCurrent.slice(itemIndex + 1),
+        ...convertCart.slice(itemIndex + 1),
       ];
     }
-    newAllCart = {
-      ...cartsFromLocal,
-      [`cart-${localStorage.getItem('currUser')}`]: newCart,
-    };
-    localStorage.setItem('cartsUsers', JSON.stringify(newAllCart));
+    this.props.updateCart(user.id, newCart);
     this.setState({ itemsCart: newCart });
   };
 
   deleteItemsCart = id => {
+    const user = this.props.users.find(item => item.email === this.props.currentUser);
+    const userCart = user.cart;
+    const convertCart = userCart === '' ? [] : userCart;
     let newCart;
-    let newAllCart;
-    const cartsFromLocal = JSON.parse(localStorage.getItem('cartsUsers'));
 
-    const cartOfCurrent =
-      this.props.currentUser === null ? [] : cartsFromLocal[`cart-${this.props.currentUser}`];
-    newCart = cartOfCurrent.filter(item => item.id !== id);
-    newAllCart = { ...cartsFromLocal, [`cart-${localStorage.getItem('currUser')}`]: newCart };
-    localStorage.setItem('cartsUsers', JSON.stringify(newAllCart));
+    newCart = convertCart.filter(item => item.id !== id);
 
-    // eslint-disable-next-line react/no-access-state-in-setstate
-    const afterDel = this.state.itemsCart.filter(item => item.id !== id);
-    this.setState({ itemsCart: afterDel });
+    let newCartItems = newCart.length === 0 ? '' : newCart;
+
+    this.props.updateCart(user.id, newCartItems);
+    this.setState({ itemsCart: newCartItems });
   };
 
   decreaseOne = id => {
-    const cartsFromLocal = JSON.parse(localStorage.getItem('cartsUsers'));
-
-    const cartOfCurrent =
-      this.props.currentUser === null ? [] : cartsFromLocal[`cart-${this.props.currentUser}`];
+    const user = this.props.users.find(item => item.email === this.props.currentUser);
+    const userCart = user.cart;
+    const convertCart = userCart === '' ? [] : userCart;
     let newCart;
-    let newAllCart;
 
-    const itemIndex = cartOfCurrent.findIndex(item => item.id === id);
-    const clockItem = cartOfCurrent[itemIndex];
+    const itemIndex = convertCart.findIndex(item => item.id === id);
+    const clockItem = convertCart[itemIndex];
     let updateClock = {
       ...clockItem,
       count: clockItem.count - 1,
     };
     if (clockItem.count === 1) {
-      newCart = [...cartOfCurrent.slice(0, itemIndex), ...cartOfCurrent.slice(itemIndex + 1)];
+      newCart = [...convertCart.slice(0, itemIndex), ...convertCart.slice(itemIndex + 1)];
     } else {
       newCart = [
-        ...cartOfCurrent.slice(0, itemIndex),
+        ...convertCart.slice(0, itemIndex),
         updateClock,
-        ...cartOfCurrent.slice(itemIndex + 1),
+        ...convertCart.slice(itemIndex + 1),
       ];
     }
-    newAllCart = { ...cartsFromLocal, [`cart-${localStorage.getItem('currUser')}`]: newCart };
-    localStorage.setItem('cartsUsers', JSON.stringify(newAllCart));
+    let newCartItems = newCart.length === 0 ? '' : newCart;
+    this.props.updateCart(user.id, newCartItems);
     this.setState({ itemsCart: newCart });
   };
 
   render() {
-    const clocksForCart =
-      this.state.itemsCart === undefined
-        ? []
-        : this.state.itemsCart.map(item => {
-            const { id, imageClock, brandClock, price, count } = item;
-            return (
-              <table className="table table-hover">
-                <tbody>
-                  <OneItemCart
-                    id={id}
-                    imageClock={imageClock}
-                    brandClock={brandClock}
-                    price={price}
-                    count={count}
-                    deleteItemsCart={this.deleteItemsCart}
-                    addOneClock={this.AddToCart}
-                    deleteOneItem={this.decreaseOne}
-                  />
-                </tbody>
-              </table>
-            );
-          });
+    const clocksForCart = this.state.itemsCart.map(item => {
+      const { id, imageClock, brandClock, price, count } = item;
+      return (
+        <table className="table table-hover">
+          <tbody>
+            <OneItemCart
+              id={id}
+              imageClock={imageClock}
+              brandClock={brandClock}
+              price={price}
+              count={count}
+              deleteItemsCart={this.deleteItemsCart}
+              addOneClock={this.AddToCart}
+              deleteOneItem={this.decreaseOne}
+            />
+          </tbody>
+        </table>
+      );
+    });
     const total = 0;
 
     const totalPrice = this.state.itemsCart.reduce((summa, item) => {
@@ -184,12 +176,14 @@ const mapStateToProps = state => {
   return {
     currentUser: state.authorizationReducer.currentUser,
     dataClocks: state.clocksReducer.clocksData,
+    users: state.usersReducer.usersAdmin,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onCloseModal: () => dispatch(onCloseModal()),
+    updateCart: (id, cartData) => dispatch(updateCart(id, cartData)),
   };
 };
 

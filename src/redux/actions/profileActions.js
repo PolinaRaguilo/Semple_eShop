@@ -26,3 +26,9 @@ export const updateImg = (id, imageUrl) => async dispatch => {
     dispatch(fetchUsers());
   });
 };
+
+export const updateCart = (id, cartData) => async dispatch => {
+  await dbUser.updateUser({ cart: cartData }, id).then(() => {
+    dispatch(fetchUsers());
+  });
+};

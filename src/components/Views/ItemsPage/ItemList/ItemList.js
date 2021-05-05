@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable prefer-const */
 
 import React from 'react';
@@ -18,6 +19,7 @@ import OneItem from './OneItem/OneItem';
 import Spinner from '../../../Spinner/Spinner';
 import ErrorLoading from '../../../ErrorLoading/ErrorLoading';
 import { filterClocks } from '../../../../redux/actions/clocksActions';
+import { updateCart } from '../../../../redux/actions/profileActions';
 
 class ItemList extends React.Component {
   clockForPrice = this.props.dataClocks.map(clock => {
@@ -74,18 +76,18 @@ class ItemList extends React.Component {
   };
 
   AddToCart = idClock => {
-    const cartsFromLocal = JSON.parse(localStorage.getItem('cartsUsers'));
-
-    const cartOfCurrent =
-      this.props.currentUser === null ? [] : cartsFromLocal[`cart-${this.props.currentUser}`];
+    const user = this.props.users.find(item => item.email === this.props.currentUser);
+    const userCart = user.cart;
+    const convertCart = userCart === '' ? [] : userCart;
 
     let newClockCart;
     let newCart;
-    let newAllCart;
     const clock = this.props.dataClocks.find(item => item.id === idClock);
     const { id, imageClock, brandClock, vendorCode, price } = clock;
-    const itemIndex = cartOfCurrent.findIndex(item => item.id === id);
-    const clockItem = cartOfCurrent[itemIndex];
+
+    const itemIndex = convertCart.findIndex(item => item.id === id);
+
+    const clockItem = convertCart[itemIndex];
     if (clockItem !== undefined) {
       newClockCart = {
         ...clockItem,
@@ -102,19 +104,15 @@ class ItemList extends React.Component {
       };
     }
     if (itemIndex < 0) {
-      newCart = [...cartOfCurrent, newClockCart];
+      newCart = [...convertCart, newClockCart];
     } else {
       newCart = [
-        ...cartOfCurrent.slice(0, itemIndex),
+        ...convertCart.slice(0, itemIndex),
         newClockCart,
-        ...cartOfCurrent.slice(itemIndex + 1),
+        ...convertCart.slice(itemIndex + 1),
       ];
     }
-    newAllCart = {
-      ...cartsFromLocal,
-      [`cart-${localStorage.getItem('currUser')}`]: newCart,
-    };
-    localStorage.setItem('cartsUsers', JSON.stringify(newAllCart));
+    this.props.updateCart(user.id, newCart);
   };
 
   render() {
@@ -249,6 +247,7 @@ const mapStateToProps = state => {
     logged: state.authorizationReducer.logged,
     forFilterData: state.clocksReducer.forFilter,
     currentUser: state.authorizationReducer.currentUser,
+    users: state.usersReducer.usersAdmin,
   };
 };
 
@@ -256,6 +255,7 @@ const mapDispatchToProps = dispatch => {
   return {
     filterItems: (gender, brand, items, minPrice, maxPrice) =>
       dispatch(filterClocks(gender, brand, items, minPrice, maxPrice)),
+    updateCart: (id, cartData) => dispatch(updateCart(id, cartData)),
   };
 };
 
@@ -267,6 +267,7 @@ ItemList.propTypes = {
   onError: PropTypes.bool.isRequired,
   filterItems: PropTypes.func.isRequired,
   currentUser: PropTypes.string.isRequired,
+  users: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

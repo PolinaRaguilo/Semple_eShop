@@ -53,6 +53,7 @@ export const addNewUser = (firstName, lastName, email) => async dispatch => {
     email,
     requestDelete: false,
     imgUrl: '',
+    cart: '',
   };
   await dbUsers.addNewUser(newUser).then(() => {
     dispatch(fetchUsers());
