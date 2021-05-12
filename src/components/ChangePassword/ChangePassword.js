@@ -9,7 +9,7 @@ import { fbDatabase } from '../../config/fbConfig';
 const checkEmail = /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/gim;
 
 class ChangePassword extends Component {
-  state = { errMsg: 'Email must be valid', err: false, success: false };
+  state = { errMsg: 'Email is empty or not valid', err: false, success: false };
 
   onInputChange = e => {
     const { id, value } = e.target;
