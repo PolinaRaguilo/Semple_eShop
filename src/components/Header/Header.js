@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-unused-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './Header.css';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { onOpenModal } from '../../redux/actions/modalActions';
 import { adminLogout, userLogout } from '../../redux/actions/authorizationAction';
 import { fbDatabase } from '../../config/fbConfig';
@@ -11,6 +12,8 @@ import Cart from '../Cart/Cart';
 
 class Header extends Component {
   onLogOutHandler = () => {
+    this.props.history.push('/');
+    localStorage.setItem('currUser', '');
     this.props.onLogOutUser();
     this.props.onLogOutAdmin();
     fbDatabase.auth().signOut();
@@ -98,4 +101,4 @@ Header.propTypes = {
   logged: PropTypes.bool.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));
