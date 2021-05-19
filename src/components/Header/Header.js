@@ -26,27 +26,7 @@ class Header extends Component {
           <Link to="/items" className="navbar-brand">
             eShop
           </Link>
-          <div className=" navbar-collapse  nav-menu-wrapper">
-            {this.props.showAdmin === false && (
-              <ul className="navbar-nav align-items-between">
-                <li className="nav-item active">
-                  <a className="nav-link" href="#">
-                    Home
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    Delivery
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    Contact us
-                  </a>
-                </li>
-              </ul>
-            )}
-          </div>
+          <div className=" navbar-collapse  nav-menu-wrapper" />
           <div className="icons-wrapper">
             <Link to="/user" className="link-user">
               <i className="far fa-user-circle" />
