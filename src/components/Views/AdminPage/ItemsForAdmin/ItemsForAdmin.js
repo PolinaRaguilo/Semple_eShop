@@ -145,7 +145,7 @@ class ItemsForAdmin extends React.Component {
               </select>
 
               <button type="submit" className="btn btn-primary btn-add">
-                Добавить
+                Add
               </button>
             </div>
           </div>
