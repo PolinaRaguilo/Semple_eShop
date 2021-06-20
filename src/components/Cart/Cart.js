@@ -103,30 +103,36 @@ class Cart extends React.Component {
   };
 
   render() {
-    const clocksForCart = this.state.itemsCart.map(item => {
-      const { id, imageClock, brandClock, price, count } = item;
-      return (
-        <table className="table table-hover">
-          <tbody>
-            <OneItemCart
-              id={id}
-              imageClock={imageClock}
-              brandClock={brandClock}
-              price={price}
-              count={count}
-              deleteItemsCart={this.deleteItemsCart}
-              addOneClock={this.AddToCart}
-              deleteOneItem={this.decreaseOne}
-            />
-          </tbody>
-        </table>
-      );
-    });
+    const clocksForCart =
+      this.state.itemsCart === ''
+        ? []
+        : this.state.itemsCart.map(item => {
+            const { id, imageClock, brandClock, price, count } = item;
+            return (
+              <table className="table table-hover">
+                <tbody>
+                  <OneItemCart
+                    id={id}
+                    imageClock={imageClock}
+                    brandClock={brandClock}
+                    price={price}
+                    count={count}
+                    deleteItemsCart={this.deleteItemsCart}
+                    addOneClock={this.AddToCart}
+                    deleteOneItem={this.decreaseOne}
+                  />
+                </tbody>
+              </table>
+            );
+          });
     const total = 0;
 
-    const totalPrice = this.state.itemsCart.reduce((summa, item) => {
-      return summa + total + item.price * item.count;
-    }, 0);
+    const totalPrice =
+      this.state.itemsCart === ''
+        ? 0
+        : this.state.itemsCart.reduce((summa, item) => {
+            return summa + total + item.price * item.count;
+          }, 0);
 
     return (
       <div className="modal show">
